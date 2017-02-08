@@ -55,11 +55,11 @@ Select the JAR link next to the library from the Java SDK for Azure to download 
 
 ## Azure services
 
-Key Vault - Securely store secrets and keys.
-SQL Database - Set up and configure a SQL database.
-DocumentDB - Create NoSQL databases with JSON data.
-Redis Cache - High throughput, in-memory key/value cache for your apps.
-Storage - Store, read, and update data to Azure Storage services.
+Key Vault - Securely store secrets and keys. [Maven](test.md) | [Gradle](test.md) | [Download](test.md) | [Reference](test.md) | [Samples](test.md) | [GitHub](test.md)
+SQL Database - Set up and configure a SQL database. Maven | Gradle | Download | Reference | Samples
+DocumentDB - Create NoSQL databases with JSON data. Maven | Gradle | Download | Reference | Samples
+Redis Cache - High throughput, in-memory key/value cache for your apps. Maven | Gradle | Download | Reference | Samples
+Storage - Store, read, and update data to Azure Storage services. Maven | Gradle | Download | Reference | Samples
 Storage for Android - Access Azure Storage services from your Android applications.
 Event Hub - Send, receive, and process telemetry events in your application.
 Data Lake Store - Store and analyze all your data in a single location with no constraints.
