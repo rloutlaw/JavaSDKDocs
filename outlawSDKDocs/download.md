@@ -20,7 +20,8 @@ ms.author: routlaw;asirveda
 # Download the Azure SDK for Java
 
 Use the libraries in the Java SDK for Azure to manage and use Azure services and resources in your applications.  
-For an overview of Azure and Java, visit the [Java developer center for Azure](https://azure.microsoft.com/en-us/develop/java)
+   
+For an overview of Azure and Java, visit the [Java developer center for Azure](https://azure.microsoft.com/en-us/develop/java).
 
 ## Installation
 
@@ -55,19 +56,18 @@ Select the JAR link next to the library from the Java SDK for Azure to download 
 
 ## Azure services
 
-Key Vault - Securely store secrets and keys. [Maven](test.md) | [Gradle](test.md) | [Download](test.md) | [Reference](test.md) | [Samples](test.md) | [GitHub](test.md)
-SQL Database - Set up and configure a SQL database. Maven | Gradle | Download | Reference | Samples
-DocumentDB - Create NoSQL databases with JSON data. Maven | Gradle | Download | Reference | Samples
-Redis Cache - High throughput, in-memory key/value cache for your apps. Maven | Gradle | Download | Reference | Samples
-Storage - Store, read, and update data to Azure Storage services. Maven | Gradle | Download | Reference | Samples
-Storage for Android - Access Azure Storage services from your Android applications.
-Event Hub - Send, receive, and process telemetry events in your application.
-Data Lake Store - Store and analyze all your data in a single location with no constraints.
-IoT Service - Create and manage your IoT hubs in Azure
-IoT Device - Send data to an IoT hub from your device.
-AppInsights - Gather logs and telemetry to track performance and usage of your app.
-Active Directory Authentication - Enable secure sign-in and authorization.
-
+Key Vault - Securely store secrets and keys. [Maven](test.md) | [Gradle](test.md) | [Download](test.md) | [Reference](test.md) | [Samples](test.md) | [GitHub](test.md)   
+SQL Database - Set up and configure a SQL database. Maven | Gradle | Download | Reference | Samples   
+DocumentDB - Create NoSQL databases with JSON data. Maven | Gradle | Download | Reference | Samples  
+Redis Cache - High throughput, in-memory key/value cache for your apps. Maven | Gradle | Download | Reference | Samples  
+Storage - Store, read, and update data to Azure Storage services. Maven | Gradle | Download | Reference | Samples  
+Storage for Android - Access Azure Storage services from your Android applications.  
+Event Hub - Send, receive, and process telemetry events in your application.  
+Data Lake Store - Store and analyze all your data in a single location with no constraints.  
+IoT Service - Create and manage your IoT hubs in Azure   
+IoT Device - Send data to an IoT hub from your device.  
+AppInsights - Gather logs and telemetry to track performance and usage of your app.  
+Active Directory Authentication - Enable secure sign-in and authorization.  
 
 
 ## Azure resource management
