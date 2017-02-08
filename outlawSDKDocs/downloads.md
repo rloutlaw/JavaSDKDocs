@@ -24,28 +24,19 @@ Add the complete SDK into your projects by updating your [Maven](https://maven.a
 
 ## Install individual libraries
 
-Add support for specific Azure services and features 
+Add a dependency for specific Azure services and features if you don't want to use the complete SDK package in your project.
 
-### Maven
+### Azure services
 
-Add a depdendency entry in your Maven pom.xml to use a library in your project.
+Key Vault
+SQL Database
+DocumentDB
+CDN
+App Service
+Redis Cache
 
-```xml
-<dependency>
-    <groupId>com.microsoft.azure</groupId>
-    <artifactId>azure-storage</artifactId>
-    <version>5.0.0</version>
-</dependency>
-```
 
-### Gradle 
+### Azure resource management
 
-Add an entry for an external module in the depdencies block of your build.gradle file to use a library in your project.
-
-```json
-dependencies {
-    compile group: 'com.microsoft.azure', name: 'azure-storage', version: '5.0.0'
-}
-```
-## 
+### Azure service management
 
