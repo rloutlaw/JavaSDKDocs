@@ -1,6 +1,6 @@
 # [Overview](index.md)
 ## Install
-### [Eclipse]
-### [IntelliJ]
+### Eclipse
+### IntelliJ
 ## Get started
-## [ownloads](downloads.md)
+## [Downloads](downloads.md)

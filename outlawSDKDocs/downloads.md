@@ -16,7 +16,7 @@ Add the complete SDK into your projects by updating your [Maven](https://maven.a
 </dependency>
 ```
 
-```json {
+```json
     dependencies {
     compile 'com.microsoft.azure:azure:1.0.0-beta5'
 }
@@ -28,15 +28,18 @@ Add a dependency for specific Azure services and features if you don't want to u
 
 ### Azure services
 
-Key Vault
-SQL Database
-DocumentDB
-CDN
-App Service
-Redis Cache
+Key Vault - Securely store secrets and keys.
+SQL Database - Set up and configure a SQL database.
+DocumentDB - Create NoSQL databases with JSON data.
+Redis Cache - High throughput, in-memory key/value cache for your apps.
+
+
 
 
 ### Azure resource management
+Content Delivery Network - Provide lower latency and high bandwidth for content no matter where your users are.
+
 
 ### Azure service management
+App Service
 
