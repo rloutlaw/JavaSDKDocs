@@ -1,5 +1,5 @@
 # [Overview](index.md)
-## [Install]((download.md)
+## [Install](download.md)
 ## Get Started 
 ### Eclipse
 ### IntelliJ
