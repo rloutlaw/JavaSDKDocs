@@ -36,13 +36,15 @@ Add a dependency element in your pom.xml to add a library from the SDK to your [
     <version>n.n.n</version>
 </dependency>
 ``` 
+### Gradle
 
-### Manual download
+Create an entry in the dependency section of your build.gradle file to add a library from the SDK to your [Gradle](https://gradle.org) project.
 
-Select the download link next to the library to get the latest release of the library. Use one of the following options to add the downloaded JAR files to your project:
-
-* Import the JAR files into your Java project in Eclipse or IntelliJ.
-* Configure the build paths for your Java projects in Eclipse or IntelliJ to include the path to the JAR files.
+```
+dependencies {
+    compile 'com.microsoft.azure:azure:n.n.n'
+}
+```
 
 ## Azure services
 
@@ -57,7 +59,7 @@ Key Vault - Store secrets and keys in secure storage and access them from your a
 ```
    
 
-[Download](test.md) | [Reference](test.md) | [Samples](test.md) | [GitHub](test.md)  | [Learn More](test.md)   
+[Reference](test.md) | [Samples](test.md) | [GitHub](test.md)  
 
 SQL Database - Set up and configure a SQL database. Maven | Gradle | Download | Reference | Samples   
 DocumentDB - Create NoSQL databases with JSON data. Maven | Gradle | Download | Reference | Samples  
