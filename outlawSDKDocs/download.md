@@ -188,27 +188,19 @@ Identity management and secure sign-in for your applications.
 
 ## Azure resource management
 
-These libraries let you create, configure, and manage Azure resources from your Java applications.
+The [Azure Management Libraries for Java](https://github.com/Azure/azure-sdk-for-java) lets you create and manage your Azure resources. 
 
-### [SQL Database](https://azure.microsoft.com/services/sql)
+Add the Azure resource management libraries for Java to your project with the following Maven dependency:
 
-Create and manage scalable SQL databases.  
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure</artifactId>
+    <version>1.0.0-beta5</version>
+</dependency>
+```
 
-[Reference](test.md) | [Samples](test.md) | [GitHub](test.md) 
-
-### [Redis Cache](https://azure.microsoft.com/services/cache/)
-
-High performance, low-latency key/value cache for your application data.
-
-[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.redis._redis_cache) | [Sample](https://docs.microsoft.com/en-us/azure/redis-cache/cache-java-get-started) | [GitHub](https://github.com/Azure/azure-sdk-for-java)
-
-
-Content Delivery Network - Provide lower latency and high bandwidth for content no matter where your users are.
-
-
-## Azure service management
-
-
+For a list of currently supported resources, sample code, and help on getting started with the API, see the [projeft readme on Github](https://github.com/Azure/azure-sdk-for-java).
 
 ## See Also
 For more information about the Azure Toolkits for Java IDEs, see the following links:
