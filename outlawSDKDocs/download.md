@@ -48,9 +48,11 @@ dependencies {
 }
 ```
 
-## Azure services
+## Azure service SDKs
 
-### [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault) 
+These libraries help you integrate Azure services into your Java applications.
+
+### [Key Vault](https://docs.microsoft.com/azure/key-vault) 
 
 Encrypt secrets and keys and safely access them from your applications. 
 
@@ -66,7 +68,7 @@ Encrypt secrets and keys and safely access them from your applications.
 
 ### [DocumentDB](https://docs.microsoft.com/azure/documentdb/documentdb-introduction)
 
-Create NoSQL databases with JSON documents and query them with SQL or JavaScript syntax.   
+Scalable NoSQL database with JSON documents and SQL or JavaScript query syntax.   
 
 ```XML
 <dependency>
@@ -78,7 +80,7 @@ Create NoSQL databases with JSON documents and query them with SQL or JavaScript
 
 [Reference](http://azure.github.io/azure-documentdb-java/) | [Samples](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application) | [GitHub](https://github.com/Azure/azure-documentdb-java)   
 
-Redis Cache - High throughput, in-memory key/value cache for your apps. Maven | Gradle | Download | Reference | Samples  
+
 Storage - Store, read, and update data to Azure Storage services. Maven | Gradle | Download | Reference | Samples  
 Storage for Android - Access Azure Storage services from your Android applications.  
 Event Hub - Send, receive, and process telemetry events in your application.  
@@ -90,9 +92,21 @@ Active Directory Authentication - Enable secure sign-in and authorization.
 
 
 ## Azure resource management
-SQL Database - Set up and configure a SQL database.  
 
-Reference | Samples | GitHub   
+These libraries let you create, configure, and manage Azure resources from your Java applications.
+
+### [SQL Database](https://azure.microsoft.com/services/sql)
+
+Create and manage scalable SQL databases.  
+
+[Reference](test.md) | [Samples](test.md) | [GitHub](test.md) 
+
+### [Redis Cache](https://azure.microsoft.com/services/cache/)
+
+High performance, low-latency key/value cache for your application data.
+
+[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.redis._redis_cache) | [Sample](https://docs.microsoft.com/en-us/azure/redis-cache/cache-java-get-started) | [GitHub](https://github.com/Azure/azure-sdk-for-java)
+
 
 Content Delivery Network - Provide lower latency and high bandwidth for content no matter where your users are.
 
