@@ -27,13 +27,15 @@ For an overview of Azure and Java, visit the [Java developer center for Azure](h
 
 ### Maven
 
-Add a dependency element in your pom.xml to add a library from the SDK to your [Maven](https://maven.apache.org) project.  
+Add a dependency entry in your pom.xml to add a library from the SDK to your [Maven](https://maven.apache.org) project.
+
+For example, to include the latest version of the Azure Management SDK for Java:
 
 ```XML
 <dependency>
     <groupId>com.microsoft.azure</groupId>
     <artifactId>azure</artifactId>
-    <version>n.n.n</version>
+    <version>1.0.0-beta5</version>
 </dependency>
 ``` 
 ### Gradle
@@ -42,13 +44,13 @@ Create an entry in the dependency section of your build.gradle file to add a lib
 
 ```
 dependencies {
-    compile 'com.microsoft.azure:azure:n.n.n'
+    compile 'com.microsoft.azure:azure:1.0.0-beta5'
 }
 ```
 
 ## Azure services
 
-Key Vault - Store secrets and keys in secure storage and access them from your applications. 
+[Key Vault](https://docs.microsoft.com/en-us/azure/key-vault) - Encrypt secrets and keys and safely access them from your applications. 
 
 ```XML
 <dependency>
@@ -60,7 +62,8 @@ Key Vault - Store secrets and keys in secure storage and access them from your a
 
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
-SQL Database - Set up and configure a SQL database. Maven | Gradle | Download | Reference | Samples   
+SQL Database - Set up and configure a SQL database.  Reference | Samples | GitHub   
+
 DocumentDB - Create NoSQL databases with JSON data. Maven | Gradle | Download | Reference | Samples  
 Redis Cache - High throughput, in-memory key/value cache for your apps. Maven | Gradle | Download | Reference | Samples  
 Storage - Store, read, and update data to Azure Storage services. Maven | Gradle | Download | Reference | Samples  
