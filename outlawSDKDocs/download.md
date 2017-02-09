@@ -62,7 +62,15 @@ dependencies {
 
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
-DocumentDB - Create NoSQL databases with JSON documents and query them with SQL or JavaScript syntax.
+DocumentDB - Create NoSQL databases with JSON documents and query them with SQL or JavaScript syntax.   
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure-documentdb</artifactId>
+    <version>1.9.3</version>
+</dependency>
+```
 
 [Reference](http://azure.github.io/azure-documentdb-java/) | [Samples](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application) | [GitHub](https://github.com/Azure/azure-documentdb-java)   
 
