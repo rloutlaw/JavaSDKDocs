@@ -29,34 +29,36 @@ For an overview of Azure and Java, visit the [Java developer center for Azure](h
 
 Add a dependency element in your pom.xml to add a library from the SDK to your [Maven](https://maven.apache.org) project.  
 
-```xml
+```XML
 <dependency>
     <groupId>com.microsoft.azure</groupId>
     <artifactId>azure</artifactId>
     <version>n.n.n</version>
 </dependency>
-```
-
-### Gradle
-
-Add a compile entry in the dependency section of your build.gradle file to add a library from the SDK to your [Gradle](https://gradle.org) project.
-
-```json
-dependencies {
-    compile 'com.microsoft.azure:azure:n.n.n'
-}
-```
+``` 
 
 ### Manual download
 
-Select the JAR link next to the library from the Java SDK for Azure to download the latest release of the library. Use one of the following options to add the JAR files to your project:
+Select the download link next to the library to get the latest release of the library. Use one of the following options to add the downloaded JAR files to your project:
 
 * Import the JAR files into your Java project in Eclipse or IntelliJ.
 * Configure the build paths for your Java projects in Eclipse or IntelliJ to include the path to the JAR files.
 
 ## Azure services
 
-Key Vault - Securely store secrets and keys. [Maven](test.md) | [Gradle](test.md) | [Download](test.md) | [Reference](test.md) | [Samples](test.md) | [GitHub](test.md)   
+Key Vault - Store secrets and keys in secure storage and access them from your applications. 
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure-keyvault</artifactId>
+    <version>1.0.0-beta3</version>
+</dependency>
+```
+   
+
+[Download](test.md) | [Reference](test.md) | [Samples](test.md) | [GitHub](test.md)  | [Learn More](test.md)   
+
 SQL Database - Set up and configure a SQL database. Maven | Gradle | Download | Reference | Samples   
 DocumentDB - Create NoSQL databases with JSON data. Maven | Gradle | Download | Reference | Samples  
 Redis Cache - High throughput, in-memory key/value cache for your apps. Maven | Gradle | Download | Reference | Samples  
