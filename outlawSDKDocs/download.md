@@ -81,9 +81,34 @@ Scalable NoSQL database with JSON documents and SQL or JavaScript query syntax.
 [Reference](http://azure.github.io/azure-documentdb-java/) | [Samples](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application) | [GitHub](https://github.com/Azure/azure-documentdb-java)   
 
 
-Storage - Store, read, and update data to Azure Storage services. Maven | Gradle | Download | Reference | Samples  
-Storage for Android - Access Azure Storage services from your Android applications.  
-Event Hub - Send, receive, and process telemetry events in your application.  
+### [Azure Storage](https://docs.microsoft.com/azure/storage/storage-introduction)  
+
+Data storage and messaging for your applications.
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure-storage</artifactId>
+    <version>5.0.0</version>
+</dependency>
+```   
+
+[Reference](http://azure.github.io/azure-storage-java/) | [Samples](https://github.com/Azure/azure-storage-java/tree/master/microsoft-azure-storage-samples/src/com/microsoft/azure/storage) | [GitHub](https://github.com/Azure/azure-storage-java)  
+
+### [Event Hub](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) 
+   
+High throughput event and telemetry ingestion for your instrumentation or IoT scenarios.
+
+```XML
+ <dependency> 
+        <groupId>com.microsoft.azure</groupId> 
+        <artifactId>azure-eventhubs</artifactId> 
+        <version>0.10.0</version> 
+    </dependency>   
+```
+
+[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.eventhubs) | [Samples](https://github.com/azure/azure-event-hubs-java#publishing-events) | [GitHub](https://github.com/azure/azure-event-hubs-java)   
+
 Data Lake Store - Store and analyze all your data in a single location with no constraints.  
 IoT Service - Create and manage your IoT hubs in Azure   
 IoT Device - Send data to an IoT hub from your device.  
