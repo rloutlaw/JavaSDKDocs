@@ -100,19 +100,78 @@ Data storage and messaging for your applications.
 High throughput event and telemetry ingestion for your instrumentation or IoT scenarios.
 
 ```XML
- <dependency> 
-        <groupId>com.microsoft.azure</groupId> 
-        <artifactId>azure-eventhubs</artifactId> 
-        <version>0.10.0</version> 
-    </dependency>   
+<dependency> 
+    <groupId>com.microsoft.azure</groupId> 
+    <artifactId>azure-eventhubs</artifactId> 
+    <version>0.10.0</version> 
+</dependency>   
 ```
 
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.eventhubs) | [Samples](https://github.com/azure/azure-event-hubs-java#publishing-events) | [GitHub](https://github.com/azure/azure-event-hubs-java)   
 
-Data Lake Store - Store and analyze all your data in a single location with no constraints.  
-IoT Service - Create and manage your IoT hubs in Azure   
-IoT Device - Send data to an IoT hub from your device.  
-AppInsights - Gather logs and telemetry to track performance and usage of your app.  
+### [Data Lake Store](https://docs.microsoft.com/azure/data-lake-store/data-lake-store-overview)   
+   
+Capture data of any size in a single location for performing data analytics.    
+
+```XML
+<dependency>
+   <groupId>com.microsoft.azure</groupId>
+   <artifactId>azure-data-lake-store-sdk</artifactId>
+   <version>2.1.4</version>
+</dependency>
+```   
+
+[Reference](https://azure.github.io/azure-data-lake-store-java/javadoc/) | [Samples](https://github.com/Azure-Samples/data-lake-store-java-upload-download-get-started) | [GitHub](test.md) 
+
+
+##[IoT Service](https://docs.microsoft.com/azure/iot-hub/)
+
+- Create/remove/update/list device identities in your IoT hub
+- Send messages to your devices and get feedback when they're delivered
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure.sdk.iot</groupId>
+    <artifactId>iot-service-client</artifactId>
+    <version>1.0.13</version>
+</dependency>
+```   
+   
+[Reference](http://azure.github.io/azure-iot-sdks/java/service/api_reference/index.html) | [Samples](https://github.com/Azure/azure-iot-sdk-java/tree/master/service/iot-service-samples) | [GitHub](https://github.com/Azure/azure-iot-sdk-java) 
+
+### [IoT Device]
+
+Send a message to an IoT hub from your device.  
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure.sdk.iot</groupId>
+    <artifactId>iot-service-client</artifactId>
+    <version>1.0.18</version>
+</dependency>
+```  
+
+[Reference](http://azure.github.io/azure-iot-sdks/java/device/api_reference/index.html) | [Samples](https://github.com/Azure/azure-iot-sdk-java/tree/master/device/iot-device-samples) | [GitHub](https://github.com/Azure/azure-iot-sdk-java) 
+
+
+### [AppInsights]  
+
+- Track usage of web applications
+- Capture logs and correlate events with page views and requests
+- Add custom telemetry
+- Monitor application availability
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>applicationinsights-web</artifactId>
+    <version>1.0.7</version>
+</dependency>
+```
+
+[Reference](test.md) | [Samples](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started) | [GitHub](https://github.com/Microsoft/ApplicationInsights-Java) 
+
+
 Active Directory Authentication - Enable secure sign-in and authorization.  
 
 
