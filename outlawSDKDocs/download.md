@@ -57,9 +57,8 @@ Key Vault - Store secrets and keys in secure storage and access them from your a
     <version>1.0.0-beta3</version>
 </dependency>
 ```
-   
 
-[Reference](test.md) | [Samples](test.md) | [GitHub](test.md)  
+[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
 SQL Database - Set up and configure a SQL database. Maven | Gradle | Download | Reference | Samples   
 DocumentDB - Create NoSQL databases with JSON data. Maven | Gradle | Download | Reference | Samples  
