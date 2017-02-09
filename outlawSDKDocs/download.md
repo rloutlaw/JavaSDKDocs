@@ -200,7 +200,7 @@ Add the Azure resource management libraries for Java to your project with the fo
 </dependency>
 ```
 
-For a list of currently supported resources, sample code, and help on getting started with the API, see the [projeft readme on Github](https://github.com/Azure/azure-sdk-for-java).
+For a list of currently supported resources, sample code, and help on getting started with the API, see the [project readme on Github](https://github.com/Azure/azure-sdk-for-java).
 
 ## See Also
 For more information about the Azure Toolkits for Java IDEs, see the following links:
