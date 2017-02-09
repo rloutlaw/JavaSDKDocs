@@ -50,7 +50,9 @@ dependencies {
 
 ## Azure services
 
-[Key Vault](https://docs.microsoft.com/en-us/azure/key-vault) - Encrypt secrets and keys and safely access them from your applications. 
+### [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault) 
+
+Encrypt secrets and keys and safely access them from your applications. 
 
 ```XML
 <dependency>
@@ -62,7 +64,9 @@ dependencies {
 
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
-DocumentDB - Create NoSQL databases with JSON documents and query them with SQL or JavaScript syntax.   
+### [DocumentDB](https://docs.microsoft.com/azure/documentdb/documentdb-introduction)
+
+Create NoSQL databases with JSON documents and query them with SQL or JavaScript syntax.   
 
 ```XML
 <dependency>
