@@ -62,9 +62,10 @@ dependencies {
 
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
-SQL Database - Set up and configure a SQL database.  Reference | Samples | GitHub   
+DocumentDB - Create NoSQL databases with JSON documents and query them with SQL or JavaScript syntax.
 
-DocumentDB - Create NoSQL databases with JSON data. Maven | Gradle | Download | Reference | Samples  
+[Reference](http://azure.github.io/azure-documentdb-java/) | [Samples](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application) | [GitHub](https://github.com/Azure/azure-documentdb-java)   
+
 Redis Cache - High throughput, in-memory key/value cache for your apps. Maven | Gradle | Download | Reference | Samples  
 Storage - Store, read, and update data to Azure Storage services. Maven | Gradle | Download | Reference | Samples  
 Storage for Android - Access Azure Storage services from your Android applications.  
@@ -77,6 +78,10 @@ Active Directory Authentication - Enable secure sign-in and authorization.
 
 
 ## Azure resource management
+SQL Database - Set up and configure a SQL database.  
+
+Reference | Samples | GitHub   
+
 Content Delivery Network - Provide lower latency and high bandwidth for content no matter where your users are.
 
 
