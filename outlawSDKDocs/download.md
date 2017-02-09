@@ -139,7 +139,7 @@ Capture data of any size in a single location for performing data analytics.
    
 [Reference](http://azure.github.io/azure-iot-sdks/java/service/api_reference/index.html) | [Samples](https://github.com/Azure/azure-iot-sdk-java/tree/master/service/iot-service-samples) | [GitHub](https://github.com/Azure/azure-iot-sdk-java) 
 
-### [IoT Device]
+### [IoT Device](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide)
 
 Send a message to an IoT hub from your device.  
 
@@ -154,7 +154,7 @@ Send a message to an IoT hub from your device.
 [Reference](http://azure.github.io/azure-iot-sdks/java/device/api_reference/index.html) | [Samples](https://github.com/Azure/azure-iot-sdk-java/tree/master/device/iot-device-samples) | [GitHub](https://github.com/Azure/azure-iot-sdk-java) 
 
 
-### [AppInsights]  
+### [AppInsights](https://docs.microsoft.com/azure/application-insights/app-insights-overview)
 
 - Track usage of web applications
 - Capture logs and correlate events with page views and requests
@@ -169,11 +169,22 @@ Send a message to an IoT hub from your device.
 </dependency>
 ```
 
-[Reference](test.md) | [Samples](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started) | [GitHub](https://github.com/Microsoft/ApplicationInsights-Java) 
+[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.applicationinsights) | [Samples](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started) | [GitHub](https://github.com/Microsoft/ApplicationInsights-Java) 
 
 
-Active Directory Authentication - Enable secure sign-in and authorization.  
+###[Azure Active Directory](https://docs.microsoft.com/azure/active-directory/active-directory-whatis)   
 
+Identity management and secure sign-in for your applications.
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>adal4j</artifactId>
+    <version>1.1.3</version>
+</dependency>
+```
+   
+[Reference](https://github.com/AzureAD/azure-activedirectory-library-for-java) | [Samples](https://github.com/Azure-Samples?utf8=%E2%9C%93&q=active%20directory%20&type=&language=java) | [GitHub](https://github.com/AzureAD/azure-activedirectory-library-for-java) 
 
 ## Azure resource management
 

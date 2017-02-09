@@ -1,6 +1,7 @@
 # [Overview](index.md)
-## Install
+## [Install]((download.md)
+## Get Started 
 ### Eclipse
 ### IntelliJ
-## Get started
-## [Downloads](downloads.md)
+## How To
+## Reference
