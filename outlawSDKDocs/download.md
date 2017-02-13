@@ -52,19 +52,50 @@ dependencies {
 
 These libraries help you integrate Azure services into your Java applications.
 
-### [Key Vault](https://docs.microsoft.com/azure/key-vault) 
+### [Azure Storage](https://docs.microsoft.com/azure/storage/storage-introduction)  
 
-Encrypt secrets and keys and safely access them from your applications. 
+Data storage and messaging for your applications.
 
 ```XML
 <dependency>
     <groupId>com.microsoft.azure</groupId>
-    <artifactId>azure-keyvault</artifactId>
-    <version>1.0.0-beta3</version>
+    <artifactId>azure-storage</artifactId>
+    <version>5.0.0</version>
+</dependency>
+```   
+
+[Reference](http://azure.github.io/azure-storage-java/) | [Samples](https://github.com/Azure/azure-storage-java/tree/master/microsoft-azure-storage-samples/src/com/microsoft/azure/storage) | [GitHub](https://github.com/Azure/azure-storage-java)  
+
+
+### [SQL Database](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-technical-overview)
+
+JDBC driver for Azure SQL database.
+
+```XML
+<dependency>
+    <groupId>com.microsoft.sqlserver</groupId>
+    <artifactId>mssql-jdbc</artifactId>
+    <version>6.1.0.jre8</version>
 </dependency>
 ```
 
-[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
+[Reference](https://docs.microsoft.com/en-us/sql/connect/jdbc/reference/jdbc-driver-api-reference) | [Sample](https://docs.microsoft.com/en-us/sql/connect/jdbc/code-samples/sample-jdbc-driver-applications) | [GitHub](https://github.com/Microsoft/mssql-jdbc)  
+
+### [Redis Cache](https://azure.microsoft.com/en-us/services/cache/)
+
+Low-latency, high-performance distributed key-value store.
+
+```XML
+<dependency>
+    <groupId>redis.clients</groupId>
+    <artifactId>jedis</artifactId>
+    <version>2.9.0</version>
+    <type>jar</type>
+    <scope>compile</scope>
+</dependency>
+```   
+
+[Reference](http://xetorthio.github.io/jedis) | [Sample](https://docs.microsoft.com/en-us/azure/redis-cache/cache-java-get-started) | [GitHub](https://github.com/xetorthio/jedis)    
 
 ### [DocumentDB](https://docs.microsoft.com/azure/documentdb/documentdb-introduction)
 
@@ -80,20 +111,47 @@ Scalable NoSQL database with JSON documents and SQL or JavaScript query syntax.
 
 [Reference](http://azure.github.io/azure-documentdb-java/) | [Samples](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application) | [GitHub](https://github.com/Azure/azure-documentdb-java)   
 
+### [Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-fundamentals-hybrid-solutions)
 
-### [Azure Storage](https://docs.microsoft.com/azure/storage/storage-introduction)  
+Java Messaging Support (JMS) through [AMQP](https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol) to connect your applications.
 
-Data storage and messaging for your applications.
+```XML
+<dependency>
+  <groupId>org.apache.qpid</groupId>
+  <artifactId>qpid-jms-client</artifactId>
+  <version>0.11.1</version>
+</dependency>
+```
+
+[Reference](http://docs.oracle.com/javaee/7/api/javax/jms/package-summary.html) | [Sample](https://github.com/apache/qpid-jms/tree/0.20.0/qpid-jms-examples) | [GitHub](https://github.com/apache/qpid-jms)    
+
+### [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/active-directory-whatis)   
+
+Identity management and secure sign-in for your applications.
 
 ```XML
 <dependency>
     <groupId>com.microsoft.azure</groupId>
-    <artifactId>azure-storage</artifactId>
-    <version>5.0.0</version>
+    <artifactId>adal4j</artifactId>
+    <version>1.1.3</version>
 </dependency>
-```   
+```
+   
+[Reference](https://github.com/AzureAD/azure-activedirectory-library-for-java) | [Samples](https://github.com/Azure-Samples?utf8=%E2%9C%93&q=active%20directory%20&type=&language=java) | [GitHub](https://github.com/AzureAD/azure-activedirectory-library-for-java) 
+ 
+### [Key Vault](https://docs.microsoft.com/azure/key-vault) 
 
-[Reference](http://azure.github.io/azure-storage-java/) | [Samples](https://github.com/Azure/azure-storage-java/tree/master/microsoft-azure-storage-samples/src/com/microsoft/azure/storage) | [GitHub](https://github.com/Azure/azure-storage-java)  
+Encrypt secrets and keys and safely access them from your applications. 
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure-keyvault</artifactId>
+    <version>1.0.0-beta3</version>
+</dependency>
+```
+
+[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
 ### [Event Hub](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) 
    
@@ -109,22 +167,7 @@ High throughput event and telemetry ingestion for your instrumentation or IoT sc
 
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.eventhubs) | [Samples](https://github.com/azure/azure-event-hubs-java#publishing-events) | [GitHub](https://github.com/azure/azure-event-hubs-java)   
 
-### [Data Lake Store](https://docs.microsoft.com/azure/data-lake-store/data-lake-store-overview)   
-   
-Capture data of any size in a single location for performing data analytics.    
-
-```XML
-<dependency>
-   <groupId>com.microsoft.azure</groupId>
-   <artifactId>azure-data-lake-store-sdk</artifactId>
-   <version>2.1.4</version>
-</dependency>
-```   
-
-[Reference](https://azure.github.io/azure-data-lake-store-java/javadoc/) | [Samples](https://github.com/Azure-Samples/data-lake-store-java-upload-download-get-started) | [GitHub](test.md) 
-
-
-###[IoT Service](https://docs.microsoft.com/azure/iot-hub/)
+### [IoT Service](https://docs.microsoft.com/azure/iot-hub/)
 
 - Create/remove/update/list device identities in your IoT hub
 - Send messages to your devices and get feedback when they're delivered
@@ -153,6 +196,19 @@ Send a message to an IoT hub from your device.
 
 [Reference](http://azure.github.io/azure-iot-sdks/java/device/api_reference/index.html) | [Samples](https://github.com/Azure/azure-iot-sdk-java/tree/master/device/iot-device-samples) | [GitHub](https://github.com/Azure/azure-iot-sdk-java) 
 
+### [Data Lake Store](https://docs.microsoft.com/azure/data-lake-store/data-lake-store-overview)   
+   
+Capture data of any size in a single location for performing data analytics.    
+
+```XML
+<dependency>
+   <groupId>com.microsoft.azure</groupId>
+   <artifactId>azure-data-lake-store-sdk</artifactId>
+   <version>2.1.4</version>
+</dependency>
+```   
+
+[Reference](https://azure.github.io/azure-data-lake-store-java/javadoc/) | [Samples](https://github.com/Azure-Samples/data-lake-store-java-upload-download-get-started) | [GitHub](test.md) 
 
 ### [AppInsights](https://docs.microsoft.com/azure/application-insights/app-insights-overview)
 
@@ -172,19 +228,6 @@ Send a message to an IoT hub from your device.
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.applicationinsights) | [Samples](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started) | [GitHub](https://github.com/Microsoft/ApplicationInsights-Java) 
 
 
-###[Azure Active Directory](https://docs.microsoft.com/azure/active-directory/active-directory-whatis)   
-
-Identity management and secure sign-in for your applications.
-
-```XML
-<dependency>
-    <groupId>com.microsoft.azure</groupId>
-    <artifactId>adal4j</artifactId>
-    <version>1.1.3</version>
-</dependency>
-```
-   
-[Reference](https://github.com/AzureAD/azure-activedirectory-library-for-java) | [Samples](https://github.com/Azure-Samples?utf8=%E2%9C%93&q=active%20directory%20&type=&language=java) | [GitHub](https://github.com/AzureAD/azure-activedirectory-library-for-java) 
 
 ## Azure resource management
 
