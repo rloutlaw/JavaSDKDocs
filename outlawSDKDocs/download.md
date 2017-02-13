@@ -1,5 +1,5 @@
 ---
-title: Download the Azure SDK for Java | Microsoft Docs
+title: Azure development for Java | Microsoft Docs
 description: Learn how to download the Azure SDK for Java, with sample code provided for Maven projects.
 services: ''
 documentationcenter: java
@@ -17,9 +17,9 @@ ms.date: 12/22/2016
 ms.author: routlaw;asirveda
 
 ---
-# Download the Azure SDK for Java
+# Azure development for Java 
 
-Use the libraries in the Java SDK for Azure to manage and use Azure services and resources in your applications.  
+Use the libraries in the Java SDK for Azure to manage and use Azure services in your applications.  
    
 For an overview of Azure and Java, visit the [Java developer center for Azure](https://azure.microsoft.com/en-us/develop/java).
 
