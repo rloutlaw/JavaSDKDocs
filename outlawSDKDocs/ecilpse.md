@@ -110,7 +110,7 @@ public class AzureMgmtDemo {
 		
 		try {
 			
-			String resourceGroup = "rloVS2015arm";
+			String resourceGroup = "MY_RESOURCE_GROUP";
 			
             // authenticate the app with Azure using the properties file generated in the previous step 
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -123,12 +123,15 @@ public class AzureMgmtDemo {
 			for(VirtualMachine vm : vmlist) {
 				if (vm != null) {
 					// write VM information to system out
-					System.out.println("Found virtual machine " + vm.name() + " with size " + vm.size() + " in resource group " + resourceGroup + " with state " + vm.provisioningState());
+					System.out.println("Found virtual machine " + vm.name() 
+				        + " with size " + vm.size() + " in resource group " + resourceGroup 
+						+ " with state " + vm.provisioningState());
 				}
 			}
 		}			
 		catch (Exception e){
-			System.err.println("Error listing virtual machines in resource group " + args[1] + " : " + e.getMessage());
+			System.err.println("Error listing virtual machines in resource group " 
+			    + resourceGroup + " : " + e.getMessage());
 		}
 	}
 }
