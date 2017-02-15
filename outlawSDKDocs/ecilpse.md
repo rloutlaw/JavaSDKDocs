@@ -19,7 +19,7 @@ ms.author: routlaw
 ---
 # Get started with Azure development in Java with Eclipse
 
-This tutorial will walk you through creating a command line tool that connects to and queries information from your Azure account.
+This guide will walk you through creating a command line tool with Eclipse that connects to Azure and lists virtual machines in a given resource group.
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ Register your application with Azure Active Directory so your app can read and m
 
 ### Create a service principal
 
-Create a service principal to let your application authenticate with without using your account. Service principals let you manage your application access separately from your 
+Create a service principal to let your application authenticate with without using your account. Service principals let you manage application access separately from your 
 actual user accounts and identities. 
 
 2. Log in using the Azure CLI 2.0 with `az login`. 
