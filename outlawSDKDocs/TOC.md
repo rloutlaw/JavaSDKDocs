@@ -1,7 +1,7 @@
 # [Overview](index.md)
 ## [Install](download.md)
 ## Get Started 
-### Eclipse
+### [Eclipse](eclipse.md)
 ### IntelliJ
 # How-To
 ## [Build and deploy a Java API in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-java-api-app)
