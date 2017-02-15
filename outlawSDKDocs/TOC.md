@@ -1,8 +1,8 @@
 # [Overview](index.md)
-## [Install](download.md)
+## [Download](download.md)
 ## Get Started 
 ### [Eclipse](eclipse.md)
-### IntelliJ
+### [IntelliJ](intelli.md)
 # How-To
 ## [Build and deploy a Java API in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-java-api-app)
 ## [Build a web application with DocumentDB](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application)

@@ -28,15 +28,15 @@ This guide will walk you through creating a command line tool with Eclipse that 
 
 ## Create your project
 
-1. Create a simple Maven project. Select **File** > **New** > **Maven Project**. In **New Maven Project**, select **Create a simple project** and **Use default workspace location.**
+1. Create a simple Maven project in Eclipse. Select **File** > **New** > **Maven Project**. In **New Maven Project**, select **Create a simple project** and **Use default workspace location.**
 2. On the second page of **New Maven Project**, enter the following:
 - Group ID: `com.<username>.azure.mgmtdemo`  
 - Artifact ID: AzureMgmtDemo  
 - Version: 0.0.1-SNAPSHOT  
 - Packaging: jar  
 - Name: AzureMgmtDemo  
-Select **Finish**
 
+Select **Finish**
 
 ## Import your dependencies
 
@@ -73,7 +73,8 @@ need to use to authenticate your app with Azure.
 
 In this example we will create a properties file with the service principal information and use that to authenticate our app.
 
-Create a file auth.properties in your src/main/resources folder in your Maven project in Eclipse. Right-click the **resources** folder and select **New File**, enter auth.propeties in the **File name:** field, then select OK.
+Create a file auth.properties in your src/main/resources folder in your Maven project in Eclipse. 
+Right-click the **resources** folder and select **New File**, enter auth.propeties in the **File name:** field, then select OK.
 
 Enter the following properties into this file:
 
@@ -88,9 +89,14 @@ authURL=https\://login.windows.net/
 graphURL=https\://graph.windows.net/
 ```
 
-The subscription, client, key, and tenant information is taken from the output from when you created the service principal.
+Update this property file with the following changes:
 
-## Connect to Azure 
+- subscription = use the *id* value from `az account list`
+- client = use the *appId* value from the output taken from the service principal created in the previous step
+- key = use the *password* value from the service principal creation output
+- tenant - use the *tenant* value from the service principal creation output
+
+## Create the application
 
 Create a new class in the src/main/java path in Eclipse (Right click the path, select **New** > **Class**). Enter AzureMgmtDemo in the **Name:** field and select the option to create
 a main method under **Which method stubs would you like to create?**. Leave the rest of the options as is and select **Finish**. 
@@ -110,9 +116,9 @@ public class AzureMgmtDemo {
 		
 		try {
 			
-			String resourceGroup = "MY_RESOURCE_GROUP";
+			final String resourceGroup = "MY_RESOURCE_GROUP";
 			
-            // authenticate the app with Azure using the properties file generated in the previous step 
+            // authenticate the app with Azure using the properties file created earlier
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             File authfile = new File(classLoader.getResource("auth.properties").getFile());
 			Azure azure = Azure.authenticate(authfile).withDefaultSubscription();
@@ -137,7 +143,17 @@ public class AzureMgmtDemo {
 }
 ```
 
-This code reads in the properties file created in the previous step. Then it gets a list of VMs for a resource group, then writes out some information about those VMs to the console.
-Management tasks in Java flow down from the top-level Azure object-you identify which resources you want to work with, then call the methods to read, update, or delete resources of that type. 
-Refer to our How-Tos for walkthroughs and sample code to [create a virtual machine](), [manage Azure storage](), or [work with your Azure SQL databases]().
+Update the value of the resourceGroup variable to a resource group in your subscription. Save your changes to the source code.
 
+This code first authenticates with Azure using the properties file you created, then gets a list of VMs for a resource group and writes out some information about them to the console.
+
+## Run the code 
+
+Run the code by selecting the Run button in Eclipse (  , shortcut Ctrl+F11) or from the **Run** > **Run** menu. The output from the application will display in the **Console** window.
+
+[pool-84-thread-1] INFO com.microsoft.aad.adal4j.AuthenticationAuthority - [Correlation ID: 3c2c9e37-5aec-482d-9a9b-6e5e6dd7db9b] Instance discovery was successful
+Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state Succeeded
+
+## Learn more
+
+See the How-Tos for detailed samples on [managing virtual machines]() , [connecting to a Azure SQL database]() 

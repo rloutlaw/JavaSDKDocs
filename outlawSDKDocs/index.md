@@ -1,9 +1,9 @@
-## Azure SDK for Java
+## Java for Azure Developers
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Azure makes it easy to deploy and scale Java apps, using the tools you know and love.
 
-- Install - Install the required tools in your favorite development environment.
-- Get started - Go from zero to Hello World.
-- How-to - Samples and tutorials.
-- Downloads - List of available libraries and how to download and use them.
-- Reference - API documentation 
+- Develop Java apps using favorite tools like Eclipse, IntelliJ, Maven and Gradle.
+- Integrate Azure services like [SQL Database]() and [Azure storage]() into your applications.
+- Deploy, scale, and monitor your applications.
+- Automate the management of your Azure resources from your Java apps.
+
