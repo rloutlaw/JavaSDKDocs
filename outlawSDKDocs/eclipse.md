@@ -19,24 +19,25 @@ ms.author: routlaw
 ---
 # Get started with Azure development in Java with Eclipse
 
-This guide will walk you through creating a command line tool with Eclipse that connects to Azure and lists virtual machines in a [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview)
+This guide walks you through creating a command line tool with Eclipse that connects to Azure and lists virtual machines in a [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview).
 
 ## Prerequisites
 
-- Eclipse running with a Java 8 JDK.
+- [Eclipse](https://eclipse.org/downloads)
 - [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2)
 
 ## Create your project
 
 1. Create a simple Maven project in Eclipse. Select **File** > **New** > **Maven Project**. In **New Maven Project**, select **Create a simple project** and **Use default workspace location**. Select **Next**.
 2. On the second page of **New Maven Project**, enter the following:
-- Group ID: `com.<username>.azure.mgmtdemo`  
-- Artifact ID: AzureMgmtDemo  
-- Version: 0.0.1-SNAPSHOT  
-- Packaging: jar  
-- Name: AzureMgmtDemo  
 
-![Complete the configure project step in the New Maven project dialog](_img/create_maven_project.png)
+   - Group ID: `com.<username>.azure.mgmtdemo`  
+   - Artifact ID: AzureMgmtDemo  
+   - Version: 0.0.1-SNAPSHOT  
+   - Packaging: jar  
+   - Name: AzureMgmtDemo  
+
+   ![Complete the configure project step in the New Maven project dialog](_img/create_maven_project.png)
 
 3. Select **Finish**
 
@@ -156,8 +157,7 @@ Update the value of the resourceGroup variable to a resource group in your subsc
 
 Run the code by selecting the Run button in Eclipse (  , shortcut Ctrl+F11) or from the **Run** > **Run** menu. The output from the application will display in the **Console** window.
 
-```text
-[pool-84-thread-1] INFO com.microsoft.aad.adal4j.AuthenticationAuthority - [Correlation ID: 3c2c9e37-5aec-482d-9a9b-6e5e6dd7db9b] Instance discovery was successful
+```
 Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state Succeeded
 ```
 
