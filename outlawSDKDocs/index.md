@@ -1,11 +1,11 @@
 # Java for Azure Developers
 
-Azure makes it easy to develop and deploy Java apps, using the tools you know and love. Java developers on Azure can:
+Azure makes it easy to develop, deploy, and manage your Java apps, using the tools you know and love. Java developers on Azure can:
 
-- Develop apps using your favorite tools such as Eclipse, IntelliJ, Maven and Gradle.
-- Integrate services like [SQL Database](https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server) and [Azure storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) into your applications.
+- Create apps using your favorite tools such as Eclipse, IntelliJ, Maven and Gradle.
+- Integrate services like [SQL Database](https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server) and [Azure storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) into new or existing applications.
 - Deploy, scale, and monitor your applications, APIs, and services.
-- Autoamte configuration of your Azure resources from Java code.
+- Automate configuration of Azure resources from your Java code.
 
 ## Try out a sample now
 
@@ -16,19 +16,77 @@ node setup.js
 mvn clean compile exec:java
 ```
 
-## Get started 
-
-Set up your [Eclipse]() or [IntelliJ]() development environment and build a sample app.
-
-## Downloads
-
-Browse the full list of Azure Maven dependencies. 
-
-## How-to
-
-Samples and tutorials for common tasks.
-
-## Reference
-
-Javadocs and API reference documentation.
-
+<ul class="panelContent cardsFTitle">
+    <li>
+        <a href="./get-started">
+        <div class="cardSize">
+            <div class="cardPadding">
+                <div class="card">
+                    <div class="cardImageOuter">
+                        <div class="cardImage">
+                            <img src="media/index/get-started.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="cardText">
+                        <h3>Build a sample app that connects to Azure with [Eclipse](eclipse.md) or [IntelliJ](intellij.md).</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </li>
+    <li>
+        <a href="./packages">
+        <div class="cardSize">
+            <div class="cardPadding">
+                <div class="card">
+                    <div class="cardImageOuter">
+                        <div class="cardImage">
+                            <img src="media/index/article.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="cardText">
+                        <h3>Downloads - Get Maven dependencies for your Azure projects.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+        <div class="cardSize">
+            <div class="cardPadding">
+                <div class="card">
+                    <div class="cardImageOuter">
+                        <div class="cardImage">
+                            <img src="media/index/deploy.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="cardText">
+                        <h3>How-to - Samples and tutorials for common tasks.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+        <div class="cardSize">
+            <div class="cardPadding">
+                <div class="card">
+                    <div class="cardImageOuter">
+                        <div class="cardImage">
+                            <img src="media/index/tutorial.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="cardText">
+                        <h3>Reference - Javadocs and API reference documentation.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </li>
+</ul>
