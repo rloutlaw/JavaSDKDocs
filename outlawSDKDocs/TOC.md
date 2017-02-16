@@ -1,5 +1,5 @@
 # [Overview](index.md)
-# [Downloads](download.md)
+# [Maven depdencies](download.md)
 ## Get Started 
 ### [Eclipse](eclipse.md)
 ### [IntelliJ](intellij.md)
