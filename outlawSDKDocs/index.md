@@ -35,7 +35,7 @@ mvn clean compile exec:java
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>Build a sample app that connects to Azure with [Eclipse](eclipse.md) or [IntelliJ](intellij.md).</h3>
+                        <h3>Get started with a sample app that connects to Azure using [Eclipse](eclipse.md) or [IntelliJ](intellij.md).</h3>
                     </div>
                 </div>
             </div>
