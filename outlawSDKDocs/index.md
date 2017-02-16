@@ -20,13 +20,12 @@ mvn clean compile exec:java
 
 <ul class="panelContent cardsFTitle">
     <li>
-        <a href="./get-started">
         <div class="cardSize">
             <div class="cardPadding">
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img src="media/index/get-started.svg" alt="" />
+                            <img src="_img/get-started.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
@@ -38,13 +37,12 @@ mvn clean compile exec:java
         </a>
     </li>
     <li>
-        <a href="./packages">
         <div class="cardSize">
             <div class="cardPadding">
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img src="media/index/article.svg" alt="" />
+                            <img src="_img/article.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
@@ -56,13 +54,12 @@ mvn clean compile exec:java
         </a>
     </li>
     <li>
-        <a href="#">
         <div class="cardSize">
             <div class="cardPadding">
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img src="media/index/deploy.svg" alt="" />
+                            <img src="_img/deploy.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
@@ -74,13 +71,12 @@ mvn clean compile exec:java
         </a>
     </li>
     <li>
-        <a href="#">
         <div class="cardSize">
             <div class="cardPadding">
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img src="media/index/tutorial.svg" alt="" />
+                            <img src="_img/tutorial.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
