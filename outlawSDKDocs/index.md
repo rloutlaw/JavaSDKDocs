@@ -7,6 +7,8 @@ Azure makes it easy to develop, deploy, and manage your Java apps, using the too
 - Deploy, scale, and monitor your applications, APIs, and services.
 - Automate configuration of Azure resources from your Java code.
 
+New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start building your apps now.
+
 ## Try out a sample now
 
 ```text
