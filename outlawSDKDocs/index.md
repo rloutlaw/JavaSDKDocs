@@ -1,3 +1,9 @@
+---
+layout: LandingPage
+description: Java for Azure developers
+---
+
+
 # Java for Azure Developers
 
 Azure makes it easy to develop, deploy, and manage your Java apps, using the tools you know and love. Java developers on Azure can:
