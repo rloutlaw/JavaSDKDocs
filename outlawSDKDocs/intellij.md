@@ -111,43 +111,37 @@ IntelliJ will open the source file for editing. Enter the following code into th
 import com.microsoft.azure.management.compute.VirtualMachine;
 import com.microsoft.azure.management.Azure;
 import com.microsoft.azure.PagedList;
+
 import java.lang.ClassLoader;
 import java.io.File;
 
 public class AzureMgmtDemo {
 
-	public static void main(String[] args) {
-		
-        final String resourceGroup = "MY_RESOURCE_GROUP";
+    public static void main(String[] args) {
 
-		try {
-			
+        try {
+
             // authenticate the app with Azure using the properties file created earlier
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             File authfile = new File(classLoader.getResource("auth.properties").getFile());
-			Azure azure = Azure.authenticate(authfile).withDefaultSubscription();
-			
-            // get a list of VMs running in the Azure resource group passed on the command line
-			PagedList<VirtualMachine> vmlist = azure.virtualMachines().listByGroup(resourceGroup);
-			
-			for(VirtualMachine vm : vmlist) {
-				if (vm != null) {
-					// write VM information to system out
-					System.out.println("Found virtual machine " + vm.name() 
-				        + " with size " + vm.size() + " in resource group " + resourceGroup 
-						+ " with state " + vm.provisioningState());
-				}
-			}
-		}			
-		catch (Exception e){
-			System.err.println("Error listing virtual machines in resource group " 
-			    + resourceGroup + " : " + e.getMessage());
-		}
-	}
+            Azure azure = Azure.authenticate(authfile).withDefaultSubscription();
+
+            PagedList<VirtualMachine> vmlist = azure.virtualMachines().list();
+            for (VirtualMachine vm : vmlist) {
+                if (vm != null) {
+                    // write VM information to system out
+                    System.out.println("Found virtual machine " + vm.name()
+                            + " with size " + vm.size() + " in resource group " + vm.resourceGroupName()
+                            + " with state " + vm.powerState());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error listing virtual machines in resource groups: "
+                    + e.getMessage());
+        }
+    }
 }
 ```
-
-Update the value of the `resourceGroup` to a resource group in your subscription and save your code.
 
 ## Run the sample
 
