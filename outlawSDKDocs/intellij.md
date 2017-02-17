@@ -19,7 +19,7 @@ ms.author: routlaw
 ---
 # Get started with Azure development with Java and IntelliJ 
 
-This guide walks you through creating a command line tool with Eclipse that connects to Azure and lists virtual machines in a [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview).
+This guide walks you through creating a command line tool with IntelliJ that connects to Azure and lists virtual machines in a [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview).
 
 ## Prerequisites
 
@@ -28,23 +28,21 @@ This guide walks you through creating a command line tool with Eclipse that conn
 
 ## Create your project
 
-1. Create a simple Maven project in IntelliJ. Select **Create New Project** after opening the IDE. Select **Maven** from the list on the left, then select **Next** (do not select a Maven archetype from the list).
+1. Open IntelliJ and select **Create New Project**. Select **Maven** from the list on the left, then select **Next** (do not select **Create from archetype**).
 2. On the second page of **New Project**, enter the following:
 
    - Groupid: `com.<username>.azure.mgmtdemo`  
    - Artifactid: AzureMgmtDemo  
    - Version: 0.0.1-SNAPSHOT  
 
-   ![Complete the configure project step in the New Maven project dialog](_img/create_maven_project.png)
+   ![Complete the configure project step in the New Maven project dialog](_img/create_maven_project_intellij.png)
 
    Select **Next**.
-3. Use *AzureMgmtDemo* as the **Project name** and leave the **Project location** to whatever value you like. Select **Finish**. 
+3. Use *AzureMgmtDemo* as the **Project name** and point the **Project location** to whatever value you like. Select **Finish**. 
 
 ## Import the Maven dependencies
 
 Double-click the **pom.xml** file in the Project view.   
-
-![Select the pom.xml tab in Eclipse after double-clicking the pom.xml file in Project Explorer](_img/pom_xml_tab.png)
 
 Add the following XML before the `</project>` tag.
 
@@ -58,7 +56,8 @@ Add the following XML before the `</project>` tag.
 </dependencies>
 ```
 
-Save the changes. If you don't have auto-import of Maven dependencies set up, you'll get a prompt **Maven projects need to be imported**. Select **Import Changes** to add the Azure dependency to your project. IntelliJ will download the dependencies from Maven Central for use in your project.
+Save the changes. If you don't have auto-import of Maven dependencies set up, you'll get a **Maven projects need to be imported** prompt.
+Select **Import Changes** to download the dependencies from Maven Central for use in your project.
 
 ## Set up authentication
 
@@ -80,10 +79,10 @@ need to use to authenticate your app with Azure.
 
 In this example we will create a properties file with the service principal information and use that to authenticate our app.
 
-Create an auth.properties in your *src/main/resources** folder in your Maven project in IntelliJ. 
-Right-click the **resources** folder and select **New** > **File**, enter auth.propeties in the **Enter a new file name:** field, then select OK.
+Create a properties file in your Maven project in IntelliJ that you can use to authenticate your application using the service principal credeentials.
+Right-click the **src/main/resources** folder and select **New** > **File**, enter *auth.propeties* in the **Enter a new file name:** field, then select OK.
 
-Enter the following properties into this file:
+Enter the following text into this properties file:
 
 ```
 subscription=########-####-####-####-############
@@ -105,7 +104,7 @@ Update this property file with the following changes:
 
 ## Create the application
 
-Create a new class in the src/main/java path in IntelliK (Right click the path, select **New** > **Java Class**). Enter AzureMgmtDemo in the **Name:** field and select **OK**.
+Create a new class in the *src/main/java* folder in IntelliJ (Right click the path, select **New** > **Java Class**). Enter AzureMgmtDemo in the **Name:** field and select **OK**.
 
 IntelliJ will open the source file for editing. Enter the following code into this file:
 
@@ -149,7 +148,7 @@ public class AzureMgmtDemo {
 }
 ```
 
-Update the value of the resourceGroup variable to a resource group in your subscription. Save your changes to the source code.
+Update the value of the `resourceGroup` to a resource group in your subscription and save your code.
 
 ## Run the sample
 

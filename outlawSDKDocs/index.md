@@ -9,7 +9,7 @@ description: Java for Azure developers
 Azure makes it easy to develop, deploy, and manage Java apps. Java developers on Azure can:
 
 - Create apps using your favorite tools such as Eclipse, IntelliJ, Maven and Gradle.
-- Integrate services like [SQL Database](https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server) and [Azure storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) into new or existing applications.
+- Integrate Azure services like [SQL Database](https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server) and [Azure storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) into new or existing applications.
 - Build, deploy, scale, and monitor your applications.
 - Automate configuration of Azure resources from your Java code.
 
@@ -23,3 +23,4 @@ cd storage-blob-java-getting-started
 node setup.js
 mvn clean compile exec:java
 </pre>
+
