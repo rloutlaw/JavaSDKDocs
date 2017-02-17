@@ -80,7 +80,7 @@ need to use in the next step.
 
 Create a properties file with the service principal information from the previous step. This file will be passed to the Azure management API to authenticate our app.
 
-Right-click the **src/main/resources** folder in **Project Explorer** and select **New** > **File**. Enter *auth.propeties* in the **File name:** field, then select OK.
+Right-click the **src/main/resources** folder in **Project Explorer** and select **New** > **File**. Enter *auth.propeties* in the **File name:** field, then select **OK**.
    ![Create the auth properties file in the regular folders, not the source folders, in Eclipse](_img/eclipse_auth_location.png)   
 
 Enter the following properties into this file:
@@ -129,10 +129,11 @@ public class AzureMgmtDemo {
             File authfile = new File(classLoader.getResource("auth.properties").getFile());
             Azure azure = Azure.authenticate(authfile).withDefaultSubscription();
 
+			// get a list of virtual machines
             PagedList<VirtualMachine> vmlist = azure.virtualMachines().list();
             for (VirtualMachine vm : vmlist) {
                 if (vm != null) {
-                    // write VM information to system out
+                    // write information about the VMs to the console
                     System.out.println("Found virtual machine " + vm.name()
                             + " with size " + vm.size() + " in resource group " + vm.resourceGroupName()
                             + " with state " + vm.powerState());
@@ -151,7 +152,7 @@ public class AzureMgmtDemo {
 Run the code by selecting the Run button in Eclipse ( ![run button in Eclipse](_img/eclipse_run_button.png) , shortcut Ctrl+F11) or from the **Run** menu. The output from the application will display in the **Console** window.
 
 ```
-Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state Succeeded
+Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state PowerState/running
 ```
 
 ## Learn more

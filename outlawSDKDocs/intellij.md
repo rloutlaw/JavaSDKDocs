@@ -19,7 +19,7 @@ ms.author: routlaw
 ---
 # Get started with Azure development with Java and IntelliJ 
 
-This guide walks you through creating a command line tool with IntelliJ that connects to Azure and lists virtual machines in a [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview).
+This guide walks you through creating a small command line tool with IntelliJ that lists your virtual machines in Azure.
 
 ## Prerequisites
 
@@ -126,10 +126,11 @@ public class AzureMgmtDemo {
             File authfile = new File(classLoader.getResource("auth.properties").getFile());
             Azure azure = Azure.authenticate(authfile).withDefaultSubscription();
 
+			// get a list of virtual machines
             PagedList<VirtualMachine> vmlist = azure.virtualMachines().list();
             for (VirtualMachine vm : vmlist) {
                 if (vm != null) {
-                    // write VM information to system out
+                    // write information about the VMs to the console
                     System.out.println("Found virtual machine " + vm.name()
                             + " with size " + vm.size() + " in resource group " + vm.resourceGroupName()
                             + " with state " + vm.powerState());
@@ -148,7 +149,7 @@ public class AzureMgmtDemo {
 Run the code by from the **Run** menu or selecting the green arrow to the left of the `main` method in the AzureMgmtDemo source. The output from the application will display in the **Run** window.
 
 ```
-Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state Succeeded
+Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state PowerState/running
 ```
 
 ## Learn more
