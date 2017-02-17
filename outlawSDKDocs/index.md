@@ -16,22 +16,6 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
 
 <ul class="panelContent cardsFTitle">
     <li>
-        <div class="cardSize">
-            <div class="cardPadding">
-                <div class="card">
-                    <div class="cardImageOuter">
-                        <div class="cardImage">
-                            <img src="_img/get-started.svg" alt="" />
-                        </div>
-                    </div>
-                    <div class="cardText">
-                        <h3>Get started with a sample app using [Eclipse](eclipse.md) or [IntelliJ](intellij.md).</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </li>
-    <li>
         <a href="./download">
         <div class="cardSize">
             <div class="cardPadding">
