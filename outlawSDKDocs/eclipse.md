@@ -1,6 +1,6 @@
 ---
 title: Get started with Azure development in Eclipse | Microsoft Docs
-description: Learn how to start working with the Azure and Java in the Eclipse IDE.
+description: Learn how to start developing for Azure with Java and the Eclipse IDE.
 services: ''
 documentationcenter: java
 author: routlaw
@@ -17,7 +17,7 @@ ms.date: 02/13/2016
 ms.author: routlaw
 
 ---
-# Get started with Azure development in Java with Eclipse
+# Get started with Azure development with Java and Eclipse
 
 This guide walks you through creating a command line tool with Eclipse that connects to Azure and lists virtual machines in a [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview).
 
@@ -56,7 +56,7 @@ Select the **pom.xml** tab at the bottom o the window that appears and add the f
     <artifactId>azure</artifactId>
     <version>1.0.0-beta5</version>
 </dependency>
-<dependencies>
+</dependencies>
 ```
 
 Eclipse will connect to Maven Central and download the Azure management libraries for Java along with their dependencies.
@@ -153,7 +153,7 @@ public class AzureMgmtDemo {
 
 Update the value of the resourceGroup variable to a resource group in your subscription. Save your changes to the source code.
 
-## Run the code 
+## Run the sample 
 
 Run the code by selecting the Run button in Eclipse (  , shortcut Ctrl+F11) or from the **Run** > **Run** menu. The output from the application will display in the **Console** window.
 
