@@ -46,13 +46,14 @@ mvn clean compile exec:java
         <div class="cardSize">
             <div class="cardPadding">
                 <div class="card">
+                    <a href="download">
                     <div class="cardImageOuter">
                         <div class="cardImage">
                             <img src="_img/article.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>Downloads - Get Maven dependencies for your Azure projects.</h3>
+                        <h3>Downloads - Get Maven dependencies for your Azure projects.</h3></a>
                     </div>
                 </div>
             </div>
