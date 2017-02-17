@@ -43,11 +43,10 @@ This guide walks you through creating a command line tool with Eclipse that conn
 
 ## Import your dependencies
 
-Double-click the **pom.xml** file in the Eclipse Project Explorer.   
-
-![Select the pom.xml tab in Eclipse after double-clicking the pom.xml file in Project Explorer](_img/pom_xml_tab.png)
-
-Select the **pom.xml** tab at the bottom o the window that appears and add the following XML after the `</name>` tag but before the `</project>` tag.
+1. Double-click the **pom.xml** file in the Eclipse Project Explorer.   
+2. Select the **pom.xml** tab at the bottom of the window that appears.   
+	![Select the pom.xml tab in Eclipse after double-clicking the pom.xml file in Project Explorer](_img/pom_xml_tab.png)		
+3. Add the following XML after the `</name>` tag but before the `</project>` tag.
 
 ```XML
 <dependencies>
@@ -59,30 +58,30 @@ Select the **pom.xml** tab at the bottom o the window that appears and add the f
 </dependencies>
 ```
 
-Eclipse will connect to Maven Central and download the Azure management libraries for Java along with their dependencies.
+Eclipse will connect to Maven Central and download the Azure management libraries along with their dependencies.
 
 ## Set up authentication
 
-Register your application with Azure Active Directory so your app can read and modify resources in Azure. This example uses the [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2) , but you
+Register your application with Azure Active Directory so your app can view (but not update) your resources in Azure. This guide uses the [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2) , but you
 can also [create the service principal via the web portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal).
 
 ### Create a service principal
 
-Create a service principal to let your application authenticate with without directly using your account. Service principals let you authenticate apps without directly using 
- user accounts and identities. 
+Create a [service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-application-objects#application-registration) to authenticate your application.
+Service principals let you set application access separate from user accounts and identities. 
 
-2. Log in using the Azure CLI 2.0 with `az login`. 
-3. List the subscriptions for your account with `az account list`.
-4. Select the subscription for your service principal to access with `az account set --subscription <subscription name>`. 
-5. Create the service principal with `az ad sp create-for-rbac -n "AzureMgmtDemo" --role contributor --output json`. Copy the output from this command to a safe place as it has information you'll
-need to use to authenticate your app with Azure.
+1. Log in using the Azure CLI 2.0 with `az login`. 
+2. List the subscriptions for your account with `az account list`.
+3. Select the subscription for your service principal to access with `az account set --subscription <subscription name>`. 
+4. Create the service principal with `az ad sp create-for-rbac -n "AzureMgmtDemo" --role reader --output json`. Keep the output from this command to a safe place as it has information you'll
+need to use in the next step.
 
-### Authenticate with a credential file
+### Create the credential file
 
-In this example we will create a properties file with the service principal information and use that to authenticate our app.
+Create a properties file with the service principal information from the previous step. This file will be passed to the Azure management API to authenticate our app.
 
-Create an auth.properties in your src/main/resources folder in your Maven project in Eclipse. 
-Right-click the **resources** folder and select **New File**, enter auth.propeties in the **File name:** field, then select OK.
+Right-click the **src/main/resources** folder in **Project Explorer** and select **New** > **File**. Enter *auth.propeties* in the **File name:** field, then select OK.
+   ![Create the auth properties file in the regular folders, not the source folders, in Eclipse](_img/eclipse_auth_location.png)   
 
 Enter the following properties into this file:
 
@@ -106,10 +105,10 @@ Update this property file with the following changes:
 
 ## Create the application
 
-Create a new class in the src/main/java path in Eclipse (Right click the path, select **New** > **Class**). Enter AzureMgmtDemo in the **Name:** field and select the option to create
-a main method under **Which method stubs would you like to create?**. Leave the rest of the options as is and select **Finish**. 
+Create a new class in the **src/main/java** source folder Eclipse (Right click the source folder, then select **New** > **Class**). Enter AzureMgmtDemo in the **Name:** field. 
+Keep the defaults for the rest of the options and select **Finish**. 
 
-Eclipse will open the class file for editing. Enter the following code into the file:
+Eclipse will open the source file for editing. Enter the following code into the file:
 
 ```java
 import com.microsoft.azure.management.compute.VirtualMachine;
@@ -122,9 +121,9 @@ public class AzureMgmtDemo {
 
 	public static void main(String[] args) {
 		
+        final String resourceGroup = "MY_RESOURCE_GROUP";
+
 		try {
-			
-			final String resourceGroup = "MY_RESOURCE_GROUP";
 			
             // authenticate the app with Azure using the properties file created earlier
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -151,11 +150,11 @@ public class AzureMgmtDemo {
 }
 ```
 
-Update the value of the resourceGroup variable to a resource group in your subscription. Save your changes to the source code.
+Update the value of the `resourceGroup` to a resource group in your subscription and save your code.
 
 ## Run the sample 
 
-Run the code by selecting the Run button in Eclipse (  , shortcut Ctrl+F11) or from the **Run** > **Run** menu. The output from the application will display in the **Console** window.
+Run the code by selecting the Run button in Eclipse ( ![run button in Eclipse](_img/eclipse_run_button.png) , shortcut Ctrl+F11) or from the **Run** > **Run** menu. The output from the application will display in the **Console** window.
 
 ```
 Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state Succeeded
