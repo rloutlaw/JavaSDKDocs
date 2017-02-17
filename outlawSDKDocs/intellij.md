@@ -23,26 +23,25 @@ This guide walks you through creating a command line tool with IntelliJ that con
 
 ## Prerequisites
 
-- [IntelliJ IDEA IDE](https://www.jetbrains.com/idea)
+- [IntelliJ IDEA](https://www.jetbrains.com/idea)
 - [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2)
 
 ## Create your project
 
 1. Open IntelliJ and select **Create New Project**. Select **Maven** from the list on the left, then select **Next** (do not select **Create from archetype**).
-2. On the second page of **New Project**, enter the following:
+    ![Complete the configure project step in the New Maven project dialog](_img/create_maven_project_intellij.png)
+2. On the second page of **New Project**, use the following values:
 
    - Groupid: `com.<username>.azure.mgmtdemo`  
    - Artifactid: AzureMgmtDemo  
    - Version: 0.0.1-SNAPSHOT  
 
-   ![Complete the configure project step in the New Maven project dialog](_img/create_maven_project_intellij.png)
-
    Select **Next**.
-3. Use *AzureMgmtDemo* as the **Project name** and point the **Project location** to whatever value you like. Select **Finish**. 
+3. Use *AzureMgmtDemo* for the **Project name** and point the **Project location** to whatever value you like. Select **Finish**. 
 
 ## Import the Maven dependencies
 
-Double-click the **pom.xml** file in the Project view.   
+Double-click the **pom.xml** file in the **Project** view.   
 
 Add the following XML before the `</project>` tag.
 
@@ -61,26 +60,25 @@ Select **Import Changes** to download the dependencies from Maven Central for us
 
 ## Set up authentication
 
-Register your application with Azure Active Directory so your app can read and modify resources in Azure. This example uses the [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2) , but you
+Register your application with Azure Active Directory so your app can view (but not update) your resources in Azure. This guide uses the [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2) , but you
 can also [create the service principal via the web portal](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal).
 
 ### Create a service principal
 
-Create a service principal to let your application authenticate with without directly using your account. Service principals let you authenticate apps without directly using 
- user accounts and identities. 
+Create a [service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-application-objects#application-registration) to authenticate your application.
+Service principals let you set application access separate from user accounts and identities. 
 
-2. Log in using the Azure CLI 2.0 with `az login`. 
-3. List the subscriptions for your account with `az account list`.
-4. Select the subscription for your service principal to access with `az account set --subscription <subscription name>`. 
-5. Create the service principal with `az ad sp create-for-rbac -n "AzureMgmtDemo" --role contributor --output json`. Copy the output from this command to a safe place as it has information you'll
-need to use to authenticate your app with Azure.
+1. Log in using the Azure CLI 2.0 with `az login`. 
+2. List the subscriptions for your account with `az account list`.
+3. Select the subscription for your service principal to access with `az account set --subscription <subscription name>`. 
+4. Create the service principal with `az ad sp create-for-rbac -n "AzureMgmtDemo" --role reader --output json`. Keep the output from this command to a safe place as it has information you'll
+need to use in the next step.
 
-### Authenticate with a credential file
+### Create the credential file
 
-In this example we will create a properties file with the service principal information and use that to authenticate our app.
+Create a properties file with the service principal information from the previous step. This file will be passed to the Azure management API to authenticate our app.
 
-Create a properties file in your Maven project in IntelliJ that you can use to authenticate your application using the service principal credeentials.
-Right-click the **src/main/resources** folder and select **New** > **File**, enter *auth.propeties* in the **Enter a new file name:** field, then select OK.
+Right-click the **src/main/resources** folder in the **Project** view. Select **New** > **File**, enter *auth.propeties* in the **Enter a new file name:** field, then select **OK**.
 
 Enter the following text into this properties file:
 
@@ -95,7 +93,7 @@ authURL=https\://login.windows.net/
 graphURL=https\://graph.windows.net/
 ```
 
-Update this property file with the following changes:
+Update the placeholder values in this property file with the following changes:
 
 - subscription = use the *id* value from `az account list`
 - client = use the *appId* value from the output taken from the service principal created in the previous step
@@ -104,7 +102,8 @@ Update this property file with the following changes:
 
 ## Create the application
 
-Create a new class in the *src/main/java* folder in IntelliJ (Right click the path, select **New** > **Java Class**). Enter AzureMgmtDemo in the **Name:** field and select **OK**.
+Create a new class in IntelliJ that will hold the sample code below. Right-click the **src/main/java** folder in the **Project** view , then elect **New** > **Java Class**. 
+Enter AzureMgmtDemo in the **Name:** field and select **OK**.
 
 IntelliJ will open the source file for editing. Enter the following code into this file:
 
@@ -152,7 +151,7 @@ Update the value of the `resourceGroup` to a resource group in your subscription
 
 ## Run the sample
 
-Run the code by from the **Run** > **Run AzureMgmtDemo**. The output from the application will display in the **Run** window.
+Run the code by from the **Run** menu or selecting the green arrow to the left of the `main` method in the AzureMgmtDemo source. The output from the application will display in the **Run** window.
 
 ```
 Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state Succeeded
@@ -160,5 +159,5 @@ Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myaz
 
 ## Learn more
 
-See the How-Tos for detailed samples on [managing virtual machines]() , [connecting to a Azure SQL database]() 
+See the How-Tos for more detailed samples on how to integrate Azure services into your application and manage your Azure resources from your code.
 
