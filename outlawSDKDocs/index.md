@@ -17,12 +17,12 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
 
 ## Try out a sample now
 
-```cli
+<pre>
 git clone https://github.com/Azure-Samples/storage-blob-java-getting-started.git
 cd storage-blob-java-getting-started
 node setup.js
 mvn clean compile exec:java
-```
+</pre>
 
 <ul class="panelContent cardsFTitle">
     <li>
