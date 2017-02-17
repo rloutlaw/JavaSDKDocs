@@ -163,4 +163,4 @@ Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myaz
 
 ## Learn more
 
-See the How-Tos for detailed samples on [managing virtual machines]() , [connecting to a Azure SQL database]() 
+See the How-Tos for more detailed samples on how to integrate Azure services into your application and manage your Azure resources from your code.
