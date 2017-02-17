@@ -12,7 +12,7 @@ Build and deploy your Java applications on Azure. The resources here will help y
 - Deploy, scale, and monitor your Java apps in Azure.
 - Automate configuration of Azure resources from your Java code.
 
-New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start building and deploying your applications.
+New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start building your first application in [Eclipse](eclipse.md) or [IntelliJ](intellij.md). 
 
 <ul class="panelContent cardsFTitle">
     <li>
