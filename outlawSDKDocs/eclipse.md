@@ -154,7 +154,7 @@ Update the value of the `resourceGroup` to a resource group in your subscription
 
 ## Run the sample 
 
-Run the code by selecting the Run button in Eclipse ( ![run button in Eclipse](_img/eclipse_run_button.png) , shortcut Ctrl+F11) or from the **Run** > **Run** menu. The output from the application will display in the **Console** window.
+Run the code by selecting the Run button in Eclipse ( ![run button in Eclipse](_img/eclipse_run_button.png) , shortcut Ctrl+F11) or from the **Run** menu. The output from the application will display in the **Console** window.
 
 ```
 Found virtual machine myAzureVM with size Standard_DS1_v2 in resource group myazresgroup with state Succeeded
