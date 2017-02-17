@@ -27,7 +27,7 @@ For an overview of Azure and Java, visit the [Java developer center for Azure](h
 
 ### Maven
 
-Add a dependency entry in your pom.xml to add a library to your [Maven](https://maven.apache.org) project.
+Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
 
 For example, to include the latest version of the Azure management libraries for Java:
 
@@ -113,7 +113,7 @@ Scalable NoSQL database with JSON documents and SQL or JavaScript query syntax.
 
 ### [Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-fundamentals-hybrid-solutions)
 
-Java Messaging Support (JMS) through [AMQP](https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol) to connect your applications.
+Java Message Service (JMS) support through [AMQP](https://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol) to connect your applications.
 
 ```XML
 <dependency>
@@ -155,7 +155,7 @@ Encrypt secrets and keys and safely access them from your applications.
 
 ### [Event Hub](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) 
    
-High throughput event and telemetry ingestion for your instrumentation or IoT scenarios.
+High throughput event and telemetry handling for your instrumentation or IoT scenarios.
 
 ```XML
 <dependency> 
@@ -169,8 +169,7 @@ High throughput event and telemetry ingestion for your instrumentation or IoT sc
 
 ### [IoT Service](https://docs.microsoft.com/azure/iot-hub/)
 
-- Create/remove/update/list device identities in your IoT hub
-- Send messages to your devices and get feedback when they're delivered
+Manage identities, send messages, and get feedback from devices in your IoT hub.
 
 ```XML
 <dependency>
@@ -198,7 +197,7 @@ Send a message to an IoT hub from your device.
 
 ### [Data Lake Store](https://docs.microsoft.com/azure/data-lake-store/data-lake-store-overview)   
    
-Capture data of any size in a single location for performing data analytics.    
+Capture data of any size and shape into a single location for performing analytics.    
 
 ```XML
 <dependency>
