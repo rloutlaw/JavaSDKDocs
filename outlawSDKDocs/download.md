@@ -17,7 +17,7 @@ ms.date: 12/22/2016
 ms.author: routlaw;asirveda
 
 ---
-# Maven dependencies for the Java SDK for Azure
+# Azure Maven depdencies
 
 Use libraries in your Java projects to manage Azure resources and integrate Azure services in your applications.  
 
@@ -35,9 +35,9 @@ For example, to include the latest version of the Azure management libraries for
 </dependency>
 ``` 
 
-## Azure service SDKs
+## Azure service dependencies
 
-These libraries help you integrate Azure services into your Java applications.
+These libraries help you consume Azure services in your applications.
 
 ### [Azure Storage](https://docs.microsoft.com/azure/storage/storage-introduction)  
 
@@ -215,7 +215,7 @@ Capture data of any size and shape into a single location for performing analyti
 
 
 
-## Azure resource management
+## Azure management dependencies
 
 The [Azure Management Libraries for Java](https://github.com/Azure/azure-sdk-for-java) lets you create and manage your Azure resources. 
 
