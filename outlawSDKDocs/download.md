@@ -39,6 +39,11 @@ For example, to include the latest version of the Azure management libraries for
 
 These libraries help you consume Azure services in your applications.
 
+| Service name | Service library | Management library | Learn More |
+|--------------|-----------------|--------------------|--------|
+| [Azure Storage](https://docs.microsoft.com/azure/storage/storage-introduction)  | [azure-storage](https://search.maven.org/#artifactdetails%7Ccom.microsoft.azure%7Cazure-storage%7C5.0.0%7Cjar) | [azure-mgmt-storage](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.microsoft.azure%22%20AND%20a%3A%22azure-mgmt-storage%22) | [Reference](http://azure.github.io/azure-storage-java/) , [Samples](https://github.com/Azure/azure-storage-java/tree/master/microsoft-azure-storage-samples/src/com/microsoft/azure/storage) , [GitHub](https://github.com/Azure/azure-storage-java)  
+
+
 ### [Azure Storage](https://docs.microsoft.com/azure/storage/storage-introduction)  
 
 Data storage and messaging for your applications.
@@ -51,7 +56,7 @@ Data storage and messaging for your applications.
 </dependency>
 ```   
 
-[Reference](http://azure.github.io/azure-storage-java/) | [Samples](https://github.com/Azure/azure-storage-java/tree/master/microsoft-azure-storage-samples/src/com/microsoft/azure/storage) | [GitHub](https://github.com/Azure/azure-storage-java)  
+
 
 
 ### [SQL Database](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-technical-overview)
@@ -66,7 +71,7 @@ JDBC driver for Azure SQL database.
 </dependency>
 ```
 
-[Reference](https://docs.microsoft.com/en-us/sql/connect/jdbc/reference/jdbc-driver-api-reference) | [Samples](https://docs.microsoft.com/en-us/sql/connect/jdbc/step-3-proof-of-concept-connecting-to-sql-using-java) | [GitHub](https://github.com/Microsoft/mssql-jdbc)  
+[Reference](https://docs.microsoft.com/en-us/sql/connect/jdbc/reference/jdbc-driver-api-reference) | [Samples](https://docs.microsoft.com/en-us/sql/connect/jdbc/step-3-proof-of-concept-connecting-to-sql-using-java) | 
 
 ### [Redis Cache](https://azure.microsoft.com/en-us/services/cache/)
 
