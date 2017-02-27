@@ -242,24 +242,6 @@ Add the Azure resource management libraries for Java to your project with the fo
 </dependency>
 ```
 
-For a list of currently supported resources, sample code, and help on getting started with the API, see the [project readme on Github](https://github.com/Azure/azure-sdk-for-java).
-
-## IDE toolkits
-For more information about the Azure Toolkits for Java IDEs, see the following links:
-
-* [Azure Toolkit for Eclipse]
-  * [Installing the Azure Toolkit for Eclipse]
-  * [Create a Hello World Web App for Azure in Eclipse]
-  * [What's New in the Azure Toolkit for Eclipse]
-* [Azure Toolkit for IntelliJ]
-  * [Installing the Azure Toolkit for IntelliJ]
-  * [Create a Hello World Web App for Azure in IntelliJ]
-  * [What's New in the Azure Toolkit for IntelliJ]
-
-> [!NOTE]
-> For detailed information on setting up build paths in Eclipse, see the [Java Build Path] article at the Eclipse website.
->
-
 <!-- URL List -->
 
 [Azure Toolkit for Eclipse]: ./azure-toolkit-for-eclipse.md
