@@ -17,15 +17,11 @@ ms.date: 12/22/2016
 ms.author: routlaw;asirveda
 
 ---
-# Download Azure libraries for Java
+# Maven dependencies for the Java SDK for Azure
 
-Add libraries to your Java projects to manage Azure resources and integrate Azure services in your Java applications.  
-   
-For an overview of Azure and Java, visit the [Java developer center for Azure](https://azure.microsoft.com/en-us/develop/java).
+Use libraries in your Java projects to manage Azure resources and integrate Azure services in your applications.  
 
 ## Installation
-
-### Maven
 
 Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
 
@@ -38,15 +34,6 @@ For example, to include the latest version of the Azure management libraries for
     <version>1.0.0-beta5</version>
 </dependency>
 ``` 
-### Gradle
-
-Create an entry in the dependency section of your build.gradle file to add a library to your [Gradle](https://gradle.org) project.
-
-```
-dependencies {
-    compile 'com.microsoft.azure:azure:1.0.0-beta5'
-}
-```
 
 ## Azure service SDKs
 
