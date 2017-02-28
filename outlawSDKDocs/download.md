@@ -35,9 +35,18 @@ For example, to include the latest version of the Azure management libraries for
 </dependency>
 ``` 
 
+## API summary
+
+| [Azure Storage](#azure-storage) |
+| [SQL Database](#sql-database) |
+| [Redis Cache](#redis-cache) | 
+
+
 ## Azure service dependencies
 
 These libraries help you consume Azure services in your applications.
+
+<a name="azure-storage"></a>
 
 ### [Azure Storage](https://docs.microsoft.com/azure/storage/storage-introduction)  
 
@@ -53,6 +62,7 @@ Data storage and messaging for your applications.
 
 [Reference](http://azure.github.io/azure-storage-java/) | [Samples](https://github.com/Azure/azure-storage-java/tree/master/microsoft-azure-storage-samples/src/com/microsoft/azure/storage) | [GitHub](https://github.com/Azure/azure-storage-java)  
 
+<a name="sql-database"></a>
 
 ### [SQL Database](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-technical-overview)
 
@@ -67,6 +77,8 @@ JDBC driver for Azure SQL database.
 ```
 
 [Reference](https://docs.microsoft.com/en-us/sql/connect/jdbc/reference/jdbc-driver-api-reference) | [Samples](https://docs.microsoft.com/en-us/sql/connect/jdbc/step-3-proof-of-concept-connecting-to-sql-using-java) | [GitHub](https://github.com/Microsoft/mssql-jdbc)  
+
+<a name="redis-cache"></a>
 
 ### [Redis Cache](https://azure.microsoft.com/en-us/services/cache/)
 
