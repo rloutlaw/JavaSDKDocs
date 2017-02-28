@@ -35,8 +35,6 @@ For example, to include the latest version of the Azure management libraries for
 </dependency>
 ``` 
 
-## API summary
-
 | ------------- | ---------- | 
 | [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) 
 | [SQL Database](#sql-database) | [Key Vault](#keyvault) 
