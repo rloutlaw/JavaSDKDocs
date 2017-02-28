@@ -37,13 +37,13 @@ For example, to include the latest version of the Azure management libraries for
 
 ## API summary
 
-| |
-| ------------- |
-| [Azure Storage](#azure-storage) |
-| [SQL Database](#sql-database) |
-| [Redis Cache](#redis-cache) | 
-| [DocumentDB](#documentdb) | 
-| [Service Bus](#servicebus) | 
+| | |
+| ------------- | ----------|
+| [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) |
+| [SQL Database](#sql-database) | [Key Vault](#keyvault) | 
+| [Redis Cache](#redis-cache) |  [IoT Service](#iotservice) | 
+| [DocumentDB](#documentdb) |  [IoT Device](#iotdevice) |
+| [Service Bus](#servicebus) | [Data Lake](#datalake) |
 
 
 ## Azure service dependencies
@@ -131,6 +131,7 @@ Java Message Service (JMS) support through [AMQP](https://en.wikipedia.org/wiki/
 ```
 
 [Reference](http://docs.oracle.com/javaee/7/api/javax/jms/package-summary.html) | [Sample](https://github.com/apache/qpid-jms/tree/0.20.0/qpid-jms-examples) | [GitHub](https://github.com/apache/qpid-jms)    
+<a name="azuread"></a>
 
 ### [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/active-directory-whatis)   
 
@@ -146,6 +147,8 @@ Identity management and secure sign-in for your applications.
    
 [Reference](https://github.com/AzureAD/azure-activedirectory-library-for-java) | [Samples](https://github.com/Azure-Samples?utf8=%E2%9C%93&q=active%20directory%20&type=&language=java) | [GitHub](https://github.com/AzureAD/azure-activedirectory-library-for-java) 
  
+<a name="keyvault"></a>
+
 ### [Key Vault](https://docs.microsoft.com/azure/key-vault) 
 
 Encrypt secrets and keys and safely access them from your applications. 
@@ -160,6 +163,8 @@ Encrypt secrets and keys and safely access them from your applications.
 
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
+<a name="eventhub"></a>
+
 ### [Event Hub](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) 
    
 High throughput event and telemetry handling for your instrumentation or IoT scenarios.
@@ -172,7 +177,9 @@ High throughput event and telemetry handling for your instrumentation or IoT sce
 </dependency>   
 ```
 
-[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.eventhubs) | [Samples](https://github.com/azure/azure-event-hubs-java#publishing-events) | [GitHub](https://github.com/azure/azure-event-hubs-java)   
+[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.eventhubs) | [Samples](https://github.com/azure/azure-event-hubs-java#publishing-events) | [GitHub](https://github.com/azure/azure-event-hubs-java)  
+
+<a name="iotservice"></a> 
 
 ### [IoT Service](https://docs.microsoft.com/azure/iot-hub/)
 
@@ -188,6 +195,8 @@ Manage identities, send messages, and get feedback from devices in your IoT hub.
    
 [Reference](http://azure.github.io/azure-iot-sdks/java/service/api_reference/index.html) | [Samples](https://github.com/Azure/azure-iot-sdk-java/tree/master/service/iot-service-samples) | [GitHub](https://github.com/Azure/azure-iot-sdk-java) 
 
+<a name="iotdevice"></a> 
+
 ### [IoT Device](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide)
 
 Send a message to an IoT hub from your device.  
@@ -202,6 +211,8 @@ Send a message to an IoT hub from your device.
 
 [Reference](http://azure.github.io/azure-iot-sdks/java/device/api_reference/index.html) | [Samples](https://github.com/Azure/azure-iot-sdk-java/tree/master/device/iot-device-samples) | [GitHub](https://github.com/Azure/azure-iot-sdk-java) 
 
+<a name="datalake"></a> 
+
 ### [Data Lake Store](https://docs.microsoft.com/azure/data-lake-store/data-lake-store-overview)   
    
 Capture data of any size and shape into a single location for performing analytics.    
@@ -215,6 +226,8 @@ Capture data of any size and shape into a single location for performing analyti
 ```   
 
 [Reference](https://azure.github.io/azure-data-lake-store-java/javadoc/) | [Samples](https://github.com/Azure-Samples/data-lake-store-java-upload-download-get-started) | [GitHub](test.md) 
+
+<a name="appinsights"></a> 
 
 ### [AppInsights](https://docs.microsoft.com/azure/application-insights/app-insights-overview)
 
