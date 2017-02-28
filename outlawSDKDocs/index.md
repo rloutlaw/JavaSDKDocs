@@ -3,16 +3,11 @@ layout: LandingPage
 description: Java for Azure developers
 ---
 
-# Java for Azure developers
+# Get started with Java and Azure
 
-Build and deploy your Java applications on Azure. The resources here will help you:
+Create and deploy Java apps in Azure and integrate Azure services into your apps.
 
-- Create apps using your favorite tools such as Eclipse, IntelliJ, Maven and Gradle.
-- Integrate Azure services like [SQL Database](https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server) and [Azure storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) into new or existing applications.
-- Deploy, scale, and monitor your Java apps in Azure.
-- Automate configuration of Azure resources from your Java code.
-
-New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start building your first application in [Eclipse](eclipse.md) or [IntelliJ](intellij.md). 
+New to Azure? Get your [free trial](https://azure.microsoft.com/free/). 
 
 <ul class="panelContent cardsFTitle">
     <li>
@@ -25,13 +20,13 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>How-to - Samples and tutorials for common tasks.</h3>
+                        <h3>Get started - Set up your environment and deploy a Java Hello World app.</h3>
                     </div>
                 </div>
             </div>
         </div>
     </li>
-        <li>
+    <li>
         <div class="cardSize">
             <div class="cardPadding">
                 <div class="card">
@@ -41,7 +36,7 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>Tools - Get the Azure toollkit for Eclipse or IntelliJ.</h3>
+                        <h3>How to - Tutorials and walkthroughs for common tasks.</h3>
                     </div>
                 </div>
             </div>
@@ -59,7 +54,7 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>Maven dependencies - Browse the full list of Azure libraries.</h3></a>
+                        <h3>APIs and libraries - Browse the list of Azure client libraries.</h3></a>
                     </div>
                 </div>
             </div>
@@ -76,7 +71,41 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>Reference - Browse the API reference documentation.</h3>
+                        <h3>Samples - Java code samples and apps</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+        <li>
+        <a href="http://stackoverflow.com/questions/tagged/azure+java">
+        <div class="cardSize">
+            <div class="cardPadding">
+                <div class="card">
+                    <div class="cardImageOuter">
+                        <div class="cardImage">
+                            <img src="_img/tutorial.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="cardText">
+                        <h3>Community - Ask questions and get help from other developers.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </a>
+    </li>
+    <li>
+        <div class="cardSize">
+            <div class="cardPadding">
+                <div class="card">
+                    <div class="cardImageOuter">
+                        <div class="cardImage">
+                            <img src="_img/deploy.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="cardText">
+                        <h3>Tools - Manage your Azure apps and resources from your IDE or command line</h3>
                     </div>
                 </div>
             </div>
