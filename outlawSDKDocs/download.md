@@ -37,6 +37,7 @@ For example, to include the latest version of the Azure management libraries for
 
 ## API summary
 
+|-------|
 | [Azure Storage](#azure-storage) |
 | [SQL Database](#sql-database) |
 | [Redis Cache](#redis-cache) | 
