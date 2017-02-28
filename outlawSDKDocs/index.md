@@ -16,6 +16,38 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
 
 <ul class="panelContent cardsFTitle">
     <li>
+        <div class="cardSize">
+            <div class="cardPadding">
+                <div class="card">
+                    <div class="cardImageOuter">
+                        <div class="cardImage">
+                            <img src="_img/deploy.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="cardText">
+                        <h3>How-to - Samples and tutorials for common tasks.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+        <li>
+        <div class="cardSize">
+            <div class="cardPadding">
+                <div class="card">
+                    <div class="cardImageOuter">
+                        <div class="cardImage">
+                            <img src="_img/deploy.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="cardText">
+                        <h3>Tools - Get the Azure toollkit for Eclipse or IntelliJ.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li>
         <a href="./download">
         <div class="cardSize">
             <div class="cardPadding">
@@ -23,11 +55,11 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
                     <a href="download">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img src="_img/article.svg" alt="" />
+                            <img src="_img/get-started.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>Downloads - Get Maven dependencies and tools for your IDE.</h3></a>
+                        <h3>Maven dependencies - Browse the full list of Azure libraries.</h3></a>
                     </div>
                 </div>
             </div>
@@ -40,27 +72,11 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/) and start
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img src="_img/deploy.svg" alt="" />
-                        </div>
-                    </div>
-                    <div class="cardText">
-                        <h3>How-to - Java samples and tutorials using Azure libraries.</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </li>
-    <li>
-        <div class="cardSize">
-            <div class="cardPadding">
-                <div class="card">
-                    <div class="cardImageOuter">
-                        <div class="cardImage">
                             <img src="_img/tutorial.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>Reference - Javadocs and API reference documentation.</h3>
+                        <h3>Reference - Browse the API reference documentation.</h3>
                     </div>
                 </div>
             </div>
