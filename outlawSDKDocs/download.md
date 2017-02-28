@@ -41,6 +41,8 @@ For example, to include the latest version of the Azure management libraries for
 | [Azure Storage](#azure-storage) |
 | [SQL Database](#sql-database) |
 | [Redis Cache](#redis-cache) | 
+| [DocumentDB](#documentdb) | 
+| [Service Bus](#servicebus) | 
 
 
 ## Azure service dependencies
@@ -97,6 +99,8 @@ Low-latency, high-performance distributed key-value store.
 
 [Reference](http://xetorthio.github.io/jedis) | [Sample](https://docs.microsoft.com/en-us/azure/redis-cache/cache-java-get-started) | [GitHub](https://github.com/xetorthio/jedis)    
 
+<a name="documentdb"></a>
+
 ### [DocumentDB](https://docs.microsoft.com/azure/documentdb/documentdb-introduction)
 
 Scalable NoSQL database with JSON documents and SQL or JavaScript query syntax.   
@@ -110,6 +114,8 @@ Scalable NoSQL database with JSON documents and SQL or JavaScript query syntax.
 ```
 
 [Reference](http://azure.github.io/azure-documentdb-java/) | [Samples](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application) | [GitHub](https://github.com/Azure/azure-documentdb-java)   
+
+<a name="servicebus"></a>
 
 ### [Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-fundamentals-hybrid-solutions)
 
