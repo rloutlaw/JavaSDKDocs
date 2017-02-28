@@ -39,10 +39,10 @@ For example, to include the latest version of the Azure management libraries for
 
 | ------------- | ----------| ------|
 | [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) | [AppInsights](#appinsights) | 
-| [SQL Database](#sql-database) | [Key Vault](#keyvault) | 
-| [Redis Cache](#redis-cache) |  [IoT Service](#iotservice) | 
-| [DocumentDB](#documentdb) |  [IoT Device](#iotdevice) |
-| [Service Bus](#servicebus) | [Data Lake](#datalake) |
+| [SQL Database](#sql-database) | [Key Vault](#keyvault) |  |
+| [Redis Cache](#redis-cache) |  [IoT Service](#iotservice) | |  
+| [DocumentDB](#documentdb) |  [IoT Device](#iotdevice) | |
+| [Service Bus](#servicebus) | [Data Lake](#datalake) | |
 
 
 ## Azure service dependencies
