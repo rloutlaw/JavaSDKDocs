@@ -34,14 +34,14 @@ For example, to include the latest version of the Azure management libraries for
     <version>1.0.0-beta5</version>
 </dependency>
 ``` 
-
+| | |
 | ------------- | ---------- | 
 | [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) |
 | [SQL Database](#sql-database) | [Key Vault](#keyvault) |
 | [Redis Cache](#redis-cache) |  [IoT Service](#iotservice) | 
 | [DocumentDB](#documentdb) |  [IoT Device](#iotdevice) |
 | [Service Bus](#servicebus) | [Data Lake](#datalake) |
-| [AppInsights](#appinsights) |
+| [AppInsights](#appinsights) | |
 
 
 ## Azure service dependencies
