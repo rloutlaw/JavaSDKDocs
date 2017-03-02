@@ -20,7 +20,7 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/).
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>Get started - Set up your environment and deploy a Java Hello World app.</h3>
+                        <h3>Get started - Set up your environment and deploy your first app.</h3>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/).
                 <div class="card">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img src="_img/deploy.svg" alt="" />
+                            <img src="_img/get-started.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
@@ -54,7 +54,7 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/).
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>APIs and libraries - Browse the list of Azure client libraries.</h3></a>
+                        <h3>APIs & libraries - Browse the list of Azure client libraries.</h3></a>
                     </div>
                 </div>
             </div>

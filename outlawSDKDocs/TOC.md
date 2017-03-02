@@ -1,7 +1,7 @@
 # [Overview](index.md)
 # Install
 ## [Tools](tools.md)
-## [Maven dependencies](download.md)
+## [Import Maven dependencies](download.md)
 # Get started 
 ## [Eclipse](eclipse.md)
 ## [IntelliJ](intellij.md)
