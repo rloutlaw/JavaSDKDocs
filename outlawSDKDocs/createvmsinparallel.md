@@ -39,6 +39,7 @@ export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
 The authentication file is used to create the top level `Azure` object, which is used by the management libraries to define, create, and configure Azure resources.
 
 ```java
+// pull in the security file from the environment 
 final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
 
 Azure azure = Azure
@@ -53,9 +54,10 @@ Azure azure = Azure
 Create a simple `java.util.Map` object with each entry having a Region constant as the key and the number of virtual machines to run in the region as the value. If you don't define a Region as a key, no virtual machines will be created in that region.
 
 ```java
+// a Map to store how many VMs to create in a region
 Map<Region, Integer> virtualMachinesByLocation = new HashMap<Region, Integer>();
 
-// each put() adds a region and count to the Map
+// each put() adds a region and number of VMs in that region to the Map
 virtualMachinesByLocation.put(Region.US_EAST, 12);
 virtualMachinesByLocation.put(Region.US_SOUTH_CENTRAL, 12);
 virtualMachinesByLocation.put(Region.US_WEST, 12);
@@ -69,6 +71,7 @@ This example creates 48 VMs total, twelve in each of the four regions listed.
 Create a new Azure resource group to logically assoicate the virtual machines and their resources.
 
 ```java
+// create a resource group with a random valid name 
 final String rgName = SdkContext.randomResourceName("rgCOPD", 24);
 ResourceGroup resourceGroup = azure.resourceGroups().define(rgName)
                 .withRegion(Region.US_EAST)
@@ -89,13 +92,14 @@ Create a `List<Creatable<VirtualMachine>>` object where each list item defines t
 
 ```java
 List<Creatable<VirtualMachine>> creatableVirtualMachines = new ArrayList<>();
+    
+    // outer loop iterates through the regions included in the map
     for (Map.Entry<Region, Integer> entry : virtualMachinesByLocation.entrySet()) {
         Region region = entry.getKey();
         Integer vmCount = entry.getValue();
 
         //=============================================================
-        // Create one network creatable per region
-        // Prepare Creatable Network definition (Where all the virtual machines in this region get added to)
+        // Define one virtual network Creatable per region where all the virtual machines created are added to
         //
         String networkName = SdkContext.randomResourceName("vnetCOPD-", 20);
         Creatable<Network> networkCreatable = azure.networks().define(networkName)
@@ -104,18 +108,21 @@ List<Creatable<VirtualMachine>> creatableVirtualMachines = new ArrayList<>();
                 .withAddressSpace("172.16.0.0/16");
 
         //=============================================================
-        // Create one storage creatable per region (For storing VMs disk)
+        // Create one storage account Creatable per region for storing VMs disk
         //
         String storageAccountName = SdkContext.randomResourceName("stgcopd", 20);
         Creatable<StorageAccount> storageAccountCreatable = azure.storageAccounts().define(storageAccountName)
                 .withRegion(region)
                 .withExistingResourceGroup(resourceGroup);
 
+        // generate a common prefix for every VM name
         String linuxVMNamePrefix = SdkContext.randomResourceName("vm-", 15);
+
+            // inner loop iterates through every VM instance to create in the region
             for (int i = 1; i <= vmCount; i++) {
 
                 //=============================================================
-                // Create one public IP address creatable for each VM
+                // Create one public IP address Creatable for each VM
                 //
                 Creatable<PublicIpAddress> publicIpAddressCreatable = azure.publicIpAddresses()
                         .define(String.format("%s-%d", linuxVMNamePrefix, i))
@@ -126,7 +133,7 @@ List<Creatable<VirtualMachine>> creatableVirtualMachines = new ArrayList<>();
                 publicIpCreatableKeys.add(publicIpAddressCreatable.key());
 
                 //=============================================================
-                // Create one virtual machine creatable, repeat loop vmCount times
+                // Create one virtual machine Creatable and add to the List 
                 Creatable<VirtualMachine> virtualMachineCreatable = azure.virtualMachines()
                         .define(String.format("%s-%d", linuxVMNamePrefix, i))
                             .withRegion(region)
@@ -159,17 +166,16 @@ CreatedResources<VirtualMachine> virtualMachines = azure.virtualMachines()
                                                         .create(creatableVirtualMachines);
 ```
 
-This returns a collection of the created virtual machines. Iterate over and inspect this object to verify the result of the batch creation of the virtual machine. For example:
+This returns a collection of the created virtual machines. Iterate over and inspect this object to verify the result of the batch creation of the virtual machine. 
 
 ```java
+// list the IDs of each virtual machine created 
 for (VirtualMachine virtualMachine : virtualMachines.values()) {
                 System.out.println(virtualMachine.id());
-            }
+}
 ```
 
-Lists the IDs of each virtual machine created to the console.
-
-## Create a Traffic Manager to distribute traffic across regions
+## Create a Traffic Manager to distribute work
 
 Create a [Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview) to improve responsiveness and availability of the applications running on the virtual machines.
 This traffic manager instance uses performance based routing and sets endpoints on the IP addresses of each of the virtual machines.

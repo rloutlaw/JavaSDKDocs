@@ -19,7 +19,7 @@ ms.author: routlaw;asirveda
 ---
 # Import Azure Maven dependencies into your Java projects
 
-Use libraries into your Java projects to [manage Azure resources](#management) and integrate Azure services in your applications.  
+Use Azure libraries into your Java projects to [manage resources](#management) and integrate services in your applications.  
 
 | | |
 | ------------- | ---------- | 
