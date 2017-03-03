@@ -22,6 +22,7 @@ ms.author: routlaw;asirveda
 
 Use Azure libraries into your Java projects to [manage resources](#management) and integrate services in your applications.  
 
+| | |
 | ------------- | ---------- | 
 | [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) | 
 | [SQL Database](#sql-database) | [Manage Azure resources](#management) |
