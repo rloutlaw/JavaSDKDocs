@@ -32,7 +32,7 @@ Use Azure libraries in your Java projects to [manage resources](#management) and
 
 Add a dependency entry in your `pom.xml` to import a library into your [Maven](https://maven.apache.org) project.
 
-For example, to include the latest version of the [Azure management libraries]((#management):
+For example, to include the latest version of the [Azure management libraries](#management):
 
 ```XML
 <dependency>
