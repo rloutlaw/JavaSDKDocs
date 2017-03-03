@@ -1,6 +1,6 @@
 ---
-title: Azure development for Java downloads | Microsoft Docs
-description: Learn how to download the Azure SDK for Java, with sample code provided for Maven projects.
+title: Import Maven dependencies for Azure development | Microsoft Docs
+description: Import dependencies into your Java projects to download and use Azure libraries in your projects.
 services: ''
 documentationcenter: java
 author: routlaw
@@ -17,9 +17,9 @@ ms.date: 12/22/2016
 ms.author: routlaw;asirveda
 
 ---
-# Azure Maven depdencies
+# Import Azure Maven dependencies into your Java projects
 
-Use libraries in your Java projects to [manage Azure resources](#management) and integrate Azure services in your applications.  
+Import libraries into your Java projects to [manage Azure resources](#management) and integrate Azure services in your applications.  
 
 | | |
 | ------------- | ---------- | 
@@ -30,6 +30,19 @@ Use libraries in your Java projects to [manage Azure resources](#management) and
 | [Service Bus](#servicebus) | [Data Lake](#datalake) |
 | [AppInsights](#appinsights) | [Key Vault](#keyvault) |
 
+## Installation
+
+Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
+
+For example, to include the latest version of the Azure management libraries for Java:
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure</artifactId>
+    <version>1.0.0-beta5</version>
+</dependency>
+```
 
 ## Azure services
 
@@ -247,20 +260,6 @@ Add the Azure resource management libraries for Java to your project with the fo
     <version>1.0.0-beta5</version>
 </dependency>
 ```
-
-## Installation
-
-Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
-
-For example, to include the latest version of the Azure management libraries for Java:
-
-```XML
-<dependency>
-    <groupId>com.microsoft.azure</groupId>
-    <artifactId>azure</artifactId>
-    <version>1.0.0-beta5</version>
-</dependency>
-``` 
 
 <!-- URL List -->
 
