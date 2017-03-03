@@ -23,9 +23,9 @@ Use Azure libraries into your Java projects to [manage resources](#management) a
 
 | | | | |
 |:-------------:|:----------:|:----:|:---:|
-| [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) | [Redis Cache](#redis-cache) |  [IoT Service](#iotservice) | 
-| [SQL Database](#sql-database) | [Manage Azure resources](#management) | [Service Bus](#servicebus) | [Data Lake](#datalake) | 
-| [DocumentDB](#documentdb) |  [IoT Device](#iotdevice) | [AppInsights](#appinsights) | [Key Vault](#keyvault) |
+| [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) | [Manage Azure resources](#management) | [Redis Cache](#redis-cache)   | 
+| [SQL Database](#sql-database) | [DocumentDB](#documentdb) | [Service Bus](#servicebus) | [Data Lake](#datalake) | 
+| [IoT Service](#iotservice) |  [IoT Device](#iotdevice) | [AppInsights](#appinsights) | [Key Vault](#keyvault) |
  
 ## Installation
 
