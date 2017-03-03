@@ -50,11 +50,11 @@ New to Azure? Get your [free trial](https://azure.microsoft.com/free/).
                     <a href="download">
                     <div class="cardImageOuter">
                         <div class="cardImage">
-                            <img src="_img/get-started.svg" alt="" />
+                            <img src="_img/article.svg" alt="" />
                         </div>
                     </div>
                     <div class="cardText">
-                        <h3>APIs & libraries - Browse the list of Azure client libraries.</h3></a>
+                        <h3>APIs & libraries - Browse Azure client libraries.</h3></a>
                     </div>
                 </div>
             </div>
