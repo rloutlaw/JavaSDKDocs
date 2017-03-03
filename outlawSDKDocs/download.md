@@ -19,32 +19,19 @@ ms.author: routlaw;asirveda
 ---
 # Azure Maven depdencies
 
-Use libraries in your Java projects to manage Azure resources and integrate Azure services in your applications.  
+Use libraries in your Java projects to [manage Azure resources](#management) and integrate Azure services in your applications.  
 
-## Installation
-
-Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
-
-For example, to include the latest version of the Azure management libraries for Java:
-
-```XML
-<dependency>
-    <groupId>com.microsoft.azure</groupId>
-    <artifactId>azure</artifactId>
-    <version>1.0.0-beta5</version>
-</dependency>
-``` 
 | | |
 | ------------- | ---------- | 
 | [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) |
-| [SQL Database](#sql-database) | [Key Vault](#keyvault) |
+| [SQL Database](#sql-database) | [Manage Azure resources](#management) |
 | [Redis Cache](#redis-cache) |  [IoT Service](#iotservice) | 
 | [DocumentDB](#documentdb) |  [IoT Device](#iotdevice) |
 | [Service Bus](#servicebus) | [Data Lake](#datalake) |
-| [AppInsights](#appinsights) | |
+| [AppInsights](#appinsights) | [Key Vault](#keyvault) |
 
 
-## Azure service dependencies
+## Azure services
 
 These libraries help you consume Azure services in your applications.
 
@@ -245,8 +232,9 @@ Capture data of any size and shape into a single location for performing analyti
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.applicationinsights) | [Samples](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started) | [GitHub](https://github.com/Microsoft/ApplicationInsights-Java) 
 
 
+<a name="management"></a> 
 
-## Azure management dependencies
+## Azure management 
 
 The [Azure Management Libraries for Java](https://github.com/Azure/azure-sdk-for-java) lets you create and manage your Azure resources. 
 
@@ -259,6 +247,20 @@ Add the Azure resource management libraries for Java to your project with the fo
     <version>1.0.0-beta5</version>
 </dependency>
 ```
+
+## Installation
+
+Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
+
+For example, to include the latest version of the Azure management libraries for Java:
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure</artifactId>
+    <version>1.0.0-beta5</version>
+</dependency>
+``` 
 
 <!-- URL List -->
 
