@@ -20,7 +20,7 @@ ms.author: routlaw;asirveda
 
 # Azure Maven dependencies 
 
-Use Azure libraries into your Java projects to [manage resources](#management) and integrate services in your applications.  
+Use Azure libraries in your Java projects to [manage resources](#management) and integrate services in your applications.  
 
 | | |
 | ------------- | ---------- | 
@@ -33,9 +33,9 @@ Use Azure libraries into your Java projects to [manage resources](#management) a
 
 ## Installation
 
-Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
+Add a dependency entry in your `pom.xml` to import a library into your [Maven](https://maven.apache.org) project.
 
-For example, to include the latest version of the Azure management libraries for Java:
+For example, to include the latest version of the [Azure management libraries]((#management):
 
 ```XML
 <dependency>
@@ -47,7 +47,7 @@ For example, to include the latest version of the Azure management libraries for
 
 ## Azure services
 
-These libraries help you consume Azure services in your applications.
+Consume Azure services in your applications using these libraries.
 
 <a name="azure-storage"></a>
 
@@ -69,7 +69,7 @@ Data storage and messaging for your applications.
 
 ### [SQL Database](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-technical-overview)
 
-JDBC driver for Azure SQL database.
+JDBC driver for Azure SQL Database.
 
 ```XML
 <dependency>
@@ -150,7 +150,7 @@ Identity management and secure sign-in for your applications.
 
 ### [Key Vault](https://docs.microsoft.com/azure/key-vault) 
 
-Encrypt secrets and keys and safely access them from your applications. 
+Encrypt secrets and safely access them from your applications. 
 
 ```XML
 <dependency>
@@ -160,7 +160,7 @@ Encrypt secrets and keys and safely access them from your applications.
 </dependency>
 ```
 
-[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
+[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/key-vault-java-manage-key-vaults) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
 <a name="eventhub"></a>
 
@@ -224,7 +224,7 @@ Capture data of any size and shape into a single location for performing analyti
 </dependency>
 ```   
 
-[Reference](https://azure.github.io/azure-data-lake-store-java/javadoc/) | [Samples](https://github.com/Azure-Samples/data-lake-store-java-upload-download-get-started) | [GitHub](test.md) 
+[Reference](https://azure.github.io/azure-data-lake-store-java/javadoc/) | [Samples](https://github.com/Azure-Samples/data-lake-store-java-upload-download-get-started) | [GitHub](https://github.com/Azure/azure-data-lake-store-java) 
 
 <a name="appinsights"></a> 
 
@@ -250,9 +250,7 @@ Capture data of any size and shape into a single location for performing analyti
 
 ## Azure management 
 
-The [Azure Management Libraries for Java](https://github.com/Azure/azure-sdk-for-java) let you create and manage your Azure resources. 
-
-Add the Azure resource management libraries for Java to your project with the following Maven dependency:
+Create, update, and delete Azure resources from your application code.
 
 ```XML
 <dependency>
