@@ -38,16 +38,7 @@ export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
 
 The authentication file is used to create the top level `Azure` object, which is used by the management libraries to define, create, and configure Azure resources.
 
-```java
-// pull in the security file from the environment 
-final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
-
-Azure azure = Azure
-        .configure()
-        .withLogLevel(LogLevel.NONE)
-        .authenticate(credFile)
-        .withDefaultSubscription();
-```
+[!code-java[VMsInParallel](../../src/main/java/com/microsoft/azure/management/compute/samples/CreateVirtualMachinesInParallel.java#AUTH "Authentication")]
 
 ## Choose how many virtual machines to create
 
