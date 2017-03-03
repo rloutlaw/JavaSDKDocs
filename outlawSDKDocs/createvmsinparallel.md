@@ -18,15 +18,15 @@ ms.author: routlaw;asirveda
 
 ---
 
-# Create virtual machines across mulitple regions in parallel 
+# Create virtual machines across mulitple regions in parallel with the Java SDK
 
-This sample creates mulitple virtual machines in different Azure regions in parallel. Each virtual machine is assigned its own public IP address and a storage account in each region is created for the VMs to use. A traffic manager profile is also created for the virtual machines. All resources created belong to a single Azure resource group.
+This guide and associated sample creates mulitple virtual machines in different Azure regions in parallel using the [Azure management libraries for Java](https://github.com/Azure/azure-sdk-for-java). Each virtual machine is assigned its own public IP address and a storage account and virtual network in each region is created for the virtual machines to use. A traffic manager is also created to optimize performance across the virtual machines. 
 
-Sample code for this scenario can be found on [Github](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel).
+Complete sample code for this scenario can be found on [Github](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel).
 
 > [!WARNING]
-> The sample code creates a total of 48 VMs running Ubuntu 16.04 LTS of [size STANDARD_DS3_V2](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes) across four regions. 
-> Customize the sample to create a number of VMs of the size and operating system environment that you need.
+> The sample creates a total of 48 VMs running Ubuntu 16.04 LTS of [size STANDARD_DS3_V2](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes) across four regions. 
+> Customize the sample to create a number of VMs of the size, region, and operating system environment you need.
 
 ## Authenticate with Azure
 
@@ -36,24 +36,25 @@ Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob
 export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
 ```
 
-The authentication file is used to create the top level `Azure` object, which is used by the Java SDK to generate and configure resources.
+The authentication file is used to create the top level `Azure` object, which is used by the management libraries to define, create, and configure Azure resources.
 
 ```java
-            final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
+final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
 
-            Azure azure = Azure
-                    .configure()
-                    .withLogLevel(LogLevel.NONE)
-                    .authenticate(credFile)
-                    .withDefaultSubscription();
+Azure azure = Azure
+        .configure()
+        .withLogLevel(LogLevel.NONE)
+        .authenticate(credFile)
+        .withDefaultSubscription();
 ```
 
-## Choose where and how many virtual machines to create
+## Choose how many virtual machines to create
 
-Create a simple Map object with each entry being an Azure region as the key and the number of virtual machines in that region as the value. 
+Create a simple `java.util.Map` object with each entry having a Region constant as the key and the number of virtual machines to run in the region as the value. If you don't define a Region as a key, no virtual machines will be created in that region.
 
 ```java
 Map<Region, Integer> virtualMachinesByLocation = new HashMap<Region, Integer>();
+
 // each put() adds a region and count to the Map
 virtualMachinesByLocation.put(Region.US_EAST, 12);
 virtualMachinesByLocation.put(Region.US_SOUTH_CENTRAL, 12);
@@ -61,10 +62,11 @@ virtualMachinesByLocation.put(Region.US_WEST, 12);
 virtualMachinesByLocation.put(Region.US_NORTH_CENTRAL, 12);
 ```
 
+This example creates 48 VMs total, twelve in each of the four regions listed.
+
 ## Create the resource group 
 
-Create a new Azure resource group to group together the virtual machines and their dependent resources.
-
+Create a new Azure resource group to logically assoicate the virtual machines and their component resources.
 
 ```java
         final String rgName = SdkContext.randomResourceName("rgCOPD", 24);
@@ -73,17 +75,17 @@ Create a new Azure resource group to group together the virtual machines and the
                     .create();
 ```
 
-This guide and the complete sample creates the following resources in this resource group:
+The `SdkContext.randomResourceName()` method call generates a random valid name for the resource group with the specified prefix. Use any valid resource name instead if you'd prefer.
+
+This guide creates the following resources in this resource group:
 
 - the virtual machines with public IP addresses
 - a storage account and virtual network for each region for the virtual machines to use
-- a traffic manager to balance traffic across all VMs created
+- a [Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview) to balance traffic across all virtual machines created
 
-The `SdkContext.randomResourceName()` method call generates a random valid name for the resource group with the specified prefix. Use any valid resource name instead if you'd prefer.
+## Define the virtual machines and their resources
 
-## Generate a list of Creatables for the virtual machines and their resources
-
-Create a List of `Creatable` objects where each list item defines the properties of a single virtual machine. Once the list of Creatable objects is populated, you instruct the API to create all items in the List in parallel.
+Create a `List<Creatable<VirtualMachine>>` object where each list item defines the properties of a single virtual machine.  When the list is fully populated, you pass it to the API to create all items defined in the list in parallel.
 
 ```java
 List<Creatable<VirtualMachine>> creatableVirtualMachines = new ArrayList<>();
@@ -143,20 +145,21 @@ List<Creatable<VirtualMachine>> creatableVirtualMachines = new ArrayList<>();
             }
 ```
 
-The outer loop above iterates through each region, defining a Creatable for a virtual network and storage account for use by all VMs to be created in that region. The inner loop defines a Creatable for the public IP address for the virtual machine and then a Creatable for the virtual machine itself, using the Creatables for virtual network, storage account, and public IP address as parameters to the method chain to configure the virtual machine Creatable. Note that the `sshKey` and `userName` variables used here are Strings to the public SSH key configured for direct access to the VMs and the user name for the root account on the virtual machine.
+The outer `for` loop above iterates for each region, defining a virtual network and storage account for use by all VMs to be created in that region. 
 
-The `createVirtualMachines.add(virtualMachineCreatable)` call adds the virtual machine Creatable to the List object used later to create the VMs in parallel.
+The inner `for` loop defines a public IP address for the virtual machine and then a Creatable<VirtualMachine> for the virtual machine itself, using the Creatables for virtual network, storage account, and public IP address as parameters to the method chain defining the virtual machine. Note that the `sshKey` and `userName` variables are `String` constants of the public SSH key configured for direct access to the VMs and the user name for the root account on the virtual machines.
 
+The `createVirtualMachines.add(virtualMachineCreatable)` call adds the virtual machine Creatable to the List object used to create the VMs in parallel.
 
-### Create the VMs
+## Create the virtual machines
 
-With the list of Creatables populated, this line of code creates all of the VMs defined in the list in parallel:
+Create all of the virtual machines defined in the List in parallel:
 
 ```java
 CreatedResources<VirtualMachine> virtualMachines = azure.virtualMachines().create(creatableVirtualMachines);
 ```
 
-This returns the results of the batch creation of the virtual machines. Iterate over this object to inspect the result of the batch creation of the VMs. For example:
+This call returns a collection of the created virtual machines. Iterate over and inspect this object to verify the result of the batch creation of the virtual machine. For example:
 
 ```java
 for (VirtualMachine virtualMachine : virtualMachines.values()) {
@@ -164,12 +167,12 @@ for (VirtualMachine virtualMachine : virtualMachines.values()) {
             }
 ```
 
-This lists the IDs of each virtual machine created to the console.
+Lists the IDs of each virtual machine created to the console.
 
-## Create a traffic manager across all the IP addresses of all the VMs created
+## Create a Traffic Manager to distribute traffic across data centers
 
-Create a Traffic Manager to improve responsiveness and availability of the applications running on the VMs.
-This traffic manager instance uses performance based routing and sets endpoints on the IP addresses of the VMs created.
+Create a [Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview) to improve responsiveness and availability of the applications running on the virtual machines
+This traffic manager instance uses performance based routing and sets endpoints on the IP addresses of the virtual machines.
 
 ```java
 String trafficManagerName = SdkContext.randomResourceName("tra", 15);
