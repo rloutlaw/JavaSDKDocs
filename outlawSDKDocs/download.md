@@ -21,15 +21,12 @@ ms.author: routlaw;asirveda
 
 Use Azure libraries into your Java projects to [manage resources](#management) and integrate services in your applications.  
 
-| | | | 
-|:-------------:|:----------:|:----:| 
-| [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) | | 
-| [SQL Database](#sql-database) | [Manage Azure resources](#management) | |
-| [Redis Cache](#redis-cache) |  [IoT Service](#iotservice) |  | 
-| [DocumentDB](#documentdb) |  [IoT Device](#iotdevice) | | 
-| [Service Bus](#servicebus) | [Data Lake](#datalake) | | 
-| [AppInsights](#appinsights) | [Key Vault](#keyvault) | |
-
+| | | | |
+|:-------------:|:----------:|:----:|:---:|
+| [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) | [Redis Cache](#redis-cache) |  [IoT Service](#iotservice) | 
+| [SQL Database](#sql-database) | [Manage Azure resources](#management) | [Service Bus](#servicebus) | [Data Lake](#datalake) | 
+| [DocumentDB](#documentdb) |  [IoT Device](#iotdevice) | [AppInsights](#appinsights) | [Key Vault](#keyvault) |
+ 
 ## Installation
 
 Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
