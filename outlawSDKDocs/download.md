@@ -249,7 +249,7 @@ Capture data of any size and shape into a single location for performing analyti
 
 ## Azure management 
 
-The [Azure Management Libraries for Java](https://github.com/Azure/azure-sdk-for-java) lets you create and manage your Azure resources. 
+The [Azure Management Libraries for Java](https://github.com/Azure/azure-sdk-for-java) let you create and manage your Azure resources. 
 
 Add the Azure resource management libraries for Java to your project with the following Maven dependency:
 
