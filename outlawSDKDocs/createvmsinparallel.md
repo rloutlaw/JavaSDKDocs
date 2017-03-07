@@ -18,15 +18,14 @@ ms.author: routlaw;asirveda
 
 ---
 
-# Create virtual machines across mulitple regions in parallel with the Java SDK
+# Create virtual machines across mulitple regions in parallel with Java
 
 This guide and associated sample creates mulitple virtual machines in different Azure regions in parallel using the [Azure management libraries for Java](https://github.com/Azure/azure-sdk-for-java). Each virtual machine is assigned its own public IP address and a storage account and virtual network in each region is created for the virtual machines to use. A traffic manager is also created to optimize performance across the virtual machines. 
 
 Complete sample code for this scenario can be found on [Github](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel).
 
-> [!WARNING]
-> The sample creates a total of 48 VMs running Ubuntu 16.04 LTS of [size STANDARD_DS3_V2](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes) across four regions. 
-> Customize the sample to create a number of VMs of the size, region, and operating system environment you need.
+> [!INFO]
+> The sample creates a total of 48 VMs running Ubuntu 16.04 LTS of [size STANDARD_DS3_V2](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes) across four regions by default. These virtual machines and their resources are deleted before the sample finishes execution. 
 
 ## Authenticate with Azure
 
@@ -39,7 +38,7 @@ export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
 The authentication file is used to create the top level `Azure` object, which is used by the management libraries to define, create, and configure Azure resources.
 
 ```java
-// pull in the security file from the environment 
+// pull in the location of the security file from the environment 
 final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
 
 Azure azure = Azure
