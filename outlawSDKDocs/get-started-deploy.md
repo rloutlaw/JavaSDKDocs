@@ -14,28 +14,34 @@ ms.date: 3/06/2016
 
 # Get started with Java in Azure
 
-## Deploy the sample app
+## Deploy the sample app with Git
 
-Use the Azure CLI 2.0 to configure the [Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/app-service-how-works-readme). In this step you will:
+In this step we'll push the sample app in the local repo cloned in the previous step into Azure. 
 
-- create a resource group in the [West US 2 region](https://azure.microsoft.com/en-us/regions/) to manage the resources your app will use.
-- create an [App Service plan](https://docs.microsoft.com/en-us/azure/app-service/azure-web-sites-web-hosting-plans-in-depth-overview) 
-- create a web application definition in App Service where you'll run the sample and configure it to run with Java 8 and Tomcat.
+Give the app a username and password to authenticate deployments, then configure it for local Git deployment:
 
 ```bash
-appname = AzureAppDemo$RANDOM # assign a random name to the app
-az group create -n sampleResourceGroup -l westus2 
-az appservice plan create --name $appname --resource-group sampleResourceGroup --sku FREE
-az appservice web create --name $webappname --resource-group sampleResourceGroup --plan $webappname
-az appservice web config update --resource-group sampleResourceGroup --name $webappname --java-container TOMCAT --java-version 1.8.0_73 --java-container-version 8.5
+cd ..
+username=<your username>
+passowrd=<your password>
+az appservice web deployment user set --user-name $username --password $password
+url=$(az appservice web source-control config-local-git --name $webapp \
+--resource-group sampleResourceGroup --query url --output tsv)
+cd hello-world-sample
+git remote add azure $url
 ```
 
-Verify the steps with the following command:
+Push the sample to Azure using the new remote. Enter the password for the deployment credential you set up when prompted. App Service will build and deploy the app in the local repo.
+
+```bash
+git push azure master
+```
+
+Verify the push was successful.
+
 ```bash
 az appservice web browse --resource-group sampleResourceGroup --name $appname
 ```
 
-Your default browser will open up to the URL where you'll deploy the sample:
-
 >[!div class="step-by-step"]
-[**Deploy the sample* &rarr;](get-started-deploy.md)
+[**Deploy with Git* &rarr;](get-started-deploy.md)
