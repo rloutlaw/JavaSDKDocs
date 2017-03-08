@@ -28,7 +28,7 @@ Before starting, make sure you have installed and configured the following:
 - [Java 8 JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 - [Apache Maven](https://maven.apache.org)
 - [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2)
-- [Git](https://git-scm.org)
+- [Git](https://git-scm.com/downloads)
 
 ## Download the sample
 
@@ -56,7 +56,7 @@ Open your browser to http://localhost:8080 . You should see the current time dis
 
 ## Create your App Service plan for the app and create 
 
-From the Azure CLI 2.0, run the following to create a plan in Azure App Service's free tier, create an application in that plan , and update the application's config to use Tomcat.
+Run the following Azure CLI 2.0 commands to create a plan in Azure App Service's free tier, create an application in that plan, and update the application's config to use Tomcat.
 
 ```bash
 appname = AzureAppDemo$RANDOM

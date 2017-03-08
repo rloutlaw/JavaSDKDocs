@@ -6,6 +6,7 @@
 ## [Introduction](get-started-intro.md)
 ## [Set up your environment](get-started-setup.md)
 ## [Get the sample](get-started-get-sample.md)
+## [Configure App Service](get-started-appservice.md)
 ## [Deploy the app](get-started-deploy.md)
 ## [Push changes](get-started-make-changes.md)
 ## [Add storage](get-started-add-storage.md)
