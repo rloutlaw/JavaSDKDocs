@@ -1,6 +1,6 @@
 ---
 title: Get started with Java in Azure | Microsoft Docs
-description: Configure your Azure appservice plan and web app for the sample
+description: Deploy the sample app to Azure app service
 keywords: Azure Java, Azure Java API Reference, Azure Java class library, Azure SDK
 author: routlaw
 manager: douge
@@ -14,7 +14,7 @@ ms.date: 3/06/2016
 
 # Get started with Java in Azure
 
-## Configure Azure App Service
+## Deploy the sample app
 
 Use the Azure CLI 2.0 to configure the [Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/app-service-how-works-readme). In this step you will:
 
