@@ -3,8 +3,13 @@
 ## [Tools](tools.md)
 ## [Import Maven dependencies](download.md)
 # Get started 
-## [Eclipse](eclipse.md)
-## [IntelliJ](intellij.md)
+## [Introduction](get-started-intro.md)
+## [Set up your environment](get-started-setup.md)
+## [Get the sample](get-started-get-sample.md)
+## [Deploy the app](get-started-deploy.md)
+## [Push changes](get-started-make-changes.md)
+## [Add storage](get-started-add-storage.md)
+## [Automate deployment](get-started-automate-deployment.md)
 # How to
 ## Build and deploy applications 
 ### [Build and deploy a Java API in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-java-api-app)
