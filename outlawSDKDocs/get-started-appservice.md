@@ -38,4 +38,4 @@ az appservice web browse --resource-group sampleResourceGroup --name $appname
 Your default browser will open up to the URL where your sample will go live:
 
 >[!div class="step-by-step"]
-[**Deploy with Git* &rarr;](get-started-deploy.md)
+[**Deploy with Git** &rarr;](get-started-deploy.md)

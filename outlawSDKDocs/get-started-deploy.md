@@ -44,4 +44,4 @@ az appservice web browse --resource-group sampleResourceGroup --name $appname
 ```
 
 >[!div class="step-by-step"]
-[**Update the app* &rarr;](get-started-updates.md)
+[**Update the app** &rarr;](get-started-updates.md)

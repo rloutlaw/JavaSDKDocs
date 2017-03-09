@@ -9,7 +9,7 @@
 ## [Configure App Service](get-started-appservice.md)
 ## [Deploy the app](get-started-deploy.md)
 ## [Push changes](get-started-make-changes.md)
-## [Add storage](get-started-add-storage.md)
+## [Add storage](get-started-storage.md)
 ## [Automate deployment](get-started-automate.md)
 # How to
 ## Build and deploy applications 
