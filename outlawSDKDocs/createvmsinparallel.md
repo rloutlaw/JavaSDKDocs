@@ -25,7 +25,7 @@ This guide and associated sample creates mulitple virtual machines in different 
 Complete sample code for this scenario can be found on [Github](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel).
 
 > [!INFO]
-> The sample creates a total of 48 VMs running Ubuntu 16.04 LTS of [size STANDARD_DS3_V2](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes) across four regions by default. These virtual machines and their resources are deleted before the sample finishes execution. 
+> The sample creates a total of 48 VMs running Ubuntu 16.04 LTS of [size STANDARD_DS3_V2](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes) across four regions by default. These virtual machines and their resources are deleted at the end of the sample code.
 
 ## Authenticate with Azure
 
@@ -207,8 +207,8 @@ for (String publicIpResourceId : publicIpResourceIds) {
 TrafficManagerProfile trafficManagerProfile = profileWithCreate.create();
 ```
 
-## Delete the resource group if something goes wrong
-If there's an uncaught exception, print the stack trace and the sample will delete the resource group if it exists, deleting all Azure resources created by the sample.
+## Delete the resource group 
+At the end of the sample, deleting the resource group deletes all resources created in the resource group.
 
 ```java
 finally {

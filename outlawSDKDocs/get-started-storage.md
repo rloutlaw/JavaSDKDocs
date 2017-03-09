@@ -44,4 +44,4 @@ The servlet called to upload the file is already included in the sample. The rel
 ## Display the helloworld image saved to the storage account under the timestamp
 
 >[!div class="step-by-step"]
-[**Automate deployment* &rarr;](get-started-automate.md)
+[**Automate deployment** &rarr;](get-started-automate.md)

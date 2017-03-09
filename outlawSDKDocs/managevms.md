@@ -151,10 +151,6 @@ Use the `update()` method and chain `with` methods after it to update a virtual 
 
 This example adds a new 10GB data disk to the virtual machine created earlier in the sample.
 
-> [!NOTE] 
-> If the update requires the virtual machine to be stopped before it can be performed, the machine will be stopped then updated.
-
-
 ## Delete a virtual machine
 ```java
 azure.virtualMachines().deleteById(windowsVM.id());
