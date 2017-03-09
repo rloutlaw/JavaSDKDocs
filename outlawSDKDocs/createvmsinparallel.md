@@ -87,7 +87,9 @@ This guide and the [sample](https://github.com/Azure-Samples/compute-java-create
 
 ## Define the virtual machines and their resources
 
-Create a `List<Creatable<VirtualMachine>>` object where each list item defines the properties of a single virtual machine.  When the list is fully populated, pass it to the API to create all items defined in the list in parallel.
+Create a `List<Creatable<VirtualMachine>>` object where each list item defines the properties of a single virtual machine. Each Creatable<VirtualMachine> object in the List is a local reprenstation of a virtual machine that can be created with the given configuration (note that some of the parmaters to configure the virtual machines are Creatables of different types). The virtual machines don't exist in Azure until `azure.virtualMachines().create()` is called with this List as a paramter.
+
+Learn more about using [Creatables](concepts.md#Creatbles) do define resources locally and create them only as needed when using the Java management libraries.
 
 ```java
 List<Creatable<VirtualMachine>> creatableVirtualMachines = new ArrayList<>();
@@ -152,7 +154,7 @@ List<Creatable<VirtualMachine>> creatableVirtualMachines = new ArrayList<>();
 
 The outer `for` loop above iterates over each region, defining a virtual network and storage account for use by all virtual machines to be created in that region in this sample. 
 
-The inner `for` loop defines a public IP address for the virtual machine and then defined the properties of the virtual machine itself, using the the definitions for the virtual network, storage account, and public IP address as parameters to the method chain that defines the virtual machine. The `sshKey` and `userName` variables are `String` constants containing your public SSH key for direct access to the virtual machines and the user name for the root account on the virtual machines.
+The inner `for` loop defines a public IP address for the virtual machine and then defined the properties of the virtual machine itself, using the the definitions for the virtual network, storage account, and public IP address as parameters to the method chain that defines the virtual machine.
 
 The `createVirtualMachines.add(virtualMachineCreatable)` call adds the virtual machine definition to the List object used to create the VMs in parallel.
 
@@ -165,7 +167,7 @@ CreatedResources<VirtualMachine> virtualMachines = azure.virtualMachines()
                                                         .create(creatableVirtualMachines);
 ```
 
-This returns a collection of the created virtual machines. Iterate over and inspect this object to verify the result of the batch creation of the virtual machine. 
+Iterate over and inspect this object to verify the result of the batch creation of the virtual machine. 
 
 ```java
 // list the IDs of each virtual machine created 
@@ -173,6 +175,17 @@ for (VirtualMachine virtualMachine : virtualMachines.values()) {
                 System.out.println(virtualMachine.id());
 }
 ```
+
+The returned `CreatedResources` object that can be used to determine all resources created by the `create()` method, not just virtual machines. For example, to get the result from the Creatable public IP addresses defined in the previous step whose Creatable keys were stored in the `publicIpCreatableKey` object:
+
+```java
+for (String publicIpCreatableKey : publicIpCreatableKeys) {
+                PublicIPAddress pip = (PublicIPAddress) virtualMachines.createdRelatedResource(publicIpCreatableKey);
+            }
+```
+
+[Learn more](concepts.md#creatables)) about working with CreatedResources in our [API concepts article](concepts.md).
+
 
 ## Create a Traffic Manager to distribute work
 
