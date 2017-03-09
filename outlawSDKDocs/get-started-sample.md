@@ -16,10 +16,10 @@ ms.date: 3/06/2016
 
 ## Get the sample app
 
-Clone the [sample GitHub repo](https://github.com/rloutlaw/hello-world-java) to your system:
+Fork the [sample GitHub repo](https://github.com/rloutlaw/hello-world-java) and clone the fork to your system:
 
 ```bash
-git clone https://github.com/rloutlaw/hello-world-java.git
+git clone https://github.com/username/hello-world-java.git
 ```
 
 ## Build and verify the sample locally

@@ -10,7 +10,7 @@
 ## [Deploy the app](get-started-deploy.md)
 ## [Push changes](get-started-make-changes.md)
 ## [Add storage](get-started-add-storage.md)
-## [Automate deployment](get-started-automate-deployment.md)
+## [Automate deployment](get-started-automate.md)
 # How to
 ## Build and deploy applications 
 ### [Build and deploy a Java API in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-java-api-app)
