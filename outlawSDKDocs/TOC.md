@@ -8,7 +8,7 @@
 ## [Get the sample](get-started-sample.md)
 ## [Configure App Service](get-started-appservice.md)
 ## [Deploy the app](get-started-deploy.md)
-## [Push changes](get-started-make-changes.md)
+## [Make changes](get-started-updates.md)
 ## [Add storage](get-started-storage.md)
 ## [Automate deployment](get-started-automate.md)
 # How to
