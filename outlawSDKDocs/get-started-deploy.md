@@ -31,7 +31,7 @@ cd hello-world-sample
 git remote add azure $url
 ```
 
-Push the sample to Azure using the new remote. Enter the password for the deployment credential you set up when prompted. App Service will build and deploy the app in the local repo.
+Push the sample to Azure using the new remote. Enter the password for the deployment credential you set up when prompted. App Service will deploy the app from code in the local repo.
 
 ```bash
 git push azure master

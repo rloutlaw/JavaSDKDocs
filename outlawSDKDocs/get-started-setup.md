@@ -22,8 +22,24 @@ Once you have the Azure CLI 2.0 installed, login to Azure (you'll need to approv
 
 ```bash
 az login
-az account list
+az account show
 ```   
+
+If you've got the CLI set up correctly, you'll see something like this in the console as output from `az account list`:
+```json
+{
+  "environmentName": "AzureCloud",
+  "id": "ac6c882c-52b3-4dfb-99d3-bc76026cb6da",
+  "isDefault": true,
+  "name": "Visual Studio Enterprise",
+  "state": "Enabled",
+  "tenantId": "6c3b4f5c-a18b-455c-87b0-d9d26521a78c",
+  "user": {
+    "name": "frank@frabrikam.com",
+    "type": "user"
+  }
+}
+```
 
 >[!div class="step-by-step"]
 [**Get the sample app** &rarr;](get-started-sample.md)

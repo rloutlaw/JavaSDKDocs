@@ -24,7 +24,7 @@ git clone https://github.com/username/hello-world-java.git
 
 ## Build and verify the sample locally
 
-Run the following to build a WAR file from the sample and run it in a local Jetty container:
+Build the WAR file in the sample and run it in a local Jetty container:
 
 ```bash
 cd hello-world-java
