@@ -32,7 +32,7 @@ mvn package
 mvn jetty:run
 ```
 
-Browse to http://localhost:8080/index.jsp and verify that the app is running. Hit `Control+C` to cancel the Jetty instance when done.
+Browse to http://localhost:8080/index.jsp and verify that the app is running. Hit `Control+C` to stop the Jetty instance when done.
 
 >[!div class="step-by-step"]
 [**Configure App Service** &rarr;](get-started-appservice.md)

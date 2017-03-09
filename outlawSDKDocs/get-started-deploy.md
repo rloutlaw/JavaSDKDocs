@@ -23,7 +23,7 @@ Give the app a username and password to authenticate deployments, then configure
 ```bash
 cd ..
 username=<your username>
-passowrd=<your password>
+password=<your password>
 az appservice web deployment user set --user-name $username --password $password
 url=$(az appservice web source-control config-local-git --name $webapp \
 --resource-group sampleResourceGroup --query url --output tsv)
@@ -37,11 +37,11 @@ Push the sample to Azure using the new remote. Enter the password for the deploy
 git push azure master
 ```
 
-Verify the push was successful.
+Verify the deployment on the web:
 
 ```bash
 az appservice web browse --resource-group sampleResourceGroup --name $appname
 ```
 
 >[!div class="step-by-step"]
-[**Deploy with Git* &rarr;](get-started-deploy.md)
+[**Update the app* &rarr;](get-started-updates.md)
