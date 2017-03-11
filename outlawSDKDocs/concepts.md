@@ -22,7 +22,31 @@ ms.author: routlaw;asirveda
 
 ## Authentication
 
-The simplest authentication scenario when using the Azure management libraries is to create an external properties file that contains authentication details and use it to build the top-level Azure object:
+The simplest way to authenticate is to create an external properties file that contains your application's credentials:
+
+```text
+subscription=########-####-####-####-############
+client=########-####-####-####-############
+key=XXXXXXXXXXXXXXXX
+tenant=########-####-####-####-############
+managementURI=https\://management.core.windows.net/
+baseURL=https\://management.azure.com/
+authURL=https\://login.windows.net/
+graphURL=https\://graph.windows.net/
+```
+
+- subscription: use the *id* value from `az account show`
+- client: use the *appId* value from the output taken from a service principal created to run the application. If you don't have a service principal yet, [use the Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli) to create one.
+- key: use the *password* value from the service principal 
+- tenant: use the *tenant* value from the service principal
+
+Save this file in a secure location on your system where your Java code can read from it. Set an environment variable with its location in your shell:
+
+```bash
+AZURE_AUTH_LOCATION=/home/frank/secure/azureauth.properties
+```
+
+Use the properties file to create the entry point `Azure` object to start working with the API:
 
 ```java
 // pull in the location of the authenticaiton properties file from the environment 
@@ -35,9 +59,8 @@ Azure azure = Azure
         .withDefaultSubscription();
 ```
 
-This pattern is used in the samples since the code is compact and easy to follow.
+This pattern is used in the samples since the code is compact and easy to follow. If you don't want to persist the credentials in a file, you can load them from your Java code from a secure source (such as [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) ) and initialize the `Azure` entry point using an [ApplicationTokenCredentials](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md#using-applicationtokencredentials) object.
 
-This requires being comfortable with putting credentials on your filesystem and making them readable by your Java code. 
 
 ## Batch create resources with Creatables
 
