@@ -35,9 +35,9 @@ Azure azure = Azure
         .withDefaultSubscription();
 ```
 
-This pattern is used in the samples since the code is compact and simple to follow.
+This pattern is used in the samples since the code is compact and easy to follow.
 
-This requires being comfortable with putting credentials on the filesystem and making it readable by your Java code. For more detailed scenarios including secure secret management using Azure Key Vault, see the [complete authentication article](authentication.md).
+This requires being comfortable with putting credentials on your filesystem and making them readable by your Java code. 
 
 ## Batch create resources with Creatables
 
@@ -106,11 +106,6 @@ for (VirtualMachine vm : vms) {
 }
 ```
 
-
-## Reactive patterns and Observables
-
-Anudeep - get the list
-
 ## Builders, not constructors
 
 You don't need to call constructors to work with the management API as it uses a Builder pattern with a fluent interface to create objects for you to use. For example, the entry-point Azure object:
@@ -122,7 +117,6 @@ Azure azure = Azure
                     .authenticate(credFile)
                     .withDefaultSubscription();
 ```
-
 
 
 ## Actionable verbs
@@ -148,16 +142,30 @@ These child resource levels generally do not have asynchronous versions.
 
 ## Exception handling
 
-Detail the exceptions we do have.
+The management API currently only throws a few typed exceptions, and most of these are subclasses of the `com.microsoft.rest.RestException` class. If you are looking to catch an exception specific to the management API, having a `catch (RestException exception` block after the relevant try statement is recommended.
 
-Jianghao (rt Martin)
+Open an [open an issue](https://github.com/Azure/azure-sdk-for-java/issues) on GitHub if you feel there's a scenario that really would benefit from a typed exception in the library.
 
 ## Returned object collections
 
-Anu Thomas Chandy
+The management library follows a convention for returned collections depending on the shape of the data returned:
+
+- Lists: PagedLists are returned for unordered data for ease of iteration across each entry in the list.
+- Maps: Maps are returned for objects that have unique keys, but not necessarily values. A good example of a Map would be a set of environment variables for a App Service app.
+- Sets: Sets have unique keys and values. A good example of a Set would be networks attached to a virtual machine, which would have both a unique identifier and a unique network configuration.
+
+Note the returned collection types when working to make assumptions about the returned data and keep your code from making logic checks about the returned data that might not be necessary.
 
 ## Logs and trace
 
-Jianghao (rt Martin)
+Logging in the management API is supported at the REST-level calls that the Java libraries invoke. This logging uses the popular [SLF4J](https://www.slf4j.org/) library for logging and defaults to a simple scheme configured when you build the entry point `Azure` object using the `withLogLevel()` method. You can specify the following trace levels:
 
-Hooking in external logging into the API
+| Trace level | Logging enabled | 
+| com.microsoft.rest.LogLevel.NONE | No output |
+| com.microsoft.rest.LogLevel.BASIC | Logs the URLs to underlying REST calls, response codes and times |
+| com.microsoft.rest.LogLevel.BODY | Everything in BASIC plus request and response bodies for the REST calls |
+| com.microsoft.rest.LogLevel.HEADERS | Everything in BASIC plus the request and response headers REST calls | 
+| com.microsoft.rest.LogLevel.BODY_AND_HEADERS | Everything in both BODY and HEADERS log level | 
+
+Bind a [SLF4J logging implementations](https://www.slf4j.org/manual.html) if you need to log output to a logging framework like [Log4J 2](https://logging.apache.org/log4j/2.x/)
+
