@@ -23,7 +23,7 @@ This guide assumes you already have:
 - An Azure account. If you don't have one , [get a free trial](https://azure.microsoft.com/free/)
 - [Java 8 SE Developers Kit](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 - [Apache Maven 3](http://maven.apache.org/download.cgi)
-- [Git](https://git-scm.com/downloads) and a [GitHub](https://github.com) account
+- [Git](https://git-scm.com/downloads)
 
 >[!div class="step-by-step"]
 [**Set up** &rarr;](get-started-setup.md)

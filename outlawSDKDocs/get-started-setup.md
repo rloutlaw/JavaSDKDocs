@@ -16,16 +16,16 @@ ms.date: 3/06/2016
 
 ## Set up your environment
 
-[Install the Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2) for your platform. You'll use the CLI to create the configuration your applications will need to run in Azure without the need to work through the Azure portal.
+[Install the Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2) for your platform. You'll use the CLI to create the Azure resources your app will need to run.
 
-Once you have the Azure CLI 2.0 installed, login to Azure (you'll need to approve the access for the CLI for your account) and verify the installation:
+Once you have the Azure CLI 2.0 installed, login to Azure and verify your installation:
 
 ```bash
 az login
 az account show
 ```   
 
-If you've got the CLI set up correctly, you'll see something like this in the console as output from `az account list`:
+If the CLI is set up correctly, you'll see output like this from `az account list`:
 ```json
 {
   "environmentName": "AzureCloud",

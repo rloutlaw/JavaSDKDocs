@@ -25,6 +25,7 @@ ms.author: routlaw;asirveda
 The simplest way to authenticate is to create an external properties file that contains your application's credentials:
 
 ```text
+# sample management library properties file
 subscription=########-####-####-####-############
 client=########-####-####-####-############
 key=XXXXXXXXXXXXXXXX
@@ -46,7 +47,7 @@ Save this file in a secure location on your system where your Java code can read
 AZURE_AUTH_LOCATION=/home/frank/secure/azureauth.properties
 ```
 
-Use the properties file to create the entry point `Azure` object to start working with the API:
+Use the properties file to create the entry point `Azure` object to start working with the library:
 
 ```java
 // pull in the location of the authenticaiton properties file from the environment 
@@ -68,13 +69,14 @@ This pattern is used in the samples since the code is compact and easy to follow
 ### all in memory
 ### parallel creation in one request
 
-One of the challenges when working with resources is that you need other Azure resources to define a new resource, such as a IP address for a virtual machine or a firewall definition for a SQL database. 
-You don't want to have to create every single resource, wait for it to be created in Azure,  and verify it exists before moving onto the next item to create. Creating each object asynchronously is challenging because some resources can be safely created in parallel with other and some need to have the resources created beforehand, and it's not easy to know which is the case for your scenario. Concurrent code like this also can be difficult to develop, debug, maintain and extend later.
+One of the challenges when creating or updating a resource in Azure is that you might need other Azure resources to configure it. A good example is reserving a public IP address and setting up a disk for a new virtual machine. You don't want create and verify the creation of each intermediate resource-all you really care about is the final result (in our case, the virtual machine). 
 
-The Azure libraries for Java provide a mechanism to locally define Azure resources and use those definitions when creating and updating other Azure resource using Creatable generitcs. Creatables are a  generated through the resource's `define()` method, for example a public IP address:
+Using asynchronous methods to create the resources is difficult because some Azures resources are fine to create in parallel but others need to be created in sequence, and it's not straightforward to know which is the case for your scenario. Concurrent code like this is also difficult to develop, debug, maintain, and extend later.
+
+The management libraries provide a pattern to define Azure resources without immediately creating them using Creatable objects. Generate creatables through the resource's `define()` method, for example a public IP address:
 
 ```java
-Creatable<PublicIPAddress> publicIPAddressCreatable = azure.publicIPAddresses().define(publicIPAddressName2)
+Creatable<PublicIPAddress> publicIPAddressCreatable = azure.publicIPAddresses().define(publicIPAddressName)
                     .withRegion(Region.US_EAST)
                     .withNewResourceGroup(rgName);
 ```

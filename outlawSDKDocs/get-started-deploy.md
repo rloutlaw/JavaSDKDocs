@@ -4,7 +4,7 @@ description: Deploy the sample app to Azure app service
 keywords: Azure Java, Azure Java API Reference, Azure Java class library, Azure SDK
 author: routlaw
 manager: douge
-ms.assetid: 7b92e776-959b-4632-8b1d-047ce1417616
+ms.assetid: 948cd16b-7b6d-4d22-bb84-69e46b90a2db
 ms.service: Azure
 ms.devlang: java
 ms.topic: reference
@@ -16,25 +16,20 @@ ms.date: 3/06/2016
 
 ## Deploy the sample app with Git
 
-In this step we'll push the sample app in the local repo cloned in the previous step into Azure. 
+In this step we'll upload the sample into Azure using FTP.
 
-Give the app a username and password to authenticate deployments, then configure it for local Git deployment:
+Create a username and password to authenticate the FTP deployment using the Azure CLI 2.0:
 
 ```bash
-cd ..
 username=<your username>
 password=<your password>
 az appservice web deployment user set --user-name $username --password $password
-url=$(az appservice web source-control config-local-git --name $webapp \
---resource-group sampleResourceGroup --query url --output tsv)
-cd hello-world-sample
-git remote add azure $url
 ```
 
-Push the sample to Azure using the new remote. Enter the password for the deployment credential you set up when prompted. App Service will deploy the app from code in the local repo.
+The Maven project in the sample has a `deploy` step that FTPs the built sample using the environment variables created so far in the walkthrough:
 
 ```bash
-git push azure master
+mvn deploy
 ```
 
 Verify the deployment on the web:

@@ -16,15 +16,15 @@ ms.date: 3/06/2016
 
 ## Get the sample app
 
-Fork the [sample GitHub repo](https://github.com/rloutlaw/hello-world-java) and clone the fork to your system:
+Clone the [sample GitHub repo](https://github.com/rloutlaw/hello-world-java) to your system:
 
 ```bash
-git clone https://github.com/username/hello-world-java.git
+git clone https://github.com/rloutlaw/hello-world-java.git
 ```
 
 ## Build and verify the sample locally
 
-Build the WAR file in the sample and run it in a local Jetty container:
+Build the sample and run it in a local Jetty container:
 
 ```bash
 cd hello-world-java
