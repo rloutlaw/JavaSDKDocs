@@ -4,7 +4,7 @@ description: Add storage to your Java web app running in Azure App Service
 keywords: Azure Java, Azure Java API Reference, Azure Java class library, Azure SDK
 author: routlaw
 manager: douge
-ms.assetid: 7b92e776-959b-4632-8b1d-047ce1417616
+ms.assetid: f63d6980-7ce1-4ab0-9b14-ffe34733c669
 ms.service: Azure
 ms.devlang: java
 ms.topic: reference
@@ -24,24 +24,29 @@ Add functionality to save to and display images from [Azure blob storage](https:
 storage_acct="helloworld$RANDOM"
 az storage account create --name $storage_acct --resourceGroup sampleResourceGroup --location westus2
 connstr=$(az storage account show-connection-string --name $storageName --resource-group sampleResourceGroup --query connectionString --output tsv)
-az appservice web config appsettings update --settings "STORAGE_CONNECTION=$connstr" --name $appname --resource-group sampleResourceGroup
+az appservice web config appsettings update --settings "STORAGE_CONNSTR=$connstr" --name $appname --resource-group sampleResourceGroup
+az storage container create  --connection-string $connstr --name helloworld 
+az storage container set-permission --connection-string $connstr --name helloworld --public-access container
 ```
 
 ## Add a form to upload an image to the JSP
 
 ```html
-<h2>Upload a file</h2>
-Select a file to upload: <br/>
-<form action="UploadAzureStorageServlet" method="post" enctype="multipart/form-data">
-  <input type="file" name="file" size"40" />
-  <br/>
-  <input type="submit" value="Upload" />
-</form>
+<h2>Upload a file</h2><br/>
+<form method="POST" action="upload" enctype="multipart/form-data">
+<input type="file" name="file"/><br/>
+ <input type="submit" value="Upload to Azure Storage" name="upload"></h3></form>
 ```
 
-The servlet called to upload the file is already included in the sample. The relevant code from it is here:
+The servlet called to upload the file is [included](https://github.com/rloutlaw/hello-world-java/src/main/java/com/microsoft/azure/samples/AzureStorageUploadServlet.java) in the sample. 
 
 ## Display the helloworld image saved to the storage account under the timestamp
+
+Add an image tag to the JSP, replacing `$storage_acct` with the actual name of the storage account generated:
+
+```html
+<img src="https://<$storage_acct>.blob.core.windows.net/helloworld/helloworld.jpg">
+```
 
 >[!div class="step-by-step"]
 [**Automate deployment** &rarr;](get-started-automate.md)

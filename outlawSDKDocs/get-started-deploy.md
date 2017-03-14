@@ -26,10 +26,12 @@ password=<your password>
 az appservice web deployment user set --user-name $username --password $password
 ```
 
+(TODO: add step to get publishing profile information and export to maven when available)
+
 The Maven project in the sample has a `deploy` step that FTPs the built sample using the environment variables created so far in the walkthrough:
 
 ```bash
-mvn deploy
+mvn install
 ```
 
 Verify the deployment on the web:

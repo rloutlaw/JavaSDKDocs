@@ -4,7 +4,7 @@ description: Automate deployment from GitHub
 keywords: Azure Java, Azure Java API Reference, Azure Java class library, Azure SDK
 author: routlaw
 manager: douge
-ms.assetid: 7b92e776-959b-4632-8b1d-047ce1417616
+ms.assetid: cef9b04a-fdd0-4661-8be7-042eec4ff568
 ms.service: Azure
 ms.devlang: java
 ms.topic: reference

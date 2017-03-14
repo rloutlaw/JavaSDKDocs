@@ -4,7 +4,7 @@ description: Update an application and push changes to App Service through local
 keywords: Azure Java, Azure Java API Reference, Azure Java class library, Azure SDK
 author: routlaw
 manager: douge
-ms.assetid: 7b92e776-959b-4632-8b1d-047ce1417616
+ms.assetid: 79e99ea9-f3b0-46e3-86f7-57ed14a7cbec
 ms.service: Azure
 ms.devlang: java
 ms.topic: reference
@@ -22,23 +22,15 @@ Open up the `src/main/webapp/index.jsp` in your repo. Let's add a current date a
 <body>
 Hello from Microsoft Azure! 
 <p>
-  Current time: <%= new Date() %>
+  Current time: <%= new java.util.Date() %>
 </p>
 </body>
 ```
 
-And add an import statement at the  of the JSP for the class we are using to get the date and time:
-
-```html
-<%@ page import="java.util.Date" %>
-```
-
-Save the file, then commit the changes and push them to Azure:
+Save the changes and then rebuild and redploy:
 
 ```bash
-git add .
-git commit -m "Add timestamp to Hello World sample"
-git push azure master
+mvn package install
 ```
 
 Refresh your browser and the sample will now show a timestamp after the Hello World greeting.

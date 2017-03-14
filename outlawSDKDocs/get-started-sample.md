@@ -4,7 +4,7 @@ description: Download and run the sample app you'll deploy in Azure.
 keywords: Azure Java, Azure Java API Reference, Azure Java class library, Azure SDK
 author: routlaw
 manager: douge
-ms.assetid: 7b92e776-959b-4632-8b1d-047ce1417616
+ms.assetid: 760634fa-f446-4704-9935-3ac3f54ae1e5
 ms.service: Azure
 ms.devlang: java
 ms.topic: reference

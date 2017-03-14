@@ -65,15 +65,11 @@ This pattern is used in the samples since the code is compact and easy to follow
 
 ## Batch create resources with Creatables
 
-### deferring creation
-### all in memory
-### parallel creation in one request
-
 One of the challenges when creating or updating a resource in Azure is that you might need other Azure resources to configure it. A good example is reserving a public IP address and setting up a disk for a new virtual machine. You don't want create and verify the creation of each intermediate resource-all you really care about is the final result (in our case, the virtual machine). 
 
 Using asynchronous methods to create the resources is difficult because some Azures resources are fine to create in parallel but others need to be created in sequence, and it's not straightforward to know which is the case for your scenario. Concurrent code like this is also difficult to develop, debug, maintain, and extend later.
 
-The management libraries provide a pattern to define Azure resources without immediately creating them using Creatable objects. Generate creatables through the resource's `define()` method, for example a public IP address:
+The management libraries provide a pattern to define Azure resources without immediately creating them using Creatable objects. Generate Creatable objects through the resource's `define()` verb, for example a public IP address:
 
 ```java
 Creatable<PublicIPAddress> publicIPAddressCreatable = azure.publicIPAddresses().define(publicIPAddressName)

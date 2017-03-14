@@ -4,7 +4,7 @@ description: Install the Azure CLI for your platform and log in to your Azure ac
 keywords: Azure Java, Azure Java API Reference, Azure Java class library, Azure SDK
 author: routlaw
 manager: douge
-ms.assetid: 7b92e776-959b-4632-8b1d-047ce1417616
+ms.assetid: ddecffcb-29e2-4fa5-9934-3e5f19f8fbdf
 ms.service: Azure
 ms.devlang: java
 ms.topic: reference
