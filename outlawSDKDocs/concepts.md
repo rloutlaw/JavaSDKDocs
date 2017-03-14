@@ -20,6 +20,8 @@ ms.author: routlaw;asirveda
 
 # Azure management library concepts
 
+<a name="authenticate"></a>
+
 ## Authentication
 
 The simplest way to authenticate is to create an external properties file that contains your application's credentials:
@@ -62,6 +64,7 @@ Azure azure = Azure
 
 This pattern is used in the samples since the code is compact and easy to follow. If you don't want to persist the credentials in a file, you can load them from your Java code from a secure source (such as [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) ) and initialize the `Azure` entry point using an [ApplicationTokenCredentials](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md#using-applicationtokencredentials) object.
 
+<a name="Creatbles"></a>
 
 ## Batch create resources with Creatables
 
