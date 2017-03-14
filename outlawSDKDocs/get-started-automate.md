@@ -16,7 +16,7 @@ ms.date: 3/06/2016
 
 ## Automate deployment from GitHub
 
-Automate deployment of your application whenever a hosted repo is updated. The previous steps showed manually pushing from a local Git repo to a Azure Git repo, but you can also have Azure deploy your changes when you push to repos hosted in GitHub, Visual Studio Team Services, or BitBucket.
+This section of the walkthrough will cover how to automate deployment of your app to Azure whenever your GitHub repo is updated. The walkthrough uses Jenkins as the build tool to manage this 
 
 ## Configure your fork for continuous delivery
 

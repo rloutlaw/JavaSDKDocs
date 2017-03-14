@@ -29,18 +29,18 @@ az storage container create  --connection-string $connstr --name helloworld
 az storage container set-permission --connection-string $connstr --name helloworld --public-access container
 ```
 
-## Add a form to upload an image to the JSP
+## Add a form to the JSP to upload an image
 
 ```html
 <h2>Upload a file</h2><br/>
-<form method="POST" action="upload" enctype="multipart/form-data">
+<form method="post" action="upload" enctype="multipart/form-data">
 <input type="file" name="file"/><br/>
  <input type="submit" value="Upload to Azure Storage" name="upload"></h3></form>
 ```
 
 The servlet called to upload the file is [included](https://github.com/rloutlaw/hello-world-java/src/main/java/com/microsoft/azure/samples/AzureStorageUploadServlet.java) in the sample. 
 
-## Display the helloworld image saved to the storage account under the timestamp
+## Display the image in the storage account 
 
 Add an image tag to the JSP, replacing `$storage_acct` with the actual name of the storage account generated:
 
