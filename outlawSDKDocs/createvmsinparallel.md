@@ -78,7 +78,7 @@ The `SdkContext.randomResourceName()` method generates a random valid name for t
 
 ## Define the virtual machines and their resources
 
-Create a `List<Creatable<VirtualMachine>>`  where each item in the list defines a single virtual machine. The virtual machines aren't created in Azure until `azure.virtualMachines().create()` is called passing this list as a parameter.
+Create a `List<Creatable<VirtualMachine>>`  where each item in the list defines a single virtual machine. The virtual machines aren't created in Azure until `azure.virtualMachines().create()` is invoked with this list as a parameter.
 
 Learn more about using [Creatables](concepts.md#Creatbles) do define resources locally and create them only when needed when using the Java management libraries.
 
@@ -191,4 +191,4 @@ finally {
 }
 ```
 
-This is a useful block to use as you develop since it ensures that any resources created are cleaned up before your code exits.
+This block ensures that any resources created in the sample are cleaned up before the code exits.
