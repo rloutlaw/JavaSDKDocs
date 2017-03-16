@@ -21,8 +21,8 @@ This quick start guides you through getting a simple Java webapp deployed in Azu
 This tutorial assumes you have:
 
 - An Azure account. If you don't have one , [get a free trial](https://azure.microsoft.com/free/)
-- [Java 8 SE Developers Kit](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-- [Apache Maven 3](http://maven.apache.org/download.cgi)
+- [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+- [Maven 3](http://maven.apache.org/download.cgi)
 - [Git](https://git-scm.com/downloads)
 
 >[!div class="step-by-step"]

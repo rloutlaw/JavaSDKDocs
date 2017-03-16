@@ -49,4 +49,4 @@ Add an image tag to the JSP, replacing `$storage_acct` with the actual name of t
 ```
 
 >[!div class="step-by-step"]
-[**Automate deployment** &rarr;](get-started-automate.md)
+[**Scale the app** &rarr;](get-started-scale.md)
