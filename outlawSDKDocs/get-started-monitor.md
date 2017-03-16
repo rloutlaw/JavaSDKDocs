@@ -14,7 +14,19 @@ ms.date: 3/06/2016
 
 # Get started with Java in Azure
 
-## Add AppInsights monitoring to your application
+## Monitor the sample through the Azure portal
 
-Add monitoring and write instrumentation and telemetry into the sample with [Azure AppInsights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started).
+Azure App Service uses the [Azure monitor] to create visualizations of key performance metrics in your app with no additional configuration: 
 
+- Live HTTP request volume, error volume, and response times
+- CPU and memory statistics for each instance
+- Network usage 
+
+## View performance metrics on the Azure portal
+
+0. Open the [Azure portal](https://ms.portal.azure.com)
+0. Select **App Services** from the left hand side of the portal.
+0. Select the App Service entry you created for the sample app.
+0. Scroll down to **Monitoring** in the list of actions. The visualizations will appear under **Metrics per instance (Apps)** and **Live HTTP traffic**. 
+
+Instrument your apps with [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started) to gather additional performance details and track user behavior and usage.
