@@ -41,7 +41,7 @@ SqlServer sqlServer = azure.sqlServers().define(sqlServerName)
                     .create();
 ```
 
-See the [ElasticPoolEditions class reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._elastic_pool_editions) for current edition values. Review the [SQL database elastic pool documentation](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-elastic-pool) to compare edition limits and characteristics. 
+See the [ElasticPoolEditions class reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._elastic_pool_editions) for current edition values. Review the [SQL database elastic pool documentation](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-elastic-pool) to compare edition resource characteristics. 
 
 ### Change Database Transaction Unit (DTU) settings in an elastic pool
 
@@ -60,34 +60,35 @@ Review the [DTUs and eDTUs documentation](https://docs.microsoft.com/en-us/azure
 ### Create a new database and add it to an elastic pool
 
 ```java
+// update the elasticPool object with the newly created SqlDatabase
 SqlDatabase anotherDatabase = sqlServer.databases().define(anotherDatabaseName).create();
-// update the SqlElasticPool object with the newly created SqlDatabase
 elasticPool.update().withExistingDatabase(anotherDatabase).apply();            
 ```
 
 ### Remove a database from an elastic pool
 ```java
 // assign the database an edition since its resources are no longer allocated by the pool 
-            anotherDatabase = anotherDatabase.update()
-                    .withoutElasticPool()
-                    .withEdition(DatabaseEditions.STANDARD)
-                    .apply();
+anotherDatabase = anotherDatabase.update()
+                     .withoutElasticPool()
+                     .withEdition(DatabaseEditions.STANDARD)
+                     .apply();
 ```
 
-See the [DatabaseEditions class reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._database_editions) for the current field values to pass to `withEdition`.
+See the [DatabaseEditions class reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._database_editions) for values to pass to `withEdition()`.
 
-### List current activities in an elastic pool
+### List current database activities in an elastic pool
 ```java
-// get a list of in-flight elastic operations in the pool and log them 
+// get a list of in-flight elastic operations on databases in the pool and log them 
 for (ElasticPoolDatabaseActivity databaseActivity : elasticPool.listDatabaseActivities()) {
-    System.out.println("Database " + databaseActivity.databaseName() + " performing operation " 
-        + databaseActivity.operation() + " with objective " + databaseActivity.requestedServiceObjective());
+    System.out.println("Database " + databaseActivity.databaseName() 
+        + " performing operation " + databaseActivity.operation() + 
+        " with objective " + databaseActivity.requestedServiceObjective());
 }
 ```
 
 ### List databases in an elastic pool
 ```java
-// write a list of databases in the elastic pool to the console
+// log a list of databases in the elastic pool to the console
 for (SqlDatabase databaseInServer : elasticPool.listDatabases()) {
     System.out.println(databaseInServer.name());
 }
