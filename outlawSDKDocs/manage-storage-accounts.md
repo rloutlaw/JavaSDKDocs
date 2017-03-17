@@ -20,7 +20,7 @@ ms.author: routlaw;asirveda
 
 # Manage Azure storage accounts with Java
 
-[This sample](https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates an [Azure Storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) account and works with the account access keys using the [Java management libraries]((https://github.com/Azure/azure-sdk-for-java). 
+[This sample](https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates an [Azure Storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) account and works with the account access keys using the [Java management libraries](https://github.com/Azure/azure-sdk-for-java). 
 
 ## Sample code 
 
@@ -52,13 +52,14 @@ for(StorageAccountKey key : storageAccountKeys)    {
 ### Regenerate a key in a storage account
 
 ```java
-// regenerate the first key in a storage account, returning an updated list of keys to work with
-List<StorageAccountKey> updatedStorageAccountKeys = storageAccount.regenerateKey(storageAccountKeys.get(0).keyName());
+// regenerate the first key in a storage account and return an updated list of keys 
+List<StorageAccountKey> updatedStorageAccountKeys =
+    storageAccount.regenerateKey(storageAccountKeys.get(0).keyName());
 ```
 
 ### List all storage accounts in a resource group
 ```java
-// get a list of accounts and log the name and creation time for each one
+// get a list of accounts in a resource group , log info about each one
 List<StorageAccount> accounts = azure.storageAccounts().listByGroup(rgName);
 for (StorageAccount sa : accounts) {
     System.out.println("Storage Account " + sa.name() + " created @ " + sa.creationTime());
@@ -76,13 +77,14 @@ azure.storageAccounts().deleteByGroup(rgName,accountName);
 
 ## Sample explanation
 
-The sample code [on GitHub]((https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates a storage account, reads and updates access keys, lists all storage accounts in a resource group, and then deletes a storage account before exiting
+[The sample code on GitHub](https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates a storage account, reads and updates access keys, lists all storage accounts in a resource group, and then deletes the storage account before exiting
 
 | Class used in sample | Notes |
 |-------|-------|
-| [com.microsoft.azure.management.storage.StorageAccount](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account)  | Object representation of an Azure storage account. Use the methods in the class to get information about the storage account.
-| [com.microsoft.azure.management.storage.StorageAccountKey](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account_key) | `StorageAccount.getKeys()` returns a list of these objects. These objects are read-only and provide the name, permissions, and value of a access key for a storage account. Use the 'regenerateKey' in `StorageAccount` to update the keys.
-| [com.microsoft.azure.management.storage.StorageAccounts](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.datalake.analytics._storage_accounts) | Created from the `azure.storageAccounts()` entry point. Provides access to create, list, update, and delete operations for storage accounts.
+| [com.microsoft.azure.management.storage.StorageAccounts](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.datalake.analytics._storage_accounts) | Created from the `azure.storageAccounts()` entry point. Provides create, list, update, and delete operations for storage accounts.
+| [com.microsoft.azure.management.storage.StorageAccount](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account)  | Representation of an Azure storage account. Use the methods in the class to get information about the storage account.
+| [com.microsoft.azure.management.storage.StorageAccountKey](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account_key) | `StorageAccount.getKeys()` returns a list of these objects. Use the `regenerateKey` methods in `StorageAccount` to update the keys.
+
 
 
 ## Next steps
