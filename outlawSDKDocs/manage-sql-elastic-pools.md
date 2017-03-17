@@ -24,6 +24,8 @@ ms.author: routlaw;asirveda
 
 ## Sample code
 
+[View the complete code sample on GitHub]((https://github.com/Azure-Samples/sql-database-java-manage-sql-dbs-in-elastic-pool)
+
 ### Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
