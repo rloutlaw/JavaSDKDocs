@@ -20,7 +20,7 @@ ms.author: routlaw;asirveda
 
 # Manage Azure SQL database elastic pools with Java
 
-[This sample](https://github.com/Azure-Samples/sql-database-java-manage-sql-dbs-in-elastic-pool) creates a SQL database server with an [elastic pool](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-elastic-pool) to manage and scale multiple databases. 
+[This sample](https://github.com/Azure-Samples/sql-database-java-manage-sql-dbs-in-elastic-pool) creates a SQL database server with an [elastic pool](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-elastic-pool) to manage and scale resouces in a single SQL database plan across multiple databases. 
 
 ## Sample code
 
