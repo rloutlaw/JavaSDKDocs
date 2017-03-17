@@ -101,7 +101,7 @@ sqlServer.elasticPools().delete(elasticPoolName);
 
 ## Sample explanation
 
-The sample uses the following classes in the [Azure management libary](https://github.com/Azure/azure-sdk-for-java) to create and work with SQL server instances, elastic pools, and SQL databases.
+The sample uses the following classes in the [Azure management libary](https://github.com/Azure/azure-sdk-for-java) to create and work with SQL server instances, elastic pools, and SQL databases. A SQL server instance is created with two databases in a single elasic pool. The elastic pool resource limits per database are then set and additional databases are added to the pool. The elastic pool is then queried for runtime information, and finally the SQL databases, the elastic pool, and then the SQL server are deleted.
 
 | Class | Notes |
 |-------|-------|
