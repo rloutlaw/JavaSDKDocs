@@ -18,77 +18,75 @@ ms.author: routlaw;asirveda
 
 ---
 
-# Manage Azure storage networks in Java
+# Manage Azure storage accounts with Java
 
-Manage [Azure Storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) accounts and access keys using the Java management libraries. [The full sample on GitHub](https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates a storage account, reads and updates access keys, lists all storage accounts in a resource group, and deletes a storage account.
+[This sample](https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates an [Azure Storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) account and works with the account access keys using the [Java management libraries]((https://github.com/Azure/azure-sdk-for-java). 
 
-## Authenticate with Azure
+## Sample code 
 
-Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set the environment variable `AZURE_AUTH_LOCATION` on the command line with the full path to the file.
+[View the complete code sample on GitHub](https://github.com/Azure-Samples/storage-java-manage-storage-accounts).
 
-```bash
-export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
-```
+### Authenticate with Azure
 
-The authentication file is used to create the entry point `Azure` object used by the management libraries to define, create, and configure Azure resources.
+[!INCLUDE [auth-include](_shared/auth-include.md)]
 
-```java
-// pull in the location of the security file from the environment 
-final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
-
-// generate the entry point Azure object
-Azure azure = Azure
-        .configure()
-        .withLogLevel(LogLevel.NONE)
-        .authenticate(credFile)
-        .withDefaultSubscription();
-```
-
-## Create a storage account
+### Create a storage account
 
 ```java
-// generate a new storage account using a randomly generated account name
-final String storageAccountName = Utils.createRandomName("sa");
+// create a new storage account
 StorageAccount storageAccount = azure.storageAccounts().define(storageAccountName)
                     .withRegion(Region.US_EAST)
                     .withNewResourceGroup(rgName)
                     .create();
 ```
 
-## List keys in a storage account
-
+### List keys in a storage account
 ```java
-            // list the name and value for each key in the storage account
-            List<StorageAccountKey> storageAccountKeys = storageAccount.getKeys();
-            for(StorageAccountKey key : storageAccountKeys)    {
-                System.out.println("Key name: " + key.keyName() + " with value "+ key.value());
-            }
+// list the name and value for each access key in the storage account
+List<StorageAccountKey> storageAccountKeys = storageAccount.getKeys();
+for(StorageAccountKey key : storageAccountKeys)    {
+    System.out.println("Key name: " + key.keyName() + " with value "+ key.value());
+}
 ```
 
-## Regenerate a key in a storage account
+### Regenerate a key in a storage account
 
 ```java
 // regenerate the first key in a storage account, returning an updated list of keys to work with
 List<StorageAccountKey> updatedStorageAccountKeys = storageAccount.regenerateKey(storageAccountKeys.get(0).keyName());
 ```
 
-## List storage accounts in a resource group
-
+### List all storage accounts in a resource group
 ```java
-            List<StorageAccount> accounts = azure.storageAccounts().listByGroup(rgName);
-            for (StorageAccount sa : accounts) {
-                System.out.println("Storage Account " + sa.name()
-                        + " created @ " + sa.creationTime());
-            }
+// get a list of accounts and log the name and creation time for each one
+List<StorageAccount> accounts = azure.storageAccounts().listByGroup(rgName);
+for (StorageAccount sa : accounts) {
+    System.out.println("Storage Account " + sa.name() + " created @ " + sa.creationTime());
+}
 ```
 
-## Delete a storage account
-
+### Delete a storage account
 ```java
-            // delete by ID when you already have a storage account object
-            System.out.println("Deleting storage account - " + storageAccount.name()
-                    + " created @ " + storageAccount.creationTime());
+// delete by ID when you already have a storage account object
+azure.storageAccounts().deleteById(storageAccount.id());
 
-            azure.storageAccounts().deleteById(storageAccount.id());
+// delete by resource group and account name if you don't have an account object
+azure.storageAccounts().deleteByGroup(rgName,accountName);
 ```
 
+## Sample explanation
+
+The sample code [on GitHub]((https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates a storage account, reads and updates access keys, lists all storage accounts in a resource group, and then deletes a storage account before exiting
+
+| Class used in sample | Notes |
+|-------|-------|
+| [com.microsoft.azure.management.storage.StorageAccount](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account)  | Object representation of an Azure storage account. Use the methods in the class to get information about the storage account.
+| [com.microsoft.azure.management.storage.StorageAccountKey](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account_key) | `StorageAccount.getKeys()` returns a list of these objects. These objects are read-only and provide the name, permissions, and value of a access key for a storage account. Use the 'regenerateKey' in `StorageAccount` to update the keys.
+| [com.microsoft.azure.management.storage.StorageAccounts](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.datalake.analytics._storage_accounts) | Created from the `azure.storageAccounts()` entry point. Provides access to create, list, update, and delete operations for storage accounts.
+
+
+## Next steps
+
+[!INCLUDE [next-steps](_shared/next-steps.md)]
+
+Additional Azure storage samples can be found in the [Azure Storage documentation](https://docs.microsoft.com/en-us/azure/storage/).
