@@ -18,39 +18,23 @@ ms.author: routlaw;asirveda
 
 ---
 
-# Manage Azure networks in Java
+# Manage Azure virtual networks with Java
 
-Create [virtual networks](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) to partition and connect your Azure resources on the same logical network and create [network security groups]() to control how networks can access public or private networking resources.
+[This sample] creates a [virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) to connect your Azure compute resources on an isolated network segment you control.
 
-This sample creates a single virtual network with two subnets. The back subnet is completely cut off from the public Internet. The front-facing subnet accepts inbound HTTP traffic from the Internet. Every virtual machine on the subnet can still communicate with each other through default network security group rules.
+## Sample code
 
-## Authenticate with Azure
+[View the complete code sample on GitHub](https://github.com/Azure-Samples/network-java-manage-virtual-network/blob/master/src/main/java/com/microsoft/azure/management/network/samples/ManageVirtualNetwork.java).
 
-Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set the environment variable `AZURE_AUTH_LOCATION` on the command line with the full path to the file.
+### Authenticate with Azure
 
-```bash
-export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
-```
+[!INCLUDE [auth-include](_shared/auth-include.md)]
 
-The authentication file is used to create the entry point `Azure` object used by the management libraries to define, create, and configure Azure resources.
-
-```java
-// pull in the location of the security file from the environment 
-final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
-
-// generate the entry point Azure object
-Azure azure = Azure
-        .configure()
-        .withLogLevel(LogLevel.NONE)
-        .authenticate(credFile)
-        .withDefaultSubscription();
-```
-
-## Create a network security group isolating a subnet from Internet traffic
+### Create a network security group to block Internet traffic
 
 ```java
  // this Network security group definition blocks out all traffic from and to the public Internet
-            NetworkSecurityGroup backEndSubnetNsg = azure.networkSecurityGroups().define(vnet1BackEndSubnetNsgName)
+NetworkSecurityGroup backEndSubnetNsg = azure.networkSecurityGroups().define(vnet1BackEndSubnetNsgName)
                     .withRegion(Region.US_EAST)
                     .withNewResourceGroup(rgName)
                     .defineRule("DenyInternetInComing")
@@ -72,10 +56,13 @@ Azure azure = Azure
                     .create();
 ```
 
-## Create a virtual network with two subnets
+This [network security group](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) blocks both inbound and outbound public Internet traffic. This network security group will not have an effect until it is applied to a subnet in your virtual network.
+
+### Create a virtual network with two subnets
 
 ```java
-// create the a virtual network with two subnets, with the backend one using the network security group
+// create the a virtual network with two subnets
+// the backend one uses the existing network security group that blocks all internet traffic
 Network virtualNetwork1 = azure.networks().define(vnetName1)
                     .withRegion(Region.US_EAST)
                     .withExistingResourceGroup(rgName)
@@ -88,12 +75,11 @@ Network virtualNetwork1 = azure.networks().define(vnetName1)
                     .create();
 ```
 
-The backend subnet is denied Internet access through the network security group definition. The front end subnet uses the [default rules](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) which allow bidirectional traffic in the virtual network and outbound access to the Internet.
+The backend subnet is denied Internet access following the rules in the  network security group definition. The front end subnet uses the [default rules](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) which allow outbound traffic to the Internet.
 
-## Create a network security group to allow inbound HTTP traffic
-
+### Create a network security group to allow inbound HTTP traffic
 ```java
-// create a rule that allows inbound HTTP from the Internet, and blocks all outbound Internet traffic
+// create a rule that allows inbound HTTP and blocks outbound Internet traffic
 NetworkSecurityGroup frontEndSubnetNsg = azure.networkSecurityGroups().define(vnet1FrontEndSubnetNsgName)
                     .withRegion(Region.US_EAST)
                     .withExistingResourceGroup(rgName)
@@ -116,26 +102,23 @@ NetworkSecurityGroup frontEndSubnetNsg = azure.networkSecurityGroups().define(vn
                     .create();
 ```
 
-This network security group does nothing until it is used to update or create a subnet.
-
-## Update a virtual network
-
+### Update a virtual network
 ```java
-// update the existing virtual network's front end subnet with the new seucirty rule to allow inbound HTTP traffic
+// update the front end subnet to use the rules in the new network security group
 virtualNetwork1.update()
-                    .updateSubnet(vnet1FrontEndSubnetName)
-                        .withExistingNetworkSecurityGroup(frontEndSubnetNsg)
-                        .parent()
-                    .apply();
+          .updateSubnet(vnet1FrontEndSubnetName)
+          .withExistingNetworkSecurityGroup(frontEndSubnetNsg)
+          .parent()
+          .apply();
 ```
 
-## Create a virtual machine on a subnet
-
+### Create a virtual machine on a subnet
 ```java
-            VirtualMachine frontEndVM = azure.virtualMachines().define(frontEndVmName)
+// use the existing virtual network and front-end subnet to attach the new VM to the network
+VirtualMachine frontEndVM = azure.virtualMachines().define(frontEndVmName)
                     .withRegion(Region.US_EAST)
                     .withExistingResourceGroup(rgName)
-                    .withExistingPrimaryNetwork(virtualNetwork1) // use the existing virtual network and front-end subnet
+                    .withExistingPrimaryNetwork(virtualNetwork1) 
                     .withSubnet(vnet1FrontEndSubnetName)
                     .withPrimaryPrivateIpAddressDynamic()
                     .withNewPrimaryPublicIpAddress(publicIpAddressLeafDnsForFrontEndVm)
@@ -146,33 +129,42 @@ virtualNetwork1.update()
                     .create();
 ```
 
-## List virtual networks in a resource group
+`withExistingPrimaryNetwork()` and `withSubnet()` configure the virtual machine to use the network created previously.
 
+### List virtual networks in a resource group
 ```java
-            // the Utils.print() method is a utility method in the sample that writes information
-            // about a resource to the console 
-            for (Network virtualNetwork : azure.networks().listByGroup(rgName)) {
-                Utils.print(virtualNetwork);
-            }
-
-            // iterate over every virtual network in the resource group 
-            for (Network virtualNetwork : azure.networks().listByGroup(rgName)) {
-                // for each subnet on the virtual network, log the address prefix 
-                for (Map.Entry<String, Subnet> entry : virtualNetwork.subnets().entrySet()) {
-                    String subnetName = entry.getKey();
-                    Subnet subnet = entry.getValue();
-                    System.out.println("Address prefix for subnet " + subnetName + " is " + subnet.addressPrefix());
-                }
-            }
+// iterate over every virtual network in the resource group 
+for (Network virtualNetwork : azure.networks().listByGroup(rgName)) {
+    // for each subnet on the virtual network, log the network address prefix 
+    for (Map.Entry<String, Subnet> entry : virtualNetwork.subnets().entrySet()) {
+        String subnetName = entry.getKey();
+        Subnet subnet = entry.getValue();
+        System.out.println("Address prefix for subnet " + subnetName + " is " + subnet.addressPrefix());
+    }
+}
 ```       
 
-## Delete a virtual network
-
+### Delete a virtual network
 ```java
-// if you already have the virtual network object it is easiest to delete by group
+// if you already have the virtual network object it is easiest to delete by ID
 azure.networks().deleteById(virtualNetwork1.id());
 
-// same delete as above but by resource group and name
+// Delete by resource group and name if you don't have the VirtualMachine object
 azure.networks().deleteByGroup(rgName,vnetName1);
 ```
 
+## Sample explanation
+
+This sample creates a virtual network with two subnets and with one virtual machine each. The back subnet is completely cut off from the public Internet. The front-facing subnet accepts inbound HTTP traffic from the Internet. Every virtual machine on the subnet can still communicate with each other through the default network security group rules.
+
+| Class used in sample | Notes |
+|-------|-------|
+| [com.microsoft.azure.management.network.Network](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._network) | Local object representation of the virtual network created from `azure.networks().define()...create()` . Update the Network object after it is created using the `update()...apply()` fluent chain.
+| [com.microsoft.azure.management.network.Subnet](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._subnet) | Subnets are created on the virtual network when defining or updating the network using `withSubnet()`. Object representations of a Subnet can be retrieved from `Network.subnets().get()` or `Network.subnets().entrySet()` and queried for information about their properties.
+| [com.microsoft.azure.management.network.NetworkSecurityGroup](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._network_security_group) | Created using the `azure.networkSecurityGroups().define()...create()` fluent chain and then applied to subnets through the updating or creating subnets in a virtual network. 
+
+## Next steps
+
+[!INCLUDE [next-steps](_shared/next-steps.md)]
+
+Additional Azure storage samples can be found in the [Azure virtual netowrking documentation](https://docs.microsoft.com/en-us/azure/virtual-network/).
