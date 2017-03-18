@@ -169,4 +169,4 @@ This sample creates a virtual network with two subnets and with one virtual mach
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
 
-Additional Azure storage samples can be found in the [Azure virtual netowrking documentation](https://docs.microsoft.com/en-us/azure/virtual-network/).
+Additional Azure storage samples can be found in the [Azure virtual networking documentation](https://docs.microsoft.com/en-us/azure/virtual-network/).
