@@ -79,7 +79,7 @@ azure.storageAccounts().deleteByGroup(rgName,accountName);
 
 [The sample code on GitHub](https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates a storage account, reads and updates access keys, lists all storage accounts in a resource group, and then deletes the storage account before exiting
 
-| Class used in sample | Notes |
+| Class used in sample | Notes
 |-------|-------|
 | [com.microsoft.azure.management.storage.StorageAccounts](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.datalake.analytics._storage_accounts) | Created from the `azure.storageAccounts()` entry point. Provides create, list, update, and delete operations for storage accounts.
 | [com.microsoft.azure.management.storage.StorageAccount](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account)  | Representation of an Azure storage account. Use the methods in the class to get information about the storage account.
