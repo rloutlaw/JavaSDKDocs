@@ -18,22 +18,20 @@ ms.author: routlaw;asirveda
 
 ---
 
-## Create and manage Azure virtual machine scale sets in Java
+# Manage Azure virtual machine scale sets with Java
 
-[This sample](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets) code creates a new [virtual machine scale set](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-overview) using the Java management libraries. The sample covers both the creation of the scale set and the management of the scale set after it is created.
+[This sample](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets) creates a  [virtual machine scale set](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-overview) using the J[Java management libraries](https://github.com/Azure/azure-sdk-for-java). 
 
-## Authenticate with Azure
+## Sample code
+
+### Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
-
-## Create a scale set
-
-Before creating the scale set definition, first set up a virtual network for the scale set and a load balancer to distribute workload across scale set instances.
 
 ### Create a virtual network for the scale set
 
 ```java
-   Network network = azure.networks().define(vnetName)
+Network network = azure.networks().define(vnetName)
                     .withRegion(region)
                     .withNewResourceGroup(rgName)
                     .withAddressSpace("172.16.0.0/16")
@@ -43,21 +41,24 @@ Before creating the scale set definition, first set up a virtual network for the
                     .create();
 ```
 
+Set up a virtual network and load balancer before creating the scale set definition. These resources will be used in the initial configuration of the scale set.
+
 ### Create a load balancer to distribute load across the scale set
 
 ```java
 LoadBalancer loadBalancer1 = azure.loadBalancers().define(loadBalancerName1)
                     .withRegion(region)
                     .withExistingResourceGroup(rgName)
+                    // assign a public IP address to the load balancer
                     .definePublicFrontend(frontendName)
                         .withExistingPublicIPAddress(publicIPAddress)
                         .attach()
-                    // Add two backend one per rule
+                    // Add two backend address pools
                     .defineBackend(backendPoolName1)
                         .attach()
                     .defineBackend(backendPoolName2)
                         .attach()
-                    // Add two probes one per rule
+                    // Add two health probes on 80 and 443
                     .defineHttpProbe(httpProbe)
                         .withRequestPath("/")
                         .withPort(80)
@@ -67,7 +68,7 @@ LoadBalancer loadBalancer1 = azure.loadBalancers().define(loadBalancerName1)
                         .withPort(443)
                         .attach()
 
-                    // Add two rules that uses above backend and probe
+                    // balance HTTP and HTTPs traffic
                     .defineLoadBalancingRule(httpLoadBalancingRule)
                         .withProtocol(TransportProtocol.TCP)
                         .withFrontend(frontendName)
@@ -83,8 +84,7 @@ LoadBalancer loadBalancer1 = azure.loadBalancers().define(loadBalancerName1)
                         .withBackend(backendPoolName2)
                         .attach()
 
-                    // Add nat pools to enable direct VM connectivity for
-                    //  SSH to port 22 and TELNET to port 23
+                    // Add NAT definitions to enable SSH and telnet to the VMs 
                     .defineInboundNatPool(natPool50XXto22)
                         .withProtocol(TransportProtocol.TCP)
                         .withFrontend(frontendName)
@@ -100,9 +100,9 @@ LoadBalancer loadBalancer1 = azure.loadBalancers().define(loadBalancerName1)
                     .create();
 ```
 
-The example load balancer created here is lengthy but straightforward. The load balancer creates two backend network address pools-one to balance load across HTTP and the other to balance load across HTTPS. Requests to the "/" HTTP and HTTPS URI on the scale set instances are defined as health probes endpoints. NAT rules are set up on the load balancer for ports 22 and 23 on the scale set instances so they can be managed directly via telnet or SSH.
+ The load balancer defines two backend network address pools-one to balance load across HTTP (`backendPoolName1`) and the other to balance load across HTTPS (`backendPoolName2`). Requests to the `/` HTTP and HTTPS URI on the scale set instances are defined as health probes endpoints the load balancers will use to verify if a scale set member goes unresponsive. NAT rules are set up on the load balancer for  ports 22 and 23 on the virtual machines in the scale set so they can be managed via telnet and SSH.
 
-### Create the scale set
+### Create a scale set
  
 ```java
  // Create a virtual machine scale set with three virtual machines
@@ -135,46 +135,44 @@ VirtualMachineScaleSet virtualMachineScaleSet = azure.virtualMachineScaleSets().
                     .create();
 ```
 
-Use the virtual network definition and load balancer definitions created in the previous step to create a scale set with three Linux instances (`withCapacity(3)`) and three 100GB data disks each. The `defineNewExtension()` section installs the Apache web server on the instance members.
+Use the virtual network definition and load balancer definitions created in the previous step to create a scale set with three Linux instances (`withCapacity(3)`) and three 100GB data disks each. The `defineNewExtension()` method chain installs the Apache web server on each VM.
 
-## Work with virtual machine scale set network interfaces
+### List virtual machine scale set network interfaces
 
 ```java
-            System.out.println("Listing scale set network interfaces ...");
-            PagedList<VirtualMachineScaleSetNetworkInterface> vmssNics = virtualMachineScaleSet.listNetworkInterfaces();
-            for (VirtualMachineScaleSetNetworkInterface vmssNic : vmssNics) {
-                System.out.println(vmssNic.id());
-            }
+// List network interfaces on the scale set and iterate through them
+PagedList<VirtualMachineScaleSetNetworkInterface> vmssNics = virtualMachineScaleSet.listNetworkInterfaces();
+for (VirtualMachineScaleSetNetworkInterface vmssNic : vmssNics) {
+    System.out.println(vmssNic.id());
+}
 ```
 
-This sample simply prints out the ID of the network interface, but once you have the scale set network interface instance object you can use methods such as `ipConfigurations()` to query interface details.
-
-## Get SSH connection strings for each scale set instance
+### Get SSH connection strings for each scale set virtual machine
 
 ```java
 for (VirtualMachineScaleSetVM instance : virtualMachineScaleSet.virtualMachines().list()) {
-                System.out.println("Scale set virtual machine instance #" + instance.instanceId());
-                System.out.println(instance.id());
-                PagedList<VirtualMachineScaleSetNetworkInterface> networkInterfaces = instance.listNetworkInterfaces();
-                // Pick the first NIC on the instance and use its primary IP address
-                VirtualMachineScaleSetNetworkInterface networkInterface = networkInterfaces.get(0);
-                for (VirtualMachineScaleSetNicIPConfiguration ipConfig : networkInterface.ipConfigurations().values()) {
-                    if (ipConfig.isPrimary()) {
-                        List<LoadBalancerInboundNatRule> natRules = ipConfig.listAssociatedLoadBalancerInboundNatRules();
-                        for (LoadBalancerInboundNatRule natRule : natRules) {
-                            // search through the NAT rules for the rule matching the inbound SSH port on the backend for this IP address
-                            if (natRule.backendPort() == 22) {
-                                System.out.println("SSH connection string: " + userName + "@" + publicIPAddress.fqdn() + ":" + natRule.frontendPort());
-                                break;
-                            }
-                        }
-                        break;
-                    }
+    System.out.println("Scale set virtual machine instance #" + instance.instanceId());
+    System.out.println(instance.id());
+    PagedList<VirtualMachineScaleSetNetworkInterface> networkInterfaces = instance.listNetworkInterfaces();
+    // Pick the first NIC on the instance and use its primary IP address
+    VirtualMachineScaleSetNetworkInterface networkInterface = networkInterfaces.get(0);
+    for (VirtualMachineScaleSetNicIPConfiguration ipConfig : networkInterface.ipConfigurations().values()) {
+        if (ipConfig.isPrimary()) {
+            List<LoadBalancerInboundNatRule> natRules = ipConfig.listAssociatedLoadBalancerInboundNatRules();
+            for (LoadBalancerInboundNatRule natRule : natRules) {
+                // search through the NAT rules for the rule matching the inbound SSH port on the backend for this IP address
+                if (natRule.backendPort() == 22) {
+                    System.out.println("SSH connection string: " + userName + "@" + publicIPAddress.fqdn() + ":" + natRule.frontendPort());
+                break;
                 }
             }
+            break;
+        }
+    }
+}
 ```
 
-## Stop the virtual machine scale set
+### Stop the virtual machine scale set
 
 ```java
             // stop (not deallocate) all scale set instances
@@ -184,23 +182,23 @@ for (VirtualMachineScaleSetVM instance : virtualMachineScaleSet.virtualMachines(
 Stopped instances have the virtual machine operating system shut down, but the scale set instances continue to reserve Azure compute, network, and storage resources used by the
 instances when they were started.
 
-## Deallocate the virtual machine scale set
+### Deallocate the virtual machine scale set
 
 ```java
        // deallocate the virtual machine scale set
                  virtualMachineScaleSet.deallocate();
 ```
 
-Deallocated scale set instances stop the operating system for the scale set instances as well as return the used compute and network resources (including any non-static IP addresses) used by the scale set instances. You continue to accrue charges for Azure storage used for the virtual machine's data and OS disks. 
+Deallocated scale set instances stop the operating system for the scale set and return the used compute and network resources (including any non-static IP addresses) used by the scale set instances. You continue to accrue charges for Azure storage used for the virtual machine's data and OS disks. 
 
-## Start a virtual machine scale set
+### Start a virtual machine scale set
 
 ```java
     // start a dealloated or stopped virtual machine scale set
      virtualMachineScaleSet.start();
 ```
 
-## Update the number of virtual machines instances in the scale set
+### Update the number of virtual machines instances in the scale set
 ```java
             // increase the number of virtual machine scale set instances to six from the
             // three in the create sample
@@ -209,4 +207,20 @@ Deallocated scale set instances stop the operating system for the scale set inst
                     .apply();
 ```
 
+## Sample explanation
 
+[The sample code](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/ManageVirtualMachineScaleSet.java) first creates a virtual network for the scale set to communicate across and a load balancer to distribute traffic across the virtual machines. The scale set is then defined created through `azure.virtualMachineScaleSets().define()...create()` with three Linux instances running the Apache web server. 
+
+| Class used in sample | Notes
+|-------|-------|
+| [com.microsoft.azure.management.compute.VirtualMachineScaleSet](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set) | Query, start, stop, update and delete all virtual machines in the scale set.
+| [com.microsoft.azure.management.compute.VirtualMachineScaleSetVM](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set_v_m) | Retrieved from `virtualMachineScaleSet.virtualMachines().get()` or `list()`, allows you to query, start, stop, configure and delete virtual machines in the scale set.
+| [com.microsoft.azure.management.network.VirtualMachineScaleSetNetworkInterface](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._virtual_machine_scale_set_network_interface) | Returned from `virtualMachineScaleSet.listNetworkInterfaces()`, read-only representation of a network interface on a virtual machine in a scale set.
+| [com.microsoft.azure.management.compute.VirtualMachineScaleSetSkuTypes](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set_sku_types) | Class of static fields used to set the [virtual machine scale set tier](https://azure.microsoft.com/en-us/pricing/details/virtual-machine-scale-sets/linux/) used to define how much resources scale set members can consume.
+| [com.microsoft.azure.management.network.VirtualMachineScaleSetNicIpConfiguration](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._virtual_machine_scale_set_nic_i_p_configuration) | Used to query the IP configuration associated with a network interface on a scale set virtual machine.
+
+## Next steps
+
+[!INCLUDE [next-steps](_shared/next-steps.md)]
+
+Additional Azure storage samples can be found in the [Azure scale set documentation](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/).
