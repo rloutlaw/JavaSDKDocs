@@ -91,4 +91,4 @@ azure.storageAccounts().deleteByGroup(rgName,accountName);
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
 
-Additional Azure storage samples can be found in the [Azure Storage documentation](https://docs.microsoft.com/en-us/azure/storage/).
+Additional Azure storage samples can be found in the [Azure storage documentation](https://docs.microsoft.com/en-us/azure/storage/).

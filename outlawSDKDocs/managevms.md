@@ -145,4 +145,4 @@ A Linux virtual machine is then created in the same virtual network. The code ge
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
 
-Additional Azure storage samples can be found in the [Azure Storage documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/).
+Additional Azure storage samples can be found in the [Azure virtual machines documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/).
