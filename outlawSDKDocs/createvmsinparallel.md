@@ -29,7 +29,7 @@ ms.author: routlaw;asirveda
 
 View the [complete code sample on GitHub](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/CreateVirtualMachinesInParallel.java).
 
-## Authenticate with Azure
+### Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
