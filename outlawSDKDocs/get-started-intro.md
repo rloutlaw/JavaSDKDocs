@@ -12,11 +12,11 @@ ms.technology: Azure
 ms.date: 3/06/2016
 ---
 
-# Set up your development environment
+# Get started with Java for Azure developers
 
-This quick start guides you through getting a simple Java webapp deployed in Azure.
+This tutorial will walk you through deploying a simple Java webapp in Azure.
 
-This tutorial assumes you have:
+## Prerequisites
 
 - An Azure account. If you don't have one , [get a free trial](https://azure.microsoft.com/free/)
 - [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
