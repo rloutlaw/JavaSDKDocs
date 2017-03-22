@@ -12,11 +12,9 @@ ms.technology: Azure
 ms.date: 3/06/2016
 ---
 
-# Get started with Java in Azure
+# Deploy a Java app to Azure App Service
 
-## Configure Azure App Service
-
-Use the Azure CLI 2.0 to configure [Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/app-service-how-works-readme) to run your app.
+## Configure App Service
 
 ```bash
 # assign a random name to the sample app
@@ -31,7 +29,16 @@ az appservice web create --name $appname --resource-group sampleResourceGroup --
 az appservice web config update --resource-group sampleResourceGroup --name $appname --java-container TOMCAT --java-version 1.8.0_73 --java-container-version 8.5
 ```
 
-Verify the web app was created successfully with the following command:
+## Deploy the app via FTP with Maven
+
+```bash
+AZ_FTP_USER=<new FTP username>
+AZ_FTP_PASS=<new FTP password>
+az appservice web deployment user set --user-name $AZ_FTP_USER --password $AZ_FTP_PASS
+mvn deploy
+```
+
+## Verify the sample
 
 ```bash
 az appservice web browse --resource-group sampleResourceGroup --name $appname

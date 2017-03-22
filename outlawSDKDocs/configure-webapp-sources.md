@@ -20,32 +20,31 @@ ms.author: routlaw;asirveda
 
 # Configure Azure App Service deployment sources with Java
 
-[This sample](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel) creates four applications in a single [Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/) plan and pushes code to each of them using different deployment sources.
+[This Java sample](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel) creates four applications in a single [App Service](https://docs.microsoft.com/en-us/azure/app-service/) plan and pushes code to each of them using different deployment sources.
 
 ## Run the sample
 
-To run the sample, create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
+Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
 
-```bash
+```
+export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
 git clone https://github.com/Azure-Samples/app-service-java-configure-deployment-sources-for-web-apps.git
-
 cd app-service-java-configure-deployment-sources-for-web-apps
-
 mvn clean compile exec:java
 ```
 
 ## Sample code
 
-View the [complete sample code on GitHub](https://github.com/Azure-Samples/app-service-java-configure-deployment-sources-for-web-apps/blob/master/src/main/java/com/microsoft/azure/management/appservice/samples/ManageWebAppSourceControl.java)
+View the [complete sample code on GitHub](https://github.com/Azure-Samples/app-service-java-configure-deployment-sources-for-web-apps/blob/master/src/main/java/com/microsoft/azure/management/appservice/samples/ManageWebAppSourceControl.java).
 
 ### Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a App Service app with running on Tomcat
+### Create a App Service app running on Apache Tomcat
 
 ```java
-// create a new S1 plan and create a single Java 8/Tomcat 8 app in the plan
+// create a new Standard app service plan and create a single Java 8/Tomcat 8 app in it
 WebApp app1 = azure.webApps().define(app1Name)
              .withNewResourceGroup(rgName)
              .withNewAppServicePlan(planName)
@@ -58,19 +57,17 @@ WebApp app1 = azure.webApps().define(app1Name)
 
 ### Deploy a Java application using FTP
 ```java
-
-// pass the PublishingProfile that contains FTP credentials to a helper method that uploads a WAR file
-// on the filesystem to the /site/wwwroot/webapps folder in App Service. Tomcat will automatically
-// deploy WAR files uploaded to this directory.
+// pass the PublishingProfile that contains FTP information to a helper method 
 uploadFileToFtp(app1.getPublishingProfile(), "helloworld.war", ManageWebAppSourceControl.class.getResourceAsStream("/helloworld.war"));
 
-// this method uses the FTP classes in the Apache Commons library to connect to Azure using the username and password
-// in the PublishingProfile object
+// Use the FTP classes in the Apache Commons library to connect to Azure using the information
+// in the PublishingProfile
 private static void uploadFileToFtp(PublishingProfile profile, String fileName, InputStream file) throws Exception {
         FTPClient ftpClient = new FTPClient();
         String[] ftpUrlSegments = profile.ftpUrl().split("/", 2);
         String server = ftpUrlSegments[0];
-        String path = "./site/wwwroot/webapps";
+        // Tomcat will deploy WAR files uploaded to this directory.
+        String path = "./site/wwwroot/webapps"; 
         ftpClient.connect(server);
         ftpClient.login(profile.ftpUsername(), profile.ftpPassword());
         ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -83,7 +80,7 @@ private static void uploadFileToFtp(PublishingProfile profile, String fileName, 
 This code uploads a WAR file to the `/site/wwwroot/webapps` directory for the app in App Service. Tomcat is configured to monitor and
 deploy WAR files in this directory by default in App Service.
 
-### Deploy a Java application in a local Git repo
+### Deploy a Java application from a local Git repo
 
 ```java
 PublishingProfile profile = app2.getPublishingProfile();
@@ -103,15 +100,15 @@ command.setForce(true);
 command.call();
 ```      
 
-This code uses the [JGit](https://eclipse.org/jgit/) libraries to create a new Git repo in the `src/main/resources/azure-samples-appservice-helloworld` directory, add all the files to an initial commit, then push the commit to Azure using the Git remote URL, username and password from the `PublishingProfile` object. 
+This code uses the [JGit](https://eclipse.org/jgit/) libraries to create a new Git repo in the `src/main/resources/azure-samples-appservice-helloworld` folder. The sample then adds all files in the folder to an initial commit and pushes the commit to Azure using the Git information in the `PublishingProfile`. 
 
 >[!NOTE]
-> The layout of the files in the repo must match exactly how you want the files deployed under the `/site/wwwroot/` directory on the Tomcat instance. For example, you cannot push a Maven project with Git deployment without committing outputs from your local build into the appropriate location in your repo first.
+> The layout of the files in the repo must match exactly how you want the files deployed under the `/site/wwwroot/` directory in Azure App Service.
 
 ### Deploy an application from a public Git repo
 
 ```java
-// create a new webapp in App Service and deploy a .NET sample app from a public GitHub repo
+// deploy a .NET sample app from a public GitHub repo into a new webapp
 WebApp app3 = azure.webApps().define(app3Name)
                     .withNewResourceGroup(rgName)
                     .withExistingAppServicePlan(plan)
@@ -125,7 +122,7 @@ WebApp app3 = azure.webApps().define(app3Name)
 ### Continuous deployment from a GitHub repo
 
 ```java
-// create a new webapp and deploy your code when your master branch is updated
+// deploy to an application when the master branch in your GitHub repo is updated
 WebApp app4 = azure.webApps()
                     .define(app4Name)
                     .withExistingResourceGroup(rgName)
@@ -139,12 +136,12 @@ WebApp app4 = azure.webApps()
                     .create();
 ```  
 
-The `username` value in this code is your GitHub username. You'll need to [create a GitHub personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) with read permissions and pass it to `withGitHubAccessToken`. 
+The `username` and `reponame` values are the ones used in GitHub. You'll need to [create a GitHub personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) with read permissions and pass it to `withGitHubAccessToken`. 
 
 
 ## Sample explanation
 
-The sample creates the first application using Java 8 and Tomcat 8 running in a newly created [Standard S1 plan](https://docs.microsoft.com/en-us/azure/app-service/azure-web-sites-web-hosting-plans-in-depth-overview) . The `PublishingProfile` for the newly created app is retieved and used to get the hostname, username, and password for FTP deployment. The code then uploads a WAR file to the directory Tomcat is configured to monitor for new deployments. 
+The sample creates the first application using Java 8 and Tomcat 8 running in a newly created [Standard](https://docs.microsoft.com/en-us/azure/app-service/azure-web-sites-web-hosting-plans-in-depth-overview) App Service plan. The code then FTPs a WAR file to the directory Tomcat is configured to monitor for new deployments using the information in the `PublishingProfile` object.
 
 The second application is created in the same plan as the first and is also configured as a Java 8/Tomcat 8 application. The JGit libraries are used to create a new Git repository in a folder of the sample that contains an unpacked Java web application in a directory structure that maps to the one in App Service. The files in the folder are committed to the repo and pushed to Azure using a Git remote URL and username/password provided by the `PublishingProfile`.
 

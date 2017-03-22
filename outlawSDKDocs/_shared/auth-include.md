@@ -4,7 +4,7 @@ Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob
 export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
 ```
 
-The authentication file is used to create the top level `Azure` object, which is used by the management libraries to define, create, and configure Azure resources.
+The authentication file is used to configure the entry point `Azure` object used by the management libraries to define, create, and configure Azure resources.
 
 ```java
 // pull in the location of the security file from the environment 
@@ -17,4 +17,4 @@ Azure azure = Azure
         .withDefaultSubscription();
 ```
 
-[Learn more](authentication.md) about authentication when using the Azure management libraries for Java.
+[Learn more](ceoncepts.md#authentication) about authentication when using the Azure management libraries for Java.

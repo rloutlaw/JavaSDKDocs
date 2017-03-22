@@ -12,27 +12,22 @@ ms.technology: Azure
 ms.date: 3/06/2016
 ---
 
-# Get started with Java in Azure
+# Get the sample Java webapp
 
-## Get the sample app
-
-Clone the [sample GitHub repo](https://github.com/rloutlaw/hello-world-java) to your system:
+Clone the [sample](https://github.com/rloutlaw/hello-world-java) to your system:
 
 ```bash
 git clone https://github.com/rloutlaw/hello-world-java.git
 ```
 
-## Build and verify the sample locally
-
-Build the sample and run it in a local Jetty container:
+## Run the sample locally
 
 ```bash
 cd hello-world-java
-mvn package
-mvn jetty:run
+mvn package jetty:run
 ```
 
-Browse to http://localhost:8080/index.jsp and verify that the app is running. Hit `Control+C` to stop the Jetty instance when done.
+Browse to http://localhost:8080/index.jsp and verify that the app is running.
 
 >[!div class="step-by-step"]
-[**Configure App Service** &rarr;](get-started-appservice.md)
+[**Deploy to App Service** &rarr;](get-started-appservice.md)
