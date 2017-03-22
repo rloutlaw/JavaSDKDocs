@@ -38,7 +38,7 @@ az appservice web config update --java-container TOMCAT --java-version 1.8.0_73 
 read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles --query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
 
 # deploy using the maven wagon FTP plugin
-mvn deploy
+mvn install -s az-settings.xml -Daz.site=$AZSITE -Daz.user=$AZUSER -Daz.pass=$AZPASS
 ```
 
 ## Verify in your browser
