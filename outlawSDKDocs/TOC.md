@@ -5,7 +5,7 @@
 # Get started 
 ## [Set up your environment](get-started-setup.md)
 ## [Get the sample](get-started-sample.md)
-## [Deploy the app](get-started-deploy.md)
+## [Deploy the app](get-started-appservice.md)
 # Quickstarts
 ## Build and deploy applications 
 ### [Build and deploy a Java API in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-java-api-app)
