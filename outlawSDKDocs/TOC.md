@@ -3,15 +3,10 @@
 ## [Tools](tools.md)
 ## [Import Maven dependencies](download.md)
 # Get started 
-## [Introduction](get-started-intro.md)
 ## [Set up your environment](get-started-setup.md)
 ## [Get the sample](get-started-sample.md)
-## [Configure App Service](get-started-appservice.md)
 ## [Deploy the app](get-started-deploy.md)
-## [Make changes](get-started-updates.md)
-## [Add storage](get-started-storage.md)
-## [Automate deployment](get-started-automate.md)
-# How to
+# Quickstarts
 ## Build and deploy applications 
 ### [Build and deploy a Java API in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-java-api-app)
 ### [Build a web application with DocumentDB](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application)
