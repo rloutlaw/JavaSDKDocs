@@ -3,7 +3,7 @@
 ## [Tools](tools.md)
 ## [Import Maven dependencies](download.md)
 # Get started 
-## [Set up your environment](get-started-setup.md)
+## [Set up your environment](get-started-intro.md)
 ## [Get the sample](get-started-sample.md)
 ## [Deploy the app](get-started-appservice.md)
 # Quickstarts
