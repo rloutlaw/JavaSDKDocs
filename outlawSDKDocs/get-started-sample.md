@@ -12,7 +12,7 @@ ms.technology: Azure
 ms.date: 3/06/2016
 ---
 
-# Get the sample Java webapp
+# Download and run a sample Java app
 
 Clone the [sample](https://github.com/rloutlaw/hello-world-java) to your system:
 

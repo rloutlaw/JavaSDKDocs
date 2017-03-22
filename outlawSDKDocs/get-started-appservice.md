@@ -17,31 +17,34 @@ ms.date: 3/06/2016
 ## Configure App Service
 
 ```bash
-# assign a random name to the sample app
-appname=AzureAppDemo$RANDOM 
+# create all resources under the same resource group
+az group create -n sampleResourceGroup -l westus2
 
-# create a new resoruce group for the application and its resources
-az group create -n sampleResourceGroup -l westus2 
+# create a default webapp and resource group for future commands
+appname=AzureJavaDemo$RANDOM
+az configure --defaults web=$appname group=sampleResourceGroup
 
-# create the App Service plan and webapp, then configure the webapp to use Tomcat 
-az appservice plan create --name $appname --resource-group sampleResourceGroup --sku FREE
-az appservice web create --name $appname --resource-group sampleResourceGroup --plan $appname
-az appservice web config update --resource-group sampleResourceGroup --name $appname --java-container TOMCAT --java-version 1.8.0_73 --java-container-version 8.5
+# create the webapp
+az appservice web create --name $appname
+
+# configure the webapp to use Tomcat 
+az appservice web config update --java-container TOMCAT --java-version 1.8.0_73 --java-container-version 8.5
 ```
 
-## Deploy the app via FTP with Maven
+## Deploy the sample 
 
 ```bash
-AZ_FTP_USER=<new FTP username>
-AZ_FTP_PASS=<new FTP password>
-az appservice web deployment user set --user-name $AZ_FTP_USER --password $AZ_FTP_PASS
+# get the FTP URL and credentials for the webapp
+read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles --query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
+
+# deploy using the maven wagon FTP plugin
 mvn deploy
 ```
 
-## Verify the sample
+## Verify in your browser
 
 ```bash
-az appservice web browse --resource-group sampleResourceGroup --name $appname
+az appservice web browse
 ```
 
 >[!div class="step-by-step"]
