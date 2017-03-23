@@ -24,7 +24,7 @@ ms.author: routlaw;asirveda
 
 ## Authentication
 
-The simplest way to authenticate is to create an external properties file that contains your application's credentials:
+The simplest way to authenticate is to create a properties file that contains credentials for an [Azure service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-application-objects)
 
 ```text
 # sample management library properties file
@@ -38,18 +38,18 @@ authURL=https\://login.windows.net/
 graphURL=https\://graph.windows.net/
 ```
 
-- subscription: use the *id* value from `az account show`
-- client: use the *appId* value from the output taken from a service principal created to run the application. If you don't have a service principal yet, [use the Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli) to create one.
-- key: use the *password* value from the service principal 
-- tenant: use the *tenant* value from the service principal
+- subscription: use the *id* value from `az account show` in the Azure CLI 2.0.
+- client: use the *appId* value from the output taken from a service principal created to run the application. If you don't have a service principal for your app, [create one with the Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli).
+- key: use the *password* value from the service principal output 
+- tenant: use the *tenant* value from the service principal output
 
-Save this file in a secure location on your system where your Java code can read from it. Set an environment variable with its location in your shell:
+Save this file in a secure location on your system where your code can read it. Set an environment variable with the full path to the file in your shell:
 
 ```bash
-AZURE_AUTH_LOCATION=/home/frank/secure/azureauth.properties
+AZURE_AUTH_LOCATION=/Users/raisa/azureauth.properties
 ```
 
-Use the properties file to create the entry point `Azure` object to start working with the library:
+Create the entry point `Azure` object to start working with the API:
 
 ```java
 // pull in the location of the authenticaiton properties file from the environment 
@@ -62,17 +62,17 @@ Azure azure = Azure
         .withDefaultSubscription();
 ```
 
-This pattern is used in the samples since the code is compact and easy to follow. If you don't want to persist the credentials in a file, you can load them from your Java code from a secure source (such as [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) ) and initialize the `Azure` entry point using an [ApplicationTokenCredentials](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md#using-applicationtokencredentials) object.
+The samples use file-based authentication to keep the code compact and easy to follow. If you don't want to save the credentials in a file, you can load them from your Java code from a secure source (such as [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) ) and initialize the `Azure` entry point using an [ApplicationTokenCredentials](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md#using-applicationtokencredentials) object.
 
-<a name="Creatbles"></a>
+<a name="Creatables"></a>
 
-## Batch create resources with Creatables
+## Just in time resource creation with Creatables
 
-One of the challenges when creating or updating a resource in Azure is that you might need other Azure resources to configure it. A good example is reserving a public IP address and setting up a disk for a new virtual machine. You don't want create and verify the creation of each intermediate resource-all you really care about is the final result (in our case, the virtual machine). 
+One challenge when creating or updating an Azure resource is that those resources require other resources to exist before they can be created or updated. An example is reserving a public IP address and setting up a disk when creating a new virtual machine. You don't want to verify the reservation of the address or the creation of the disk-you just want to the virtual machine to have those resources.
 
-Using asynchronous methods to create the resources is difficult because some Azures resources are fine to create in parallel but others need to be created in sequence, and it's not straightforward to know which is the case for your scenario. Concurrent code like this is also difficult to develop, debug, maintain, and extend later.
+Use `Creatable` objects to define Azure resources for use in your code but only create them when needed in Azure. Code written with `Creatable` objects offloads resource creation in the Azure environment to the management API, boosting performance. 
 
-The management libraries provide a pattern to define Azure resources without immediately creating them using Creatable objects. Generate Creatable objects through the resource's `define()` verb, for example a public IP address:
+Generate `Creatable `objects through the resource collections' `define()` verb:
 
 ```java
 Creatable<PublicIPAddress> publicIPAddressCreatable = azure.publicIPAddresses().define(publicIPAddressName)
@@ -80,48 +80,47 @@ Creatable<PublicIPAddress> publicIPAddressCreatable = azure.publicIPAddresses().
                     .withNewResourceGroup(rgName);
 ```
 
-At this point, the Azure resource defined by the Creatable does not yet exist in your Azure subscription-it is only a representation of a resource that the management API can create later. Use this Creatable to define other Azure objects that use this resource. These objects can also be Creatables:
+The Azure resource defined by the `Creatable` does not yet exist in your subscription. A `Creatable` is a local representation of a resource that the management API will create when its needed. Use this `Creatable` to define other Azure resources that need this resource. 
 
 ```java
 Creatable<VirtualMachine> vmCreatable = azure.virtualMachines().define("creatableVM")
         .withNewPrimaryPublicIPAddress(publicIPAddressCreatable)
 ```
 
-In this manner you can set up a batch of Azure resources defined in your code for your configuration and use them to configure your environments without managing the creation of the resources every time. When you're ready in your code to create the resources in Azure, generate the Creatables using the `create()` method for the top-level resource type you are working with. To continue the virtual machine example:
+Create the resources in your Azure subscription using the  `create()` method for the resource collection. 
 
 ```java
 CreatedResources<VirtualMachine> virtualMachine = azure.virtualMachines().create(vmCreatable);
 ```
 
-`create()` calls that take a Creatable return a `CreatedResources` generic instead of just a type of the created Azure resource. This is important since when a Creatable is created, any Creatables (such as the IP address in the example) used in defining the resource are also created in Azure. The `CreatedResources` object lets you access all resources created by the `create()` call. For example, to access the actual IP address created for the virtual machine:
+Passing `Creatables` to `create()` calls returns a `CreatedResources` object instead of a single resource object.  The `CreatedResources` object lets you access all resources created by the `create()` call, not just the the type from the resource collection. To access the public IP address created in Azure for the virtual machine created in the above example:
 
 ```java
 PublicIPAddress pip = (PublicIPAddress) virtualMachine.createdRelatedResource(publicIPAddressCreatable.key());
 ```
 
-Use Creatables in your code to define resources locally and batch their creation in parallel in Azure. Creatables keeps your code synchronous and easy to follow and the API takes care of maximizing parallel resource creation, reducing the amount of calls to the Azure backend helping your code to complete faster.
+## Child resource collections
 
-## Child resources
+The management API has a single point of entry through the `com.microsoft.azure.management.Azure` object.  Select which type of resources to work with using the child resource collections in the `Azure` object, for example for SQL Database:
 
-The management libraries have a single point of entry in the `Azure` object you create an instance of. From the `Azure` object, you then select which type of resources to work with , for example:
+```java
+SqlServer sqlServer = azure.sqlServers().define(sqlServerName)
+                    .withRegion(Region.US_EAST)
+                    .withNewResourceGroup(rgName)
+                    .withAdministratorLogin(administratorLogin)
+                    .withAdministratorPassword(administratorPassword)
+                    .create();
+```
 
-azure.virtualMachines() 
-azure.storageAccounts()
-azure.sqlServers()
-
-These child resources are what you define locally and interact with using the API's [verbs](#verbs). Every fluent conversation you have with the API starts with selecting the appropriate child resource for the Azure service or resources you need to work with.
+Most fluent conversations you have with the API starts with selecting the appropriate child resource collection for the Azure service or resources you need to work with.
 
 ## Lists and iterations
 
-Two lists methods are available for every child resource and return a uniform `List` collection to iterate through.
+Every child resource collection has a `list()` method to return every instance of that resource in your current subscription. For example, `azure.sqlServers().list()` returns all SQL databases in the subscription.
 
-`list()` against a child resource returns a `PagedList` collection for all resources of that type in the Azure subscription used to create the entry-point `Azure` object. For example:
+Use the `listByGroup(String groupname)` method to scope the returned List to a specific [Azure resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).  
 
-`azure.sqlServers().list()` returns all SQL databases in the subscription.
-
-Scope the returned resources to a specific Azure resource group by using the `listByGroup(String groupname)` method. This call only returns the resources in a specific resource group in the subscription. 
-
-Returned `PagedList` objects can be iterated over just like a normal `List` collection:
+Iterate over the returned `PagedList` collection just as you would a normal `List`:
 
 ```java
 PagedList<VirtualMachine> vms = azure.virtualMachines().list();
@@ -132,7 +131,7 @@ for (VirtualMachine vm : vms) {
 
 ## Builders, not constructors
 
-You don't need to call constructors to work with the management API as it uses a Builder pattern with a fluent interface to create objects for you to use. For example, the entry-point Azure object:
+You do not call constructors to work with the management API. Use the fluent interface to build the API objects for your code. For example, the entry-point Azure object:
 
 ```java
 Azure azure = Azure
@@ -166,7 +165,7 @@ These child resource levels generally do not have asynchronous versions.
 
 ## Exception handling
 
-The management API currently only throws a few typed exceptions, and most of these are subclasses of the `com.microsoft.rest.RestException` class. If you are looking to catch an exception specific to the management API, having a `catch (RestException exception` block after the relevant try statement is recommended.
+The management API currently only throws a few typed exceptions, and most of these are subclasses of the `com.microsoft.rest.RestException` class. If you are looking to catch an exception specific to the management API, having a `catch (RestException exception)` block after the relevant try statement is recommended.
 
 Open an [open an issue](https://github.com/Azure/azure-sdk-for-java/issues) on GitHub if you feel there's a scenario that really would benefit from a typed exception in the library.
 
@@ -184,12 +183,13 @@ Note the returned collection types when working to make assumptions about the re
 
 Logging in the management API is supported at the REST-level calls that the Java libraries invoke. This logging uses the popular [SLF4J](https://www.slf4j.org/) library for logging and defaults to a simple scheme configured when you build the entry point `Azure` object using the `withLogLevel()` method. You can specify the following trace levels:
 
-| Trace level | Logging enabled | 
-| com.microsoft.rest.LogLevel.NONE | No output |
-| com.microsoft.rest.LogLevel.BASIC | Logs the URLs to underlying REST calls, response codes and times |
-| com.microsoft.rest.LogLevel.BODY | Everything in BASIC plus request and response bodies for the REST calls |
-| com.microsoft.rest.LogLevel.HEADERS | Everything in BASIC plus the request and response headers REST calls | 
-| com.microsoft.rest.LogLevel.BODY_AND_HEADERS | Everything in both BODY and HEADERS log level | 
+| Trace level | Logging enabled 
+| ------------ | ---------------
+| com.microsoft.rest.LogLevel.NONE | No output
+| com.microsoft.rest.LogLevel.BASIC | Logs the URLs to underlying REST calls, response codes and times
+| com.microsoft.rest.LogLevel.BODY | Everything in BASIC plus request and response bodies for the REST calls
+| com.microsoft.rest.LogLevel.HEADERS | Everything in BASIC plus the request and response headers REST calls
+| com.microsoft.rest.LogLevel.BODY_AND_HEADERS | Everything in both BODY and HEADERS log level
 
-Bind a [SLF4J logging implementations](https://www.slf4j.org/manual.html) if you need to log output to a logging framework like [Log4J 2](https://logging.apache.org/log4j/2.x/)
+Bind a [SLF4J logging implementation](https://www.slf4j.org/manual.html) if you need to log output to a logging framework like [Log4J 2](https://logging.apache.org/log4j/2.x/)
 
