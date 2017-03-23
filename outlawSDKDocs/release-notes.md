@@ -50,15 +50,15 @@ Starting in 1.0.0-beta5, if you like to continue to use the storage account base
        .create();
 ```
 
-See the [manage virtual machine with unmanaged disks](https://github.com/azure-samples/compute-java-manage-virtual-machine-with-unmanaged-disks)
+See the [manage virtual machine with unmanaged disks](https://github.com/azure-samples/compute-java-manage-virtual-machine-with-unmanaged-disks) sample for more code examples.
 
 ## Migration 
 
-[Migrate from Beta 4](migrate-from-beta-4.md)
+[Migrate from Beta 4](migrate-from-beta-4.md)    
 [Migrate from 0.91](migrate-from-before-1.md)
 
 ## Previous versions
 
-[1.0.0-beta4](release-notes-1-0-0-beta4.md)
-[1.0.0-beta3](release-notes-1-0-0-beta3.md)
+[1.0.0-beta4 release notes](release-notes-1-0-0-beta4.md)   
+[1.0.0-beta3 release notes](release-notes-1-0-0-beta3.md)
 
