@@ -1,37 +1,33 @@
 ---
-title: Import Maven dependencies for Azure development | Microsoft Docs
-description: Import dependencies into your Java projects to download and use Azure libraries in your projects.
-services: ''
-documentationcenter: java
+title: Azure for Java developers Microsoft Docs
+description: Java SDK and API Reference for Azure
+keywords: Azure Java, Azure Java API Reference, Azure Java class library, Azure SDK
 author: routlaw
 manager: douge
-editor: ''
-
-ms.assetid: 4b8f8fe6-1b26-4bb4-9be9-6ae757a59e66
-ms.service: multiple
-ms.workload: na
-ms.tgt_pltfrm: multiple
-ms.devlang: Java
-ms.topic: article
-ms.date: 12/22/2016
-ms.author: routlaw;asirveda
-
+ms.assetid: 7b92e776-959b-4632-8b1d-047ce1417616
+ms.service: Azure
+ms.devlang: java
+ms.topic: reference
+ms.technology: Azure
+ms.date: 3/06/2016
 ---
-# Import Azure Maven dependencies into your Java projects
 
-Use Azure libraries into your Java projects to [manage resources](#management) and integrate services in your applications.  
+# Azure libraries for Java
+
+Use Azure libraries in your Java projects to [manage resources](#management) and integrate services in your applications.  
 
 | | | | |
 |:-------------:|:----------:|:----:|:---:|
-| [Azure Storage](#azure-storage) | [Azure Active Directory](#azuread) | [Manage Azure resources](#management) | [Redis Cache](#redis-cache)   | 
-| [SQL Database](#sql-database) | [DocumentDB](#documentdb) | [Service Bus](#servicebus) | [Data Lake](#datalake) | 
-| [IoT Service](#iotservice) |  [IoT Device](#iotdevice) | [AppInsights](#appinsights) | [Key Vault](#keyvault) |
- 
-## Installation
+| [Azure Storage](#azure-storage) | [SQL Database](#sql-database)  | [Redis Cache](#redis-cache)   | [DocumentDB](#documentdb) |
+| [Service Bus](#servicebus)  | [Azure Active Directory](#azuread) | [Key Vault](#keyvault)  | [Event Hub](#eventhub)
+| [IoT Service](#iotservice) | [IoT Device](#iotdevice) | [Data Lake](#datalake)  | [AppInsights](#appinsights) | 
+| [Batch](#batch) | [Manage Azure resources](#management) |
 
-Add a dependency entry in your `pom.xml` to add a library to your [Maven](https://maven.apache.org) project.
+## Install with Maven
 
-For example, to include the latest version of the Azure management libraries for Java:
+Add a dependency entry in your `pom.xml` to import a library into your [Maven](https://maven.apache.org) project.
+
+For example, to include the latest version of the [Azure management libraries](#management):
 
 ```XML
 <dependency>
@@ -43,7 +39,7 @@ For example, to include the latest version of the Azure management libraries for
 
 ## Azure services
 
-These libraries help you consume Azure services in your applications.
+Consume Azure services in your applications using these libraries.
 
 <a name="azure-storage"></a>
 
@@ -65,7 +61,7 @@ Data storage and messaging for your applications.
 
 ### [SQL Database](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-technical-overview)
 
-JDBC driver for Azure SQL database.
+JDBC driver for Azure SQL Database.
 
 ```XML
 <dependency>
@@ -146,17 +142,17 @@ Identity management and secure sign-in for your applications.
 
 ### [Key Vault](https://docs.microsoft.com/azure/key-vault) 
 
-Encrypt secrets and keys and safely access them from your applications. 
+Encrypt secrets and safely access them from your applications. 
 
 ```XML
 <dependency>
     <groupId>com.microsoft.azure</groupId>
     <artifactId>azure-keyvault</artifactId>
-    <version>1.0.0-beta3</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
-[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/batch-keyvault-java-management) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
+[Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.keyvault) | [Samples](https://github.com/Azure-Samples/key-vault-java-manage-key-vaults) | [GitHub](https://github.com/Azure/azure-sdk-for-java)  
 
 <a name="eventhub"></a>
 
@@ -220,7 +216,7 @@ Capture data of any size and shape into a single location for performing analyti
 </dependency>
 ```   
 
-[Reference](https://azure.github.io/azure-data-lake-store-java/javadoc/) | [Samples](https://github.com/Azure-Samples/data-lake-store-java-upload-download-get-started) | [GitHub](test.md) 
+[Reference](https://azure.github.io/azure-data-lake-store-java/javadoc/) | [Samples](https://github.com/Azure-Samples/data-lake-store-java-upload-download-get-started) | [GitHub](https://github.com/Azure/azure-data-lake-store-java) 
 
 <a name="appinsights"></a> 
 
@@ -242,13 +238,27 @@ Capture data of any size and shape into a single location for performing analyti
 [Reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.applicationinsights) | [Samples](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started) | [GitHub](https://github.com/Microsoft/ApplicationInsights-Java) 
 
 
+<a name="batch"></a>
+
+### [Batch](https://docs.microsoft.com/en-us/azure/batch)
+
+Run large-scale parallel and high-performance computing applications efficiently in the cloud.
+
+```XML
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>azure-batch</artifactId>
+    <version>1.0.0-rc</version>
+</dependency>
+```
+
+[Reference](http://azure.github.io/azure-sdk-for-java) | [Samples](https://github.com/azure/azure-batch-samples) | [GitHub](https://github.com/azure/azure-batch-sdk-for-java) 
+
 <a name="management"></a> 
 
 ## Azure management 
 
-The [Azure Management Libraries for Java](https://github.com/Azure/azure-sdk-for-java) let you create and manage your Azure resources. 
-
-Add the Azure resource management libraries for Java to your project with the following Maven dependency:
+Create, update, and delete Azure resources from your application code.
 
 ```XML
 <dependency>
@@ -258,19 +268,4 @@ Add the Azure resource management libraries for Java to your project with the fo
 </dependency>
 ```
 
-<!-- URL List -->
-
-[Azure Toolkit for Eclipse]: ./azure-toolkit-for-eclipse.md
-[Azure Toolkit for IntelliJ]: ./azure-toolkit-for-intellij.md
-[Create a Hello World Web App for Azure in Eclipse]: ./app-service-web/app-service-web-eclipse-create-hello-world-web-app.md
-[Create a Hello World Web App for Azure in IntelliJ]: ./app-service-web/app-service-web-intellij-create-hello-world-web-app.md
-[Installing the Azure Toolkit for Eclipse]: ./azure-toolkit-for-eclipse-installation.md
-[Installing the Azure Toolkit for IntelliJ]: ./azure-toolkit-for-intellij-installation.md
-[What's New in the Azure Toolkit for Eclipse]: ./azure-toolkit-for-eclipse-whats-new.md
-[What's New in the Azure Toolkit for IntelliJ]: ./azure-toolkit-for-intellij-whats-new.md
-
-[Azure Java Developer Center]: http://go.microsoft.com/fwlink/?LinkID=699547
-[Azure Libraries Repository on Maven]: http://go.microsoft.com/fwlink/?LinkID=286274
-[Java Build Path]: http://help.eclipse.org/luna/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Freference%2Fref-properties-build-path.htm
-[license]: http://www.apache.org/licenses/LICENSE-2.0.html
-[maven-getting-started]: http://go.microsoft.com/fwlink/?LinkID=622998
+[Reference](http://azure.github.io/azure-sdk-for-java) | [Samples](https://github.com/Azure/azure-sdk-for-java#sample-code) | [GitHub](https://github.com/Azure/azure-sdk-for-java) 
