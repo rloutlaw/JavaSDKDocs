@@ -14,7 +14,7 @@ ms.date: 3/06/2016
 
 # Download and run a sample Java app
 
-Clone the [sample](https://github.com/rloutlaw/hello-world-java) to your system:
+Clone the [sample Maven project](https://github.com/rloutlaw/hello-world-java) to your system:
 
 ```bash
 git clone https://github.com/rloutlaw/hello-world-java.git
@@ -22,12 +22,14 @@ git clone https://github.com/rloutlaw/hello-world-java.git
 
 ## Run the sample locally
 
+Build the sample and run it in a local [Jetty](http://www.eclipse.org/jetty/) container:
+
 ```bash
 cd hello-world-java
 mvn package jetty:run
 ```
 
-Browse to http://localhost:8080/index.jsp and verify that the app is running.
+Browse to http://localhost:8080/index.jsp to verify that the app is running.
 
 >[!div class="step-by-step"]
 [**Deploy to App Service** &rarr;](get-started-appservice.md)

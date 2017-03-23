@@ -14,7 +14,7 @@ ms.date: 3/06/2016
 
 # Deploy a Java app to Azure App Service
 
-## Configure App Service
+Set up a Tomcat environment in Azure using the Azure CLI 2.0 to run the sample in.
 
 ```bash
 # create all resources under the same resource group
@@ -33,12 +33,15 @@ az appservice web config update --java-container TOMCAT --java-version 1.8.0_73 
 
 ## Deploy the sample 
 
-```bash
-# get the FTP URL and credentials for the webapp
-read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles --query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
+Deploy the sample to Azure App Service. 
 
-# deploy using the maven wagon FTP plugin
-mvn install -s az-settings.xml -Daz.site=$AZSITE -Daz.user=$AZUSER -Daz.pass=$AZPASS
+```bash
+# export the FTP URL and credentials for the webapp to bash
+read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles --query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
+export AZSITE AZUSER AZPASS
+
+# deploy using Maven reading in the FTP information from the shell
+mvn install -s az-settings.xml
 ```
 
 ## Verify in your browser
@@ -46,6 +49,6 @@ mvn install -s az-settings.xml -Daz.site=$AZSITE -Daz.user=$AZUSER -Daz.pass=$AZ
 ```bash
 az appservice web browse
 ```
-
+   
 >[!div class="step-by-step"]
 [**Deploy with Git** &rarr;](get-started-deploy.md)

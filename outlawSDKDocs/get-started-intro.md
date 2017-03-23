@@ -25,4 +25,4 @@ This tutorial will walk you through deploying a simple Java webapp in Azure.
 - [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2)
 
 >[!div class="step-by-step"]
-[**Get the sample** &rarr;](get-started-setup.md)
+[**Get the sample** &rarr;](get-started-sample.md)

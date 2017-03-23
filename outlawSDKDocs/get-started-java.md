@@ -26,13 +26,15 @@ This tutorial will walk you through deploying a simple Java webapp in Azure.
 
 ## Get the sample
 
-Clone the [sample](https://github.com/rloutlaw/hello-world-java) to your system:
+Clone the [sample Maven project](https://github.com/rloutlaw/hello-world-java) to your system:
 
 ```bash
 git clone https://github.com/rloutlaw/hello-world-java.git
 ```
 
 ## Run the sample
+
+Build the sample and run it in a local [Jetty](http://www.eclipse.org/jetty/) container:
 
 ```bash
 cd hello-world-java
@@ -42,6 +44,8 @@ mvn package jetty:run
 Browse to http://localhost:8080/index.jsp to verify that the app is running.
 
 ## Configure App Service
+
+Set up a Tomcat environment in Azure using the Azure CLI 2.0 to run the sample in.
 
 ```bash
 # create all resources under the same resource group
@@ -60,12 +64,15 @@ az appservice web config update --java-container TOMCAT --java-version 1.8.0_73 
 
 ## Deploy the sample 
 
-```bash
-# get the FTP URL and credentials for the webapp
-read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles --query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
+Deploy the sample to Azure App Service. 
 
-# deploy using the maven wagon FTP plugin
-mvn install -s az-settings.xml -Daz.site=$AZSITE -Daz.user=$AZUSER -Daz.pass=$AZPASS
+```bash
+# export the FTP URL and credentials for the webapp to bash
+read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles --query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
+export AZSITE AZUSER AZPASS
+
+# deploy using Maven reading in the FTP information from the shell
+mvn install -s az-settings.xml
 ```
 
 ## Verify in your browser
@@ -73,5 +80,4 @@ mvn install -s az-settings.xml -Daz.site=$AZSITE -Daz.user=$AZUSER -Daz.pass=$AZ
 ```bash
 az appservice web browse
 ```
-
 
