@@ -51,4 +51,4 @@ az appservice web browse
 ```
    
 >[!div class="step-by-step"]
-[**Deploy with Git** &rarr;](get-started-deploy.md)
+[**Add Azure Storage** &rarr;](get-started-storage.md)
