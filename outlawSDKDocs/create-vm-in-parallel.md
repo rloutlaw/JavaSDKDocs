@@ -185,5 +185,3 @@ The `finally` block deletes the resources from your Azure subscription even in t
 ## Next steps
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
-
-Visit the [Azure virtual machines documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/) for additional Azure compute samples.

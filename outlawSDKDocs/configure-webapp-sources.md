@@ -160,5 +160,3 @@ The fourth application deploys the code in your master branch every time you pus
 ## Next steps
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
-
-See the [Azure App Service documentation](https://docs.microsoft.com/en-us/azure/app-service/) for additional sample code.

@@ -56,7 +56,7 @@ NetworkSecurityGroup backEndSubnetNsg = azure.networkSecurityGroups().define(vne
                     .create();
 ```
 
-This [network security group](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) blocks both inbound and outbound public Internet traffic. This network security group will not have an effect until it is applied to a subnet in your virtual network.
+This [network security group](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) blocks both inbound and outbound public Internet traffic. This network security group will not have an effect until applied to a subnet in your virtual network.
 
 ### Create a virtual network with two subnets
 
@@ -75,7 +75,7 @@ Network virtualNetwork1 = azure.networks().define(vnetName1)
                     .create();
 ```
 
-The backend subnet is denied Internet access following the rules set in the previously created network security group. The front end subnet uses the [default rules](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) which allow outbound traffic to the Internet.
+The backend subnet denies Internet access usingfollowing the rules set in the network security group. The front end subnet uses the [default rules](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) which allow outbound traffic to the Internet.
 
 ### Create a network security group to allow inbound HTTP traffic
 ```java
@@ -157,16 +157,14 @@ azure.networks().deleteByGroup(rgName,vnetName1);
 
 ## Sample explanation
 
-This sample creates a virtual network with two subnets and with one virtual machine each. The back subnet is completely cut off from the public Internet. The front-facing subnet accepts inbound HTTP traffic from the Internet. Every virtual machine on the subnet can still communicate with each other through the default network security group rules.
+This sample creates a virtual network with two subnets and with one virtual machine on each subnet. The back subnet is cut off from the public Internet. The front-facing subnet accepts inbound HTTP traffic from the Internet. Both virtual machines in the virtual network communicate with each other through the default network security group rules.
 
 | Class used in sample | Notes
 |-------|-------|
-| [com.microsoft.azure.management.network.Network](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._network) | Local object representation of the virtual network created from `azure.networks().define()...create()` . Update the Network object after it is created using the `update()...apply()` fluent chain.
-| [com.microsoft.azure.management.network.Subnet](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._subnet) | Subnets are created on the virtual network when defining or updating the network using `withSubnet()`. Object representations of a Subnet can be retrieved from `Network.subnets().get()` or `Network.subnets().entrySet()` and queried for information about their properties.
+| [com.microsoft.azure.management.network.Network](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._network) | Local object representation of the virtual network created from `azure.networks().define()...create()` . Use the `update()...apply()` fluent chain to update an existing virtual network.
+| [com.microsoft.azure.management.network.Subnet](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._subnet) | Create subnets on the virtual network when defining or updating the network using `withSubnet()`. Get object representations of a subnet from `Network.subnets().get()` or `Network.subnets().entrySet()`. These objects have methods to query subnet properties.
 | [com.microsoft.azure.management.network.NetworkSecurityGroup](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._network_security_group) | Created using the `azure.networkSecurityGroups().define()...create()` fluent chain and then applied to subnets through the updating or creating subnets in a virtual network. 
 
 ## Next steps
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
-
-Additional Azure storage samples can be found in the [Azure virtual networking documentation](https://docs.microsoft.com/en-us/azure/virtual-network/).

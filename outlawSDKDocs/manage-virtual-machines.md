@@ -143,5 +143,3 @@ A Linux virtual machine is then created in the same virtual network. The code ge
 ## Next steps
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
-
-Visit the [Azure virtual machines documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/) for additional samples.
