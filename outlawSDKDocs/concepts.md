@@ -68,7 +68,7 @@ The samples use file-based authentication to keep the code compact and easy to f
 
 ## Just in time resource creation
 
-One challenge when creating or updating an Azure resource is that those resources require other resources to exist before they can be created or updated. An example is reserving a public IP address and setting up a disk when creating a new virtual machine. You don't want to verify the reservation of the address or the creation of the disk-you just want to the virtual machine to have those resources.
+A challenge when creating Azure resources is when a new resources depends on another resource that doesn't yet exist. An example is reserving a public IP address and setting up a disk when creating a new virtual machine. You don't want to verify the reservation of the address or the creation of the disk-you just want to the virtual machine to have those resources.
 
 Use `Creatable` objects to define Azure resources for use in your code but only create them when needed in Azure. Code written with `Creatable` objects offloads resource creation in the Azure environment to the management API, boosting performance. 
 
@@ -93,7 +93,7 @@ Create the resources in your Azure subscription using the  `create()` method for
 CreatedResources<VirtualMachine> virtualMachine = azure.virtualMachines().create(vmCreatable);
 ```
 
-Passing `Creatables` to `create()` calls returns a `CreatedResources` object instead of a single resource object.  The `CreatedResources` object lets you access all resources created by the `create()` call, not just the the type from the resource collection. To access the public IP address created in Azure for the virtual machine created in the above example:
+Passing `Creatables` to `create()` calls returns a `CreatedResources` object instead of a single resource object.  The `CreatedResources` object lets you access all resources created by the `create()` call, not just the type from the resource collection. To access the public IP address created in Azure for the virtual machine created in the above example:
 
 ```java
 PublicIPAddress pip = (PublicIPAddress) virtualMachine.createdRelatedResource(publicIPAddressCreatable.key());
@@ -144,7 +144,8 @@ Azure azure = Azure
 
 ## Actionable verbs
 
-Method calls that take immediate effect in Azure use verbs as their names and are called from child collections. These methods work synchronously in your code and will block execution in the current thread until completed. 
+Child resource collection methods with verbs in their names take immediate action in Azure. These methods work synchronously in your code and will block execution in the current thread until completed. 
+The one exception to this rule is `define()` when not followed by `create()` in a fluent chain to generate a `Creatable`.
 
 | Verb   |  Sample Usage |
 |--------|---------------|
@@ -153,7 +154,7 @@ Method calls that take immediate effect in Azure use verbs as their names and ar
 | list   | `azure.sqlServers().list()` | 
 | get    | `VirtualMachine vm  = azure.virtualMachines().getByResourceGroup(group, vmName)` |
 
-Asynchronous versions of these methods are provided that use [Reactive extensions](https://github.com/ReactiveX/RxJava). 
+Asynchronous versions of these methods exist with a `Async` suffix use [Reactive extensions](https://github.com/ReactiveX/RxJava). 
 
 Specific resource objects have verbs that change the state of the resource in Azure. For example:
 
@@ -171,15 +172,15 @@ The management API currently defines Exception classes that extend `com.microsof
 
 The management API follows convention for returned object collections depending on the properties of the returned objects:
 
-- Lists: Lists are returned for unordered data for ease of iteration.
-- Maps: Maps are returned for objects that have unique keys, but not necessarily values. An example of a Map would be app settings for a App Service webapp.
+- Lists: Unordered data that is easy to iterate over.
+- Maps: Maps are key/value pairs with unique keys, but not necessarily unique values. An example of a Map would be app settings for a App Service webapp.
 - Sets: Sets have unique keys and values. A good example of a Set would be networks attached to a virtual machine, which would have both a unique identifier and a unique network configuration.
 
 The returned collection types let you make assumptions about the returned objects when working with the collections in your code.
 
 ## Logs and trace
 
-Logging in the management API is supported in the REST calls that the management APIs invoke. Configure the verbosenessof the logging when you build the entry point `Azure` object using `withLogLevel()`. The following trace levels are supported:
+Configure the amount of logging from the management API when you build the entry point `Azure` object using `withLogLevel()`. The following trace levels exist:
 
 | Trace level | Logging enabled 
 | ------------ | ---------------
