@@ -1,5 +1,5 @@
 ---
-title: Azure management library concepts | Microsoft Docs
+title: Azure management API for Java guide | Microsoft Docs
 description: Understand patterns and concepts used by the Azure management libraries for Java
 services: ''
 documentationcenter: java
@@ -18,7 +18,7 @@ ms.author: routlaw;asirveda
 
 ---
 
-# Azure management library concepts
+# Azure management API for Java concepts
 
 <a name="authenticate"></a>
 
@@ -66,7 +66,7 @@ The samples use file-based authentication to keep the code compact and easy to f
 
 <a name="Creatables"></a>
 
-## Just in time resource creation with Creatables
+## Just in time resource creation
 
 One challenge when creating or updating an Azure resource is that those resources require other resources to exist before they can be created or updated. An example is reserving a public IP address and setting up a disk when creating a new virtual machine. You don't want to verify the reservation of the address or the creation of the disk-you just want to the virtual machine to have those resources.
 
