@@ -1,6 +1,6 @@
 ---
-title: Manage Azure virtual machines from Java | Microsoft Docs
-description: Sample code to manage Azure virtual machines from your Java applications
+title: Manage Azure virtual machines with Java
+description: Sample code to manage Azure virtual machines from your Java apps
 services: ''
 documentationcenter: java
 author: routlaw
@@ -20,7 +20,7 @@ ms.author: routlaw;asirveda
 
 # Manage virtual machines with Java
 
-[This sample](https://github.com/Azure-Samples/compute-java-manage-vm/) uses the [Azure management libraries for Java](https://github.com/Azure/azure-sdk-for-java) to create and manage Azure virtual machines
+[This sample](https://github.com/Azure-Samples/compute-java-manage-vm/) uses the [Azure management libraries for Java](https://github.com/Azure/azure-sdk-for-java) to create and work with Azure virtual machines.
 
 ## Sample code
 
@@ -57,20 +57,19 @@ VirtualMachine windowsVM = azure.virtualMachines().define(windowsVmName)
 ```
 
 This code:
-0. Defines a `Disk` Creatable with a 50GB size and randome name to attach to the virtual machine.
-0. Uses the `azure.virtualMachines().define()..create()` chain to create the a Windows Server 2012 virtual machine. The `Disk` Creatable defined in the first block of code is created in Azure when the virtual machine is created.
+0. Defines a `Disk` Creatable with a 50GB size and random name to attach to the virtual machine.
+0. Uses the `azure.virtualMachines().define()..create()` chain to create a Windows Server 2012 virtual machine. The sample creates the `Disk` defined in Azure at the same time as the virtual machine.
 
-Learn more about using [Creatables](concepts.md#Creatbles) do define resources locally and create them only as needed.
+Learn more about using [Creatables](concepts.md#Creatbles) do define resources locally and create them only when needed.
 
 ### Stop, start, and restart a virtual machine
-
 
 ```java
 // look up a virtual machine by its ID and then restart, stop, and start it
 azureVM = azure.getVirtualMachine.getById(windowsVM.id());
 
 azureVM.restart();
-azureVM.powerOff(); // stops the operating system, but does not deallocate its resources
+azureVM.powerOff(); // stops the operating system, but does not deallocate the VM resources
 azureVM.start();
 ```
 
@@ -137,7 +136,7 @@ A Linux virtual machine is then created in the same virtual network. The code ge
 | [com.microsoft.azure.management.compute.VirtualMachine](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine) | Query properties and manage state of virtual machines. Retrieved in list form  with`azure.virtualMachines().list()` or by name or ID `azure.virtualMachines().getByGroup()`
 | [com.microsoft.azure.management.compute.VirtualMachineSizeTypes](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_size_types) | Class with static values that map to [virtual machine size options](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/), used by the `withSize()` method to define the resources allocated to the VM.
 | [com.microsoft.azure.management.compute.Disk](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._disk) | Create a disk to store data using `withData()` or operating system image using the appropriate `withLinux` or `withWindows` method when defining the disk. Attach disks to virtual machines either at the time of creation (`using withNewDataDisk` or `withExistingDataDisk`) or after creation by `update()..apply()` on the VirtualMachine object.
-| com.microsoft.azure.management.compute.DiskSkuTypes | Class with static values to define a disk with a standard or [premium](https://docs.microsoft.com/en-us/azure/storage/storage-premium-storage) storage plan.
+| [com.microsoft.azure.management.compute.DiskSkuTypes](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._disk_sku_types) | Class with static values to define a disk with a standard or [premium](https://docs.microsoft.com/en-us/azure/storage/storage-premium-storage) storage plan.
 | [com.microsoft.azure.management.compute.KnownLinuxVirtualMachineImage](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._known_linux_virtual_machine_image) | Class with a set of Linux virtual machine options for use with the `withPopularLinuxImage()` method when defining a virtual machine.
 | [com.microsoft.azure.management.compute.KnownWindowsVirtualMachineImage](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._known_windows_virtual_machine_image) | Class with a set of Windows virtual machine image options for use with the `withPopularWindowsImage()` method when defining a virtual machine.
 
@@ -145,4 +144,4 @@ A Linux virtual machine is then created in the same virtual network. The code ge
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
 
-Additional Azure storage samples can be found in the [Azure virtual machines documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/).
+Visit the [Azure virtual machines documentation](https://docs.microsoft.com/en-us/azure/virtual-machines/) for additional samples.
