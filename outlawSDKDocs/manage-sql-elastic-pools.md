@@ -24,7 +24,7 @@ ms.author: routlaw;asirveda
 
 ## Sample code
 
-[View the complete code sample on GitHub]((https://github.com/Azure-Samples/sql-database-java-manage-sql-dbs-in-elastic-pool)
+[View the complete code sample on GitHub](https://github.com/Azure-Samples/sql-database-java-manage-sql-dbs-in-elastic-pool)
 
 ### Authenticate with Azure
 
@@ -103,12 +103,14 @@ sqlServer.elasticPools().delete(elasticPoolName);
 
 ## Sample explanation
 
-The sample uses the following classes in the [Azure management libary](https://github.com/Azure/azure-sdk-for-java) to create and work with SQL server instances, elastic pools, and SQL databases. A SQL server instance is created with two databases in a single elasic pool. The elastic pool resource limits per database are then set and additional databases are added to the pool. The elastic pool is then queried for runtime information, and finally the SQL databases, the elastic pool, and the SQL server are deleted.
+The sample creates a SQL server instance with two databases managed in a single elasic pool. The elastic pool resource limits are updated,  and additional databases are added to the pool. The elastic pool is then queried for its configuration and state. 
+
+The sample deletes all resources it created before exiting.
 
 | Class used in sample | Notes |
 |-------|-------|
 | [com.microsoft.azure.management.sql.SqlServer](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._sql_server) | SQL Server instance in Azure created by `azure.sqlServers().define()...create()` fluent chain. Provides methods to create elastic pools and databases in the created instance. 
-| [com.microsoft.azure.management.sql.SqlDatabase](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._sql_database) | Client side object representing a SQL database. Instances created through `sqlServer().define()...create()` are created in Azure and their representation returned from the `create()`. 
+| [com.microsoft.azure.management.sql.SqlDatabase](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._sql_database) | Client side object representing a SQL database. Created through `sqlServer().define()...create()`. 
 | [com.microsoft.azure.management.sql.DatabaseEditions](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._database_editions) | Constant static fields used to set database resources when creating a database outside of an elastic pool or when moving a database out of an elastic pool  
 | [com.microsoft.azure.management.sql.SqlElasticPool](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._sql_elastic_pool) | Created from the `withNewElasticPool()` section of the fluent chain that created the SqlServer in Azure. Provides methods to set resource limits for databases running in the elastic pool and for the elastic pool itself. 
 | [com.microsoft.azure.management.sql.ElasticPoolEditions](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._elastic_pool_editions) | Class of constant fields defining the resources available to an elastic pool. See [SQL database elastic pool documentation](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-elastic-pool) for tier details. 
@@ -118,5 +120,3 @@ The sample uses the following classes in the [Azure management libary](https://g
 ## Next steps
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
-
-Additional SQL database samples can be found in the [Azure SQL Database documentation](https://docs.microsoft.com/en-us/azure/sql-database/).
