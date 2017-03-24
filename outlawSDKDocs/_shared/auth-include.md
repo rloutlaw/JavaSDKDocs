@@ -17,4 +17,4 @@ Azure azure = Azure
         .withDefaultSubscription();
 ```
 
-[Learn more](ceoncepts.md#authentication) about authentication when using the Azure management libraries for Java.
+[Learn more](ceoncepts.md#authentication) about authentication options  when using the Azure management libraries for Java.

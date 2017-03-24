@@ -1,5 +1,5 @@
 ---
-title: Configure Azure App Service deployment sources | Microsoft Docs
+title: Deploy App Serivce apps with Git and FTP using the Java API | Microsoft Docs
 description: Sample Java code to configure Azure App Service deployment using FTP, Git, or continuous deployment
 services: ''
 documentationcenter: java
@@ -18,16 +18,15 @@ ms.author: routlaw;asirveda
 
 ---
 
-# Configure Azure App Service deployment sources with Java
+# Deploy App Service apps using deployment sources with Java
 
-[This Java sample](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel) creates four applications in a single [App Service](https://docs.microsoft.com/en-us/azure/app-service/) plan and pushes code to each of them using different deployment sources.
+[This sample](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel) deploys code to four applications in a single [Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/) plan, each using a different deployment source.
 
 ## Run the sample
 
 Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
 
-```
-export AZURE_AUTH_LOCATION=/Users/raisa/azure.auth
+```bash
 git clone https://github.com/Azure-Samples/app-service-java-configure-deployment-sources-for-web-apps.git
 cd app-service-java-configure-deployment-sources-for-web-apps
 mvn clean compile exec:java
@@ -41,7 +40,7 @@ View the [complete sample code on GitHub](https://github.com/Azure-Samples/app-s
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a App Service app running on Apache Tomcat
+### Create a App Service app running Apache Tomcat
 
 ```java
 // create a new Standard app service plan and create a single Java 8/Tomcat 8 app in it
@@ -77,12 +76,13 @@ private static void uploadFileToFtp(PublishingProfile profile, String fileName, 
 }
 ```
 
-This code uploads a WAR file to the `/site/wwwroot/webapps` directory for the app in App Service. Tomcat is configured to monitor and
-deploy WAR files in this directory by default in App Service.
+This code uploads a WAR file to the `/site/wwwroot/webapps` directory. Tomcat is configured to monitor and
+deploy WAR files placed in this directory by default in App Service.
 
 ### Deploy a Java application from a local Git repo
 
 ```java
+// get the publishing profile from the App Service webapp
 PublishingProfile profile = app2.getPublishingProfile();
 // create a new Git repo in the helloworld sample directory in src/main/resources and add all files into a new commit
 Git git = Git
@@ -100,7 +100,7 @@ command.setForce(true);
 command.call();
 ```      
 
-This code uses the [JGit](https://eclipse.org/jgit/) libraries to create a new Git repo in the `src/main/resources/azure-samples-appservice-helloworld` folder. The sample then adds all files in the folder to an initial commit and pushes the commit to Azure using the Git information in the `PublishingProfile`. 
+This code uses the [JGit](https://eclipse.org/jgit/) libraries to create a new Git repo in the `src/main/resources/azure-samples-appservice-helloworld` folder. The sample then adds all files in the folder to an initial commit and pushes the commit to Azure using Git deployment information from the webapp's `PublishingProfile`. 
 
 >[!NOTE]
 > The layout of the files in the repo must match exactly how you want the files deployed under the `/site/wwwroot/` directory in Azure App Service.
@@ -127,7 +127,7 @@ WebApp app4 = azure.webApps()
                     .define(app4Name)
                     .withExistingResourceGroup(rgName)
                     .withExistingAppServicePlan(plan)
-                    // Uncomment the following lines to turn on 4th scenario
+                    // Uncomment the following lines to turn on continuous deployment scenario
                     //.defineSourceControl()
                     //    .withContinuouslyIntegratedGitHubRepository("username", "reponame")
                     //    .withBranch("master")
@@ -136,7 +136,7 @@ WebApp app4 = azure.webApps()
                     .create();
 ```  
 
-The `username` and `reponame` values are the ones used in GitHub. You'll need to [create a GitHub personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) with read permissions and pass it to `withGitHubAccessToken`. 
+The `username` and `reponame` values are the ones used in GitHub. [Create a GitHub personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) with repo read permissions and pass it to `withGitHubAccessToken`. 
 
 
 ## Sample explanation
@@ -155,11 +155,11 @@ The fourth application pulls your own application from your GitHub repo and will
 | [com.microsoft.azure.management.appservice.WebContainer](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._web_container) | Class with static public fields used as paramters to `withWebContainer()` when defining a WebApp running a Java webcontainer. Has choices for both Jetty and Tomcat versions.
 | [com.microsoft.azure.management.appservice.PublishingProfile](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._publishing_profile) | Obtained through a WebApp object using the `getPublishingProfile()` method. Contains FTP and Git deployment information, including deployment username and password (which is separate from Azure account or service principal credentials).
 | [com.microsoft.azure.management.appservice.AppServicePlan](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._app_service_plan) | Returned by `azure.appServices().appServicePlans().getbyGroup()`. Methods are availble to check the capacity, tier, and number of web apps running in the plan.
-| com.microsoft.azure.management.appservice.AppServicePricingTier | Class with static public fields representing App Service tiers. Used to define a plan tier in-line during app creation with `withPricingTier()` or directly when defining a plan via `azure.appServices().appServicePlans().define()`
+| [com.microsoft.azure.management.appservice.AppServicePricingTier](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._app_service_pricing_tier) | Class with static public fields representing App Service tiers. Used to define a plan tier in-line during app creation with `withPricingTier()` or directly when defining a plan via `azure.appServices().appServicePlans().define()`
 | [com.microsoft.azure.management.appservice.JavaVersion](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._java_version) | Class with static public fields representing Java versions supported by App Service. Used with `withJavaVersion()` during the `define()...create()` chain when creating a new webapp.
 
 ## Next steps
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
 
-Additional Azure storage samples can be found in the [Azure App Service documentation](https://docs.microsoft.com/en-us/azure/app-service/).
+Additional Azure App Service samples can be found in the [Azure App Service documentation](https://docs.microsoft.com/en-us/azure/app-service/).
