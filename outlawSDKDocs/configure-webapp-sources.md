@@ -76,8 +76,7 @@ private static void uploadFileToFtp(PublishingProfile profile, String fileName, 
 }
 ```
 
-This code uploads a WAR file to the `/site/wwwroot/webapps` directory. Tomcat is configured to monitor and
-deploy WAR files placed in this directory by default in App Service.
+This code uploads a WAR file to the `/site/wwwroot/webapps` directory. Tomcat deploys WAR files placed in this directory by default in App Service.
 
 ### Deploy a Java application from a local Git repo
 
@@ -122,7 +121,7 @@ WebApp app3 = azure.webApps().define(app3Name)
 ### Continuous deployment from a GitHub repo
 
 ```java
-// deploy to an application when the master branch in your GitHub repo is updated
+// deploy the application whenever you push a new commit or merge a pull request into your master branch
 WebApp app4 = azure.webApps()
                     .define(app4Name)
                     .withExistingResourceGroup(rgName)
@@ -141,17 +140,17 @@ The `username` and `reponame` values are the ones used in GitHub. [Create a GitH
 
 ## Sample explanation
 
-The sample creates the first application using Java 8 and Tomcat 8 running in a newly created [Standard](https://docs.microsoft.com/en-us/azure/app-service/azure-web-sites-web-hosting-plans-in-depth-overview) App Service plan. The code then FTPs a WAR file to the directory Tomcat is configured to monitor for new deployments using the information in the `PublishingProfile` object.
+The sample creates the first application using Java 8 and Tomcat 8 running in a newly created [Standard](https://docs.microsoft.com/en-us/azure/app-service/azure-web-sites-web-hosting-plans-in-depth-overview) App Service plan. The code then FTPs a WAR file using the information in the `PublishingProfile` object and Tomcat deploys it.
 
-The second application is created in the same plan as the first and is also configured as a Java 8/Tomcat 8 application. The JGit libraries are used to create a new Git repository in a folder of the sample that contains an unpacked Java web application in a directory structure that maps to the one in App Service. The files in the folder are committed to the repo and pushed to Azure using a Git remote URL and username/password provided by the `PublishingProfile`.
+The second application uses in the same plan as the first and is also configured as a Java 8/Tomcat 8 application. The JGit libraries create a new Git repository in a folder that contains an unpacked Java web application in a directory structure that maps to App Service. A new commit adds the files in the folder to the new Git repo, and Git pushes the commit to Azure with a remote URL and username/password provided by the webapp's `PublishingProfile`.
 
-The third application is created in the same plan, but is not configured for Java and Tomcat. Instead, a .NET sample is deployed directly from the source in a public GitHub repo.
+The third application is not configured for Java and Tomcat. Instead, a .NET sample in a public GitHub repo is deployed directly from source.
 
-The fourth application pulls your own application from your GitHub repo and will deploy the code in your master branch every time it is updated. 
+The fourth application deploys the code in your master branch every time you push changes or merge a pull request into the GitHub repo's master branch.
 
 | Class used in sample | Notes
 |-------|-------|
-| [com.microsoft.azure.management.appservice.WebApp](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._web_app) | Created from the `azure.webApps().define()....create()` fluent chain. Creates a App Service web app and any resources needed for the app. Can be queried for properties and the state of the application can be changed through methods like `restart()`.
+| [com.microsoft.azure.management.appservice.WebApp](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._web_app) | Created from the `azure.webApps().define()....create()` fluent chain. Creates a App Service web app and any resources needed for the app. Most methods query the object for configuration details, but verb methods like `restart()` change the state of the webapp.
 | [com.microsoft.azure.management.appservice.WebContainer](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._web_container) | Class with static public fields used as paramters to `withWebContainer()` when defining a WebApp running a Java webcontainer. Has choices for both Jetty and Tomcat versions.
 | [com.microsoft.azure.management.appservice.PublishingProfile](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._publishing_profile) | Obtained through a WebApp object using the `getPublishingProfile()` method. Contains FTP and Git deployment information, including deployment username and password (which is separate from Azure account or service principal credentials).
 | [com.microsoft.azure.management.appservice.AppServicePlan](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._app_service_plan) | Returned by `azure.appServices().appServicePlans().getbyGroup()`. Methods are availble to check the capacity, tier, and number of web apps running in the plan.
@@ -162,4 +161,4 @@ The fourth application pulls your own application from your GitHub repo and will
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
 
-Additional Azure App Service samples can be found in the [Azure App Service documentation](https://docs.microsoft.com/en-us/azure/app-service/).
+See the [Azure App Service documentation](https://docs.microsoft.com/en-us/azure/app-service/) for additional sample code.
