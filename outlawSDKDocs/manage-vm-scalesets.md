@@ -41,7 +41,7 @@ Network network = azure.networks().define(vnetName)
                     .create();
 ```
 
-Set up a virtual network and load balancer before creating the scale set definition. These resources will be used in the initial configuration of the scale set.
+Set up a virtual network and load balancer before creating the scale set definition. The scale set uses these resources for its initial configuration.
 
 ### Create a load balancer to distribute load across the scale set
 
@@ -100,7 +100,7 @@ LoadBalancer loadBalancer1 = azure.loadBalancers().define(loadBalancerName1)
                     .create();
 ```
 
- The load balancer defines two backend network address pools-one to balance load across HTTP (`backendPoolName1`) and the other to balance load across HTTPS (`backendPoolName2`). Requests to the `/` HTTP and HTTPS URI on the scale set instances are defined as health probes endpoints the load balancers will use to verify if a scale set member goes unresponsive. NAT rules are set up on the load balancer for  ports 22 and 23 on the virtual machines in the scale set so they can be managed via telnet and SSH.
+ The load balancer defines two backend network address pools-one to balance load across HTTP (`backendPoolName1`) and the other to balance load across HTTPS (`backendPoolName2`).  The `defineHttpProbe()` methods set up health probe endpoints on the load balancers. NAT rules expose ports 22 and 23 on the scale set virtual machines for telnet and SSH access.
 
 ### Create a scale set
  
@@ -179,9 +179,6 @@ for (VirtualMachineScaleSetVM instance : virtualMachineScaleSet.virtualMachines(
             virtualMachineScaleSet.powerOff();
 ```
 
-Stopped instances have the virtual machine operating system shut down, but the scale set instances continue to reserve Azure compute, network, and storage resources used by the
-instances when they were started.
-
 ### Deallocate the virtual machine scale set
 
 ```java
@@ -222,5 +219,3 @@ Deallocated scale set instances stop the operating system for the scale set and 
 ## Next steps
 
 [!INCLUDE [next-steps](_shared/next-steps.md)]
-
-Additional Azure storage samples can be found in the [Azure scale set documentation](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/).
