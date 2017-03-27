@@ -28,7 +28,8 @@ az configure --defaults web=$appname group=sampleResourceGroup
 az appservice web create --name $appname
 
 # configure the webapp to use Tomcat 
-az appservice web config update --java-container TOMCAT --java-version 1.8.0_73 --java-container-version 8.5
+az appservice web config update --java-container TOMCAT --java-version 1.8.0_73  \
+--java-container-version 8.5
 ```
 
 ## Deploy the sample 
@@ -37,18 +38,19 @@ Deploy the sample to Azure App Service.
 
 ```bash
 # export the FTP URL and credentials for the webapp to bash
-read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles --query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
+read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles \ 
+--query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
 export AZSITE AZUSER AZPASS
 
 # deploy with Maven 
 mvn install -s az-settings.xml
 ```
 
-The Maven [pom.xml](https://github.com/rloutlaw/hello-world-java/blob/master/pom.xml)  and [az-settings.xml](https://github.com/rloutlaw/hello-world-java/blob/master/az-settings.xml) included deploys the sample using the FTP information from the environment variables.
+The sample Maven [pom.xml](https://github.com/rloutlaw/hello-world-java/blob/master/pom.xml) and [az-settings.xml](https://github.com/rloutlaw/hello-world-java/blob/master/az-settings.xml) deploys the sample using the FTP information exported to the environment.
 
 ## Verify in your browser
 
-```bash
+```
 az appservice web browse
 ```
    

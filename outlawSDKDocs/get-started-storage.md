@@ -22,38 +22,40 @@ Add functionality to store and display images in [Azure storage](https://docs.mi
 
 ```bash
 storageName=helloworld$RANDOM
-az storage account create --name $storageName --resource-group sampleResourceGroup --location $location --sku Standard_LRS
+az storage account create --name $storageName --resource-group sampleResourceGroup \
+ --location $location --sku Standard_LRS
 ```
 
-This creates the storage account, but the Java application needs to know how to interact with the storage account and a container for [blob storage](https://docs.microsoft.com/en-us/azure/storage/storage-java-how-to-use-blob-storage) has to exist before you can save an image to the storage account.
+This creates the Azure storage account, but the Java application needs to interact with a [blob storage]((https://docs.microsoft.com/en-us/azure/storage/storage-java-how-to-use-blob-storage)) container created in the account.
 
 ## Add a connection string to the webapp and create the storage container
 
-```
+```bash
 connstr=$(az storage account show-connection-string --name $storageName --resource-group sampleResourceGroup --query connectionString --output tsv)
 az appservice web config appsettings update --settings "STORAGE_CONNSTR=$connstr" --name $appname --resource-group sampleResourceGroup
 az storage container create --connection-string $connstr --name helloworld --public-access container
 ```
 
-Create the `helloworld` container in the storage account-the JSP code and servlet in the sample will use this container to read and write the images.
+Create the `helloworld` container in the storage account to store and serve an uploaded image file.
 
 ## Create a form on the JSP to upload an image
 
 ```html
 <h2>Upload a file</h2><br/>
 <form method="post" action="upload" enctype="multipart/form-data">
-<input type="file" name="file"/><br/>
- <input type="submit" value="Upload to Azure Storage" name="upload"></h3></form>
+    <input type="file" name="file"/><br/>
+    <input type="submit" value="Upload to Azure Storage" name="upload">
+</form>
 ```
 
-The [code for the servlet]((https://github.com/rloutlaw/hello-world-java/src/main/java/com/microsoft/azure/samples/AzureStorageUploadServlet.java)) that uploads the file to blob storage is included in the sample. 
+This form calls an [upload servlet](https://github.com/rloutlaw/hello-world-java/src/main/java/com/microsoft/azure/samples/AzureStorageUploadServlet.java) to store a local file to the blob storage container.
 
 ## Display the image in the storage account 
 
-Add an image tag to the JSP, replacing `$storage_acct` with the actual name of the storage account generated:
+Add an image tag to the JSP, replacing `storageName` with the name of the storage account in the previous steps:
 
 ```html
-<img src="https://<$storage_acct>.blob.core.windows.net/helloworld/helloworld.jpg">
+<img src="https://<$storageName>.blob.core.windows.net/helloworld/helloworld.jpg">
 ```
 
 ## Rebuild deploy the updated sample
@@ -61,4 +63,4 @@ Add an image tag to the JSP, replacing `$storage_acct` with the actual name of t
 mvn clean package install -s az-settings.xml
 ```
 
-Refreshing the web browser will show the new form and a broken image tag. Upload an image from your computer using the form and refresh to render the image from Azure storage.
+Refreshing the web browser will show the new form and a broken image tag. Upload an image from your computer using the form and refresh your browser to display the image from Azure storage.
