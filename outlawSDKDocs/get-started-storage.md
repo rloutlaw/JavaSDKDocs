@@ -46,7 +46,7 @@ Create the `helloworld` container in the storage account-the JSP code and servle
  <input type="submit" value="Upload to Azure Storage" name="upload"></h3></form>
 ```
 
-The [code for the serlvet]((https://github.com/rloutlaw/hello-world-java/src/main/java/com/microsoft/azure/samples/AzureStorageUploadServlet.java)) that uploads the file to blob storage is included in the sample. 
+The [code for the servlet]((https://github.com/rloutlaw/hello-world-java/src/main/java/com/microsoft/azure/samples/AzureStorageUploadServlet.java)) that uploads the file to blob storage is included in the sample. 
 
 ## Display the image in the storage account 
 
