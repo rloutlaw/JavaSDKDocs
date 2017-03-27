@@ -40,9 +40,11 @@ Deploy the sample to Azure App Service.
 read AZSITE AZUSER AZPASS <<< $(az appservice web deployment list-publishing-profiles --query "[?publishMethod=='FTP'].{URL:publishUrl, Username:userName,Password:userPWD}" --output tsv)
 export AZSITE AZUSER AZPASS
 
-# deploy using Maven reading in the FTP information from the shell
+# deploy with Maven 
 mvn install -s az-settings.xml
 ```
+
+The Maven [pom.xml](https://github.com/rloutlaw/hello-world-java/blob/master/pom.xml)  and [az-settings.xml](https://github.com/rloutlaw/hello-world-java/blob/master/az-settings.xml) included deploys the sample using the FTP information from the environment variables.
 
 ## Verify in your browser
 
