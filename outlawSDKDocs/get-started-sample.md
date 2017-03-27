@@ -16,7 +16,7 @@ ms.date: 3/06/2016
 
 Clone the [sample Maven project](https://github.com/rloutlaw/hello-world-java) to your system:
 
-```bash
+```
 git clone https://github.com/rloutlaw/hello-world-java.git
 ```
 
@@ -24,7 +24,7 @@ git clone https://github.com/rloutlaw/hello-world-java.git
 
 Build the sample and run it in a local [Jetty](http://www.eclipse.org/jetty/) container:
 
-```bash
+```
 cd hello-world-java
 mvn package jetty:run
 ```

@@ -12,20 +12,19 @@ ms.technology: Azure
 ms.date: 3/06/2016
 ---
 
-# Get started with Java in Azure
+# Log in with Azure CLI 2.0
 
-## Set up your environment
+Once you have the [Azure CLI 2.0]((https://docs.microsoft.com/en-us/cli/azure/install-az-cli2)) installed, log in to Azure:
 
-[Install the Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-az-cli2) for your platform. You'll use the CLI to create the Azure resources your app will need to run.
-
-Once you have the Azure CLI 2.0 installed, login to Azure and verify your installation:
-
-```bash
+```
 az login
 az account show
 ```   
+> [!NOTE]
+> If this is your first time using the CLI 2.0 on your system, you'll need to authenticate on the web before continuing.
 
-If the CLI is set up correctly, you'll see output like this from `az account list`:
+You'll see output like this from `az account list` if the CLI 2.0 is ready for use:
+   
 ```json
 {
   "environmentName": "AzureCloud",
