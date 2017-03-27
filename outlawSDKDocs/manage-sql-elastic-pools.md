@@ -30,7 +30,7 @@ ms.author: routlaw;asirveda
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a SQL database instance with an elastic pool
+### Create a  SQL database logical server with an elastic pool
 
 ```java
 SqlServer sqlServer = azure.sqlServers().define(sqlServerName)
@@ -67,6 +67,8 @@ SqlDatabase anotherDatabase = sqlServer.databases().define(anotherDatabaseName).
 elasticPool.update().withExistingDatabase(anotherDatabase).apply();            
 ```
 
+The API created `anotherDatabase` at [S0 tier](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers) in the first statement. Moving `anotherDatabase` to the elastic pool assigns the database resources based on the pool settings.
+
 ### Remove a database from an elastic pool
 ```java
 // assign the database an edition since its resources are no longer allocated by the pool 
@@ -88,6 +90,8 @@ for (ElasticPoolDatabaseActivity databaseActivity : elasticPool.listDatabaseActi
 }
 ```
 
+
+
 ### List databases in an elastic pool
 ```java
 // log a list of databases in the elastic pool to the console
@@ -96,10 +100,14 @@ for (SqlDatabase databaseInServer : elasticPool.listDatabases()) {
 }
 ```
 
+Review the methods in [com.microsoft.azure.management.sql.SqlDatabase](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._sql_database) to query the database objects in more detail when iterating over them.
+
 ### Delete an elastic pool
 ```java
 sqlServer.elasticPools().delete(elasticPoolName);
 ```
+
+Removing a database from an elastic pool returns it to using resources defined by its [pricing tier](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers).
 
 ## Sample explanation
 
