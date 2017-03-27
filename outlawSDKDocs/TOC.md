@@ -1,13 +1,13 @@
 # [Overview](index.md)
-# Install
-## [Tools](tools.md)
-## [Import Maven dependencies](download.md)
-# Get started 
-## [Set up your environment](get-started-intro.md)
-## [Run the sample](get-started-sample.md)
-## [Deploy to App Service](get-started-appservice.md)
-## [Add Azure Storage](get-started-storage.md)
-# How To
+## Install
+### [Tools](tools.md)
+### [Import dependencies](download.md)
+## Get started 
+### [Set up your environment](get-started-intro.md)
+### [Run the sample](get-started-sample.md)
+### [Deploy to App Service](get-started-appservice.md)
+### [Add Azure Storage](get-started-storage.md)
+# Samples
 ## Build and deploy applications 
 ### [Build and deploy a Java API in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-java-api-app)
 ### [Build a web application with DocumentDB](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-java-application)
