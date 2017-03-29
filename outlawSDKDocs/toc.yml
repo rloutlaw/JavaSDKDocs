@@ -1,5 +1,5 @@
----
-- name: Overview
-  displayName: Home
+- name: Tutorial
   href: index.md
----
+  items:
+  - name: Step 1
+    href: download.md
