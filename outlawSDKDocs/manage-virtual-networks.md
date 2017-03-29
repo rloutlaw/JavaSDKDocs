@@ -41,8 +41,9 @@ View the [complete code sample on GitHub](https://github.com/Azure-Samples/netwo
 ## Create a network security group to block Internet traffic
 
 ```java
- // this NSG definition block traffic to and from the public Internet
-NetworkSecurityGroup backEndSubnetNsg = azure.networkSecurityGroups().define(vnet1BackEndSubnetNsgName)
+// this NSG definition block traffic to and from the public Internet
+NetworkSecurityGroup backEndSubnetNsg = azure.networkSecurityGroups()
+              .define(vnet1BackEndSubnetNsgName)
                     .withRegion(Region.US_EAST)
                     .withNewResourceGroup(rgName)
                     .defineRule("DenyInternetInComing")
@@ -70,7 +71,7 @@ This [network security rule](https://docs.microsoft.com/en-us/azure/virtual-netw
 
 ```java
 // create the a virtual network with two subnets
-// the backend one uses the existing network security group that blocks all internet traffic
+// assign the backend subnet a rule blocking public internet traffic
 Network virtualNetwork1 = azure.networks().define(vnetName1)
                     .withRegion(Region.US_EAST)
                     .withExistingResourceGroup(rgName)
@@ -88,7 +89,8 @@ The backend subnet denies Internet access usingfollowing the rules set in the ne
 ## Create a network security group to allow inbound HTTP traffic
 ```java
 // create a rule that allows inbound HTTP and blocks outbound Internet traffic
-NetworkSecurityGroup frontEndSubnetNsg = azure.networkSecurityGroups().define(vnet1FrontEndSubnetNsgName)
+NetworkSecurityGroup frontEndSubnetNsg = azure.networkSecurityGroups()
+               .define(vnet1FrontEndSubnetNsgName)
                     .withRegion(Region.US_EAST)
                     .withExistingResourceGroup(rgName)
                     .defineRule("AllowHttpInComing")
@@ -126,7 +128,7 @@ Update the front end subnet to allow inbound HTTP traffic using the network secu
 
 ## Create a virtual machine on a subnet
 ```java
-// use the existing virtual network and front-end subnet to attach the new VM to the network
+// attach the new VM to the front end subnet on the virtual network
 VirtualMachine frontEndVM = azure.virtualMachines().define(frontEndVmName)
                     .withRegion(Region.US_EAST)
                     .withExistingResourceGroup(rgName)
@@ -151,7 +153,8 @@ for (Network virtualNetwork : azure.networks().listByGroup(rgName)) {
     for (Map.Entry<String, Subnet> entry : virtualNetwork.subnets().entrySet()) {
         String subnetName = entry.getKey();
         Subnet subnet = entry.getValue();
-        System.out.println("Address prefix for subnet " + subnetName + " is " + subnet.addressPrefix());
+        System.out.println("Address prefix for subnet " + subnetName + 
+             " is " + subnet.addressPrefix());
     }
 }
 ```       
