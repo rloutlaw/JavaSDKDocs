@@ -1,12 +1,16 @@
-- name: Overview 
-  href: index.md
+--- 
+- 
   displayName: Home
   expanded: true
-  items:
-  - name: Install
-    items:
-    - name: Tools
-      href: tools.md
-    - name: Import dependencies
-      href: download.md
-
+  href: index.md
+  items: 
+    - 
+      items: 
+        - 
+          href: tools.md
+          name: Tools
+        - 
+          href: download.md
+          name: "Import dependencies"
+      name: Install
+  name: Overview
