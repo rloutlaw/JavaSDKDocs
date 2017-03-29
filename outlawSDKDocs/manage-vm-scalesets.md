@@ -231,11 +231,11 @@ Scale the number of virtual machines in the scale set using `withCapacity()` and
 
 | Class used in sample | Notes
 |-------|-------|
-| [com.microsoft.azure.management.compute.VirtualMachineScaleSet](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set) | Query, start, stop, update and delete all virtual machines in the scale set.
-| [com.microsoft.azure.management.compute.VirtualMachineScaleSetVM](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set_v_m) | Retrieved from `virtualMachineScaleSet.virtualMachines().get()` or `list()`, allows you to query, start, stop, configure and delete virtual machines in the scale set.
-| [com.microsoft.azure.management.network.VirtualMachineScaleSetNetworkInterface](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._virtual_machine_scale_set_network_interface) | Returned from `virtualMachineScaleSet.listNetworkInterfaces()`, read-only representation of a network interface on a virtual machine in a scale set.
-| [com.microsoft.azure.management.compute.VirtualMachineScaleSetSkuTypes](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set_sku_types) | Class of static fields used to set the [virtual machine scale set tier](https://azure.microsoft.com/en-us/pricing/details/virtual-machine-scale-sets/linux/) used to define how much resources scale set members can consume.
-| [com.microsoft.azure.management.network.VirtualMachineScaleSetNicIpConfiguration](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._virtual_machine_scale_set_nic_i_p_configuration) | Used to query the IP configuration associated with a network interface on a scale set virtual machine.
+| [VirtualMachineScaleSet](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set) | Query, start, stop, update and delete all virtual machines in the scale set.
+| [VirtualMachineScaleSetVM](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set_v_m) | Retrieved from `virtualMachineScaleSet.virtualMachines().get()` or `list()`, allows you to query, start, stop, configure and delete virtual machines in the scale set.
+| [VirtualMachineScaleSetNetworkInterface](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._virtual_machine_scale_set_network_interface) | Returned from `virtualMachineScaleSet.listNetworkInterfaces()`, read-only representation of a network interface on a virtual machine in a scale set.
+| [VirtualMachineScaleSetSkuTypes](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set_sku_types) | Class of static fields used to set the [virtual machine scale set tier](https://azure.microsoft.com/en-us/pricing/details/virtual-machine-scale-sets/linux/) used to define how much resources scale set members can consume.
+| [VirtualMachineScaleSetNicIpConfiguration](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._virtual_machine_scale_set_nic_i_p_configuration) | Used to query the IP configuration associated with a network interface on a scale set virtual machine.
 
 ## Next steps
 
