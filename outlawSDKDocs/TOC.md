@@ -4,7 +4,7 @@
 ### [Import dependencies](download.md)
 ## Get started 
 ### [Set up your environment](get-started-intro.md)
-### [Log in with the CLI 2.0](get-staretd-cli.md)
+### [Log in with the CLI 2.0](get-started-cli.md)
 ### [Run the sample](get-started-sample.md)
 ### [Deploy to App Service](get-started-appservice.md)
 ### [Add Azure Storage](get-started-storage.md)

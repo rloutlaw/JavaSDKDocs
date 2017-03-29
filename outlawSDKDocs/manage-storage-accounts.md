@@ -40,6 +40,8 @@ StorageAccount storageAccount = azure.storageAccounts().define(storageAccountNam
                     .create();
 ```
 
+The storage name provided must be unique across all names in Azure and contain only lowercase letters and numbers. The default performance and replication profile used for this account is [Standard_GRS](https://docs.microsoft.com/en-us/azure/storage/storage-redundancy#geo-redundant-storage).
+
 ### List keys in a storage account
 ```java
 // list the name and value for each access key in the storage account
@@ -48,6 +50,8 @@ for(StorageAccountKey key : storageAccountKeys)    {
     System.out.println("Key name: " + key.keyName() + " with value "+ key.value());
 }
 ```
+
+You cannot directly set the value of keys-you can retrieve the values or regenerate them, revoking access granted by previous value.
 
 ### Regenerate a key in a storage account
 
