@@ -22,7 +22,7 @@ ms.author: routlaw;asirveda
 
 [This sample](https://github.com/Azure-Samples/sql-database-java-manage-sql-dbs-in-elastic-pool) creates a SQL database server with an [elastic pool](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-elastic-pool) to manage and scale resouces in a single SQL database plan across multiple databases. 
 
-## Sample code
+## Run the sample
 
 Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
 
@@ -118,7 +118,7 @@ Review the methods in [com.microsoft.azure.management.sql.SqlDatabase](https://d
 sqlServer.elasticPools().delete(elasticPoolName);
 ```
 
-Remove a database from an elastic pool to assign fixed resources to it defined by its [pricing tier](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers).
+The elastic pool must be empty before deleting it.
 
 ## Sample code summary.
 

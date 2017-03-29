@@ -20,17 +20,25 @@ ms.author: routlaw;asirveda
 
 # Manage Azure virtual networks with Java
 
-[This sample](https://github.com/Azure-Samples/network-java-manage-virtual-network) creates a [virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) to isolate your Azure compute resources on network segment you control.
+[This sample](https://github.com/Azure-Samples/network-java-manage-virtual-network) creates a [virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) to isolate your Azure resources on network segment you control.
 
-## Sample code
+## Run the sample
 
-[View the complete code sample on GitHub](https://github.com/Azure-Samples/network-java-manage-virtual-network/blob/master/src/main/java/com/microsoft/azure/management/network/samples/ManageVirtualNetwork.java).
+Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
 
-### Authenticate with Azure
+```
+git clone https://github.com/Azure-Samples/network-java-manage-virtual-network.git
+cd network-java-manage-virtual-network
+mvn clean compile exec:java
+```
+
+View the [complete code sample on GitHub](https://github.com/Azure-Samples/network-java-manage-virtual-network/blob/master/src/main/java/com/microsoft/azure/management/network/samples/ManageVirtualNetwork.java).
+
+## Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a network security group to block Internet traffic
+## Create a network security group to block Internet traffic
 
 ```java
  // this NSG definition block traffic to and from the public Internet
@@ -56,9 +64,9 @@ NetworkSecurityGroup backEndSubnetNsg = azure.networkSecurityGroups().define(vne
                     .create();
 ```
 
-This [network security group](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) blocks both inbound and outbound public Internet traffic. This network security group will not have an effect until applied to a subnet in your virtual network.
+This [network security rule](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) blocks both inbound and outbound public Internet traffic. This network security group will not have an effect until applied to a subnet in your virtual network.
 
-### Create a virtual network with two subnets
+## Create a virtual network with two subnets
 
 ```java
 // create the a virtual network with two subnets
@@ -77,7 +85,7 @@ Network virtualNetwork1 = azure.networks().define(vnetName1)
 
 The backend subnet denies Internet access usingfollowing the rules set in the network security group. The front end subnet uses the [default rules](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg) which allow outbound traffic to the Internet.
 
-### Create a network security group to allow inbound HTTP traffic
+## Create a network security group to allow inbound HTTP traffic
 ```java
 // create a rule that allows inbound HTTP and blocks outbound Internet traffic
 NetworkSecurityGroup frontEndSubnetNsg = azure.networkSecurityGroups().define(vnet1FrontEndSubnetNsgName)
@@ -102,7 +110,9 @@ NetworkSecurityGroup frontEndSubnetNsg = azure.networkSecurityGroups().define(vn
                     .create();
 ```
 
-### Update a virtual network
+This network security rule opens up inbound traffic on port 80 from the public Internet, and blocks all outbound traffic from inside the network to the public Internet. 
+
+## Update a virtual network
 ```java
 // update the front end subnet to use the rules in the new network security group
 virtualNetwork1.update()
@@ -112,9 +122,9 @@ virtualNetwork1.update()
           .apply();
 ```
 
-Update the other subnet to allow inbound HTTP traffic. 
+Update the front end subnet to allow inbound HTTP traffic using the network security rule created in the previous step.
 
-### Create a virtual machine on a subnet
+## Create a virtual machine on a subnet
 ```java
 // use the existing virtual network and front-end subnet to attach the new VM to the network
 VirtualMachine frontEndVM = azure.virtualMachines().define(frontEndVmName)
@@ -131,9 +141,9 @@ VirtualMachine frontEndVM = azure.virtualMachines().define(frontEndVmName)
                     .create();
 ```
 
-`withExistingPrimaryNetwork()` and `withSubnet()` configure the virtual machine to use the virtual network created in the previous steps.
+`withExistingPrimaryNetwork()` and `withSubnet()` configure the virtual machine to use the front-end subnet on the virtual network created in the previous steps.
 
-### List virtual networks in a resource group
+## List virtual networks in a resource group
 ```java
 // iterate over every virtual network in the resource group 
 for (Network virtualNetwork : azure.networks().listByGroup(rgName)) {
@@ -146,7 +156,9 @@ for (Network virtualNetwork : azure.networks().listByGroup(rgName)) {
 }
 ```       
 
-### Delete a virtual network
+You can list and inspect `Network` object using the outer collection or iterate through each child resource for each network using the nested for-each loop as seen in this example.
+
+## Delete a virtual network
 ```java
 // if you already have the virtual network object it is easiest to delete by ID
 azure.networks().deleteById(virtualNetwork1.id());
@@ -154,6 +166,8 @@ azure.networks().deleteById(virtualNetwork1.id());
 // Delete by resource group and name if you don't have the VirtualMachine object
 azure.networks().deleteByGroup(rgName,vnetName1);
 ```
+
+Removing a virtual network deletes the subnets on the network but does not delete the network security group rules applied to the subnets. Those definitions can be reapplied to other subnets.
 
 ## Sample explanation
 
