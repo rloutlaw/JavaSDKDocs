@@ -24,13 +24,21 @@ ms.author: routlaw;asirveda
 
 ## Sample code
 
+Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
+
+```
+git clone https://github.com/Azure-Samples/sql-database-java-manage-sql-dbs-in-elastic-pool
+cd sql-database-java-manage-sql-dbs-in-elastic-pool
+mvn clean compile exec:java
+```
+
 [View the complete code sample on GitHub](https://github.com/Azure-Samples/sql-database-java-manage-sql-dbs-in-elastic-pool)
 
-### Authenticate with Azure
+## Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a  SQL database logical server with an elastic pool
+## Create a  SQL database logical server with an elastic pool
 
 ```java
 SqlServer sqlServer = azure.sqlServers().define(sqlServerName)
@@ -38,14 +46,16 @@ SqlServer sqlServer = azure.sqlServers().define(sqlServerName)
                     .withNewResourceGroup(rgName)
                     .withAdministratorLogin(administratorLogin)
                     .withAdministratorPassword(administratorPassword)
-                    // use ElasticPoolEditions.STANDARD as the edition and creating two databases
-                    .withNewElasticPool(elasticPoolName, ElasticPoolEditions.STANDARD, database1Name, database2Name)
+                    // use ElasticPoolEditions.STANDARD as the edition
+                    // and creating two databases
+                    .withNewElasticPool(elasticPoolName, ElasticPoolEditions.STANDARD, 
+                        database1Name, database2Name)
                     .create();
 ```
 
 See the [ElasticPoolEditions class reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._elastic_pool_editions) for current edition values. Review the [SQL database elastic pool documentation](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-elastic-pool) to compare edition resource characteristics. 
 
-### Change Database Transaction Unit (DTU) settings in an elastic pool
+## Change Database Transaction Unit (DTU) settings in an elastic pool
 
 ```java
 // set an pool of 200 eDTUs to share between the databases
@@ -57,9 +67,9 @@ elasticPool = elasticPool.update()
                     .apply();
 ```
 
-Review the [DTUs and eDTUs documentation](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-what-is-a-dtu) to learn more about allocating resources in a service tier to multiple databases.
+Review the [DTUs and eDTUs documentation](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-what-is-a-dtu) to learn about allocating resources in a service tier to multiple databases.
 
-### Create a new database and add it to an elastic pool
+## Create a new database and add it to an elastic pool
 
 ```java
 // update the elasticPool object with the newly created SqlDatabase
@@ -69,9 +79,9 @@ elasticPool.update().withExistingDatabase(anotherDatabase).apply();
 
 The API created `anotherDatabase` at [S0 tier](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers) in the first statement. Moving `anotherDatabase` to the elastic pool assigns the database resources based on the pool settings.
 
-### Remove a database from an elastic pool
+## Remove a database from an elastic pool
 ```java
-// assign the database an edition since its resources are no longer allocated by the pool 
+// assign an edition since the database resources are no longer managed in the pool 
 anotherDatabase = anotherDatabase.update()
                      .withoutElasticPool()
                      .withEdition(DatabaseEditions.STANDARD)
@@ -80,7 +90,7 @@ anotherDatabase = anotherDatabase.update()
 
 See the [DatabaseEditions class reference](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._database_editions) for values to pass to `withEdition()`.
 
-### List current database activities in an elastic pool
+## List current database activities in an elastic pool
 ```java
 // get a list of in-flight elastic operations on databases in the pool and log them 
 for (ElasticPoolDatabaseActivity databaseActivity : elasticPool.listDatabaseActivities()) {
@@ -90,9 +100,10 @@ for (ElasticPoolDatabaseActivity databaseActivity : elasticPool.listDatabaseActi
 }
 ```
 
+Database activities include moving an existing database in and out of an elastic pool or the creation or deletion of a database already in an elastic pool.
 
 
-### List databases in an elastic pool
+## List databases in an elastic pool
 ```java
 // log a list of databases in the elastic pool to the console
 for (SqlDatabase databaseInServer : elasticPool.listDatabases()) {
@@ -102,16 +113,16 @@ for (SqlDatabase databaseInServer : elasticPool.listDatabases()) {
 
 Review the methods in [com.microsoft.azure.management.sql.SqlDatabase](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.sql._sql_database) to query the database objects in more detail when iterating over them.
 
-### Delete an elastic pool
+## Delete an elastic pool
 ```java
 sqlServer.elasticPools().delete(elasticPoolName);
 ```
 
-Removing a database from an elastic pool returns it to using resources defined by its [pricing tier](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers).
+Remove a database from an elastic pool to assign fixed resources to it defined by its [pricing tier](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers).
 
-## Sample explanation
+## Sample code summary.
 
-The sample creates a SQL server instance with two databases managed in a single elasic pool. The elastic pool resource limits are updated,  and additional databases are added to the pool. The elastic pool is then queried for its configuration and state. 
+The sample creates a SQL server instance with two databases managed in a single elasic pool. The elastic pool resource limits are updated, and additional databases are added to the pool. The elastic pool is then queried for its configuration and state. 
 
 The sample deletes all resources it created before exiting.
 
