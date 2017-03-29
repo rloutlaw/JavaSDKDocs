@@ -4,13 +4,4 @@
   expanded: true
   href: index.md
   items: 
-    - 
-      items: 
-        - 
-          href: tools.md
-          name: Tools
-        - 
-          href: download.md
-          name: "Import dependencies"
-      name: Install
-  name: Overview
+---
