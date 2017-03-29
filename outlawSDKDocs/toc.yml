@@ -1,6 +1,5 @@
---- 
-- 
+- name: Overview
   displayName: Home
   expanded: true
   href: index.md
-  name: Overview
+
