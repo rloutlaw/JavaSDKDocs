@@ -11,7 +11,7 @@ ms.assetid: 9b461de8-46bc-4650-8e9e-59531f4e2a53
 ms.service: multiple
 ms.workload: na
 ms.tgt_pltfrm: multiple
-ms.devlang: Java
+ms.devlang: java
 ms.topic: article
 ms.date: 12/22/2016
 ms.author: routlaw;asirveda
@@ -22,15 +22,23 @@ ms.author: routlaw;asirveda
 
 [This sample](https://github.com/Azure-Samples/storage-java-manage-storage-accounts) creates an [Azure Storage](https://docs.microsoft.com/en-us/azure/storage/storage-introduction) account and works with the account access keys using the [Java management libraries](https://github.com/Azure/azure-sdk-for-java). 
 
-## Sample code 
+## Run the sample
 
-[View the complete code sample on GitHub](https://github.com/Azure-Samples/storage-java-manage-storage-accounts).
+Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
 
-### Authenticate with Azure
+```
+git clone https://github.com/Azure-Samples/storage-java-manage-storage-accounts.git
+cd storage-java-manage-storage-accounts
+mvn clean compile exec:java
+```
+
+View the [complete code sample on GitHub](https://github.com/Azure-Samples/storage-java-manage-storage-accounts).
+
+## Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a storage account
+## Create a storage account
 
 ```java
 // create a new storage account
@@ -42,7 +50,7 @@ StorageAccount storageAccount = azure.storageAccounts().define(storageAccountNam
 
 The storage name provided must be unique across all names in Azure and contain only lowercase letters and numbers. The default performance and replication profile used for this account is [Standard_GRS](https://docs.microsoft.com/en-us/azure/storage/storage-redundancy#geo-redundant-storage).
 
-### List keys in a storage account
+## List keys in a storage account
 ```java
 // list the name and value for each access key in the storage account
 List<StorageAccountKey> storageAccountKeys = storageAccount.getKeys();
@@ -51,9 +59,9 @@ for(StorageAccountKey key : storageAccountKeys)    {
 }
 ```
 
-You cannot directly set the value of keys-you can retrieve the values or regenerate them, revoking access granted by previous value.
+Two keys are provided in each Azure storage account so that you can regenerate one key while still allowing access to storage using the other key.
 
-### Regenerate a key in a storage account
+## Regenerate a key in a storage account
 
 ```java
 // regenerate the first key in a storage account and return an updated list of keys 
@@ -61,7 +69,9 @@ List<StorageAccountKey> updatedStorageAccountKeys =
     storageAccount.regenerateKey(storageAccountKeys.get(0).keyName());
 ```
 
-### List all storage accounts in a resource group
+You must update all Azure resources and applications with the new key after generating a new one.
+
+## List all storage accounts in a resource group
 ```java
 // get a list of accounts in a resource group , log info about each one
 List<StorageAccount> accounts = azure.storageAccounts().listByGroup(rgName);
@@ -70,7 +80,9 @@ for (StorageAccount sa : accounts) {
 }
 ```
 
-### Delete a storage account
+[com.microsoft.azure.management.storage.StorageAccount](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account) provides a set of useful methods to inspect the configuration of a storage account.
+
+## Delete a storage account
 ```java
 // delete by ID when you already have a storage account object
 azure.storageAccounts().deleteById(storageAccount.id());
@@ -78,6 +90,8 @@ azure.storageAccounts().deleteById(storageAccount.id());
 // delete by resource group and account name if you don't have an account object
 azure.storageAccounts().deleteByGroup(rgName,accountName);
 ```
+
+Storage accounts with in-use disk images connected to virtual machines or disks in use by other artifacts may not remove with these methods. Detach the storage from these resources before removing the account.
 
 ## Sample explanation
 
