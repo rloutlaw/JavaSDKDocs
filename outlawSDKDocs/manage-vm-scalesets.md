@@ -110,39 +110,41 @@ LoadBalancer loadBalancer1 = azure.loadBalancers().define(loadBalancerName1)
                     .create();
 ```
 
- The load balancer defines two backend network address pools-one to balance load across HTTP (`backendPoolName1`) and the other to balance load across HTTPS (`backendPoolName2`).  The `defineHttpProbe()` methods set up health probe endpoints on the load balancers. NAT rules expose ports 22 and 23 on the scale set virtual machines for telnet and SSH access.
+ The load balancer defines two backend network address pools-one to balance load across HTTP (`backendPoolName1`) and the other to balance load across HTTPS (`backendPoolName2`).  The `defineHttpProbe()` methods set up [health probe endpoints](https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-custom-probe-overview) on the load balancers. NAT rules expose ports 22 and 23 on the scale set virtual machines for telnet and SSH access.
 
 ## Create a scale set
  
 ```java
  // Create a virtual machine scale set with three virtual machines
  // And, install Apache Web servers on them
-VirtualMachineScaleSet virtualMachineScaleSet = azure.virtualMachineScaleSets().define(vmssName)
-                    .withRegion(region)
-                    .withExistingResourceGroup(rgName)
-                    .withSku(VirtualMachineScaleSetSkuTypes.STANDARD_D3_V2)
-                    .withExistingPrimaryNetworkSubnet(network, "Front-end")
-                    .withExistingPrimaryInternetFacingLoadBalancer(loadBalancer1)
-                    .withPrimaryInternetFacingLoadBalancerBackends(backendPoolName1, backendPoolName2)
-                    .withPrimaryInternetFacingLoadBalancerInboundNatPools(natPool50XXto22, natPool60XXto23)
-                    .withoutPrimaryInternalLoadBalancer()
-                    .withPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-                    .withRootUsername(userName)
-                    .withSsh(sshKey)
-                    .withNewDataDisk(100)
-                    .withNewDataDisk(100, 1, CachingTypes.READ_WRITE)
-                    .withNewDataDisk(100, 2, CachingTypes.READ_WRITE, StorageAccountTypes.STANDARD_LRS)
-                    .withCapacity(3)
-                    // Use a VM extension to install Apache Web servers
-                    .defineNewExtension("CustomScriptForLinux")
-                        .withPublisher("Microsoft.OSTCExtensions")
-                        .withType("CustomScriptForLinux")
-                        .withVersion("1.4")
-                        .withMinorVersionAutoUpgrade()
-                        .withPublicSetting("fileUris", fileUris)
-                        .withPublicSetting("commandToExecute", installCommand)
-                        .attach()
-                    .create();
+VirtualMachineScaleSet virtualMachineScaleSet = azure.virtualMachineScaleSets()
+       .define(vmssName)
+                .withRegion(region)
+                .withExistingResourceGroup(rgName)
+                .withSku(VirtualMachineScaleSetSkuTypes.STANDARD_D3_V2)
+                .withExistingPrimaryNetworkSubnet(network, "Front-end")
+                .withExistingPrimaryInternetFacingLoadBalancer(loadBalancer1)
+                .withPrimaryInternetFacingLoadBalancerBackends(backendPoolName1, backendPoolName2)
+                .withPrimaryInternetFacingLoadBalancerInboundNatPools(natPool50XXto22, natPool60XXto23)
+                .withoutPrimaryInternalLoadBalancer()
+                .withPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                .withRootUsername(userName)
+                .withSsh(sshKey)
+                .withNewDataDisk(100)
+                .withNewDataDisk(100, 1, CachingTypes.READ_WRITE)
+                .withNewDataDisk(100, 2, 
+                     CachingTypes.READ_WRITE, StorageAccountTypes.STANDARD_LRS)
+                .withCapacity(3)
+                // Use a VM extension to install Apache Web servers
+                .defineNewExtension("CustomScriptForLinux")
+                    .withPublisher("Microsoft.OSTCExtensions")
+                    .withType("CustomScriptForLinux")
+                    .withVersion("1.4")
+                    .withMinorVersionAutoUpgrade()
+                    .withPublicSetting("fileUris", fileUris)
+                    .withPublicSetting("commandToExecute", installCommand)
+                    .attach()
+                .create();
 ```
 
 Use the virtual network definition and load balancer definitions created in the previous step to create a scale set with three Linux instances (`withCapacity(3)`) and three 100GB data disks each. The `defineNewExtension()` method chain installs the Apache web server on each VM.
@@ -151,7 +153,8 @@ Use the virtual network definition and load balancer definitions created in the 
 
 ```java
 // List network interfaces on the scale set and iterate through them
-PagedList<VirtualMachineScaleSetNetworkInterface> vmssNics = virtualMachineScaleSet.listNetworkInterfaces();
+PagedList<VirtualMachineScaleSetNetworkInterface> vmssNics = 
+     virtualMachineScaleSet.listNetworkInterfaces();
 for (VirtualMachineScaleSetNetworkInterface vmssNic : vmssNics) {
     System.out.println(vmssNic.id());
 }
@@ -163,16 +166,19 @@ for (VirtualMachineScaleSetNetworkInterface vmssNic : vmssNics) {
 for (VirtualMachineScaleSetVM instance : virtualMachineScaleSet.virtualMachines().list()) {
     System.out.println("Scale set virtual machine instance #" + instance.instanceId());
     System.out.println(instance.id());
-    PagedList<VirtualMachineScaleSetNetworkInterface> networkInterfaces = instance.listNetworkInterfaces();
+    PagedList<VirtualMachineScaleSetNetworkInterface> networkInterfaces = 
+         instance.listNetworkInterfaces();
     // Pick the first NIC on the instance and use its primary IP address
     VirtualMachineScaleSetNetworkInterface networkInterface = networkInterfaces.get(0);
     for (VirtualMachineScaleSetNicIPConfiguration ipConfig : networkInterface.ipConfigurations().values()) {
         if (ipConfig.isPrimary()) {
             List<LoadBalancerInboundNatRule> natRules = ipConfig.listAssociatedLoadBalancerInboundNatRules();
             for (LoadBalancerInboundNatRule natRule : natRules) {
-                // search through the NAT rules for the rule matching the inbound SSH port on the backend for this IP address
+                // find rule matching the inbound SSH port on the backend for the IP address
+                // and return the SSH connection string to that port on the load balancer
                 if (natRule.backendPort() == 22) {
-                    System.out.println("SSH connection string: " + userName + "@" + publicIPAddress.fqdn() + ":" + natRule.frontendPort());
+                    System.out.println("SSH connection string: " + userName + 
+                        "@" + publicIPAddress.fqdn() + ":" + natRule.frontendPort());
                 break;
                 }
             }
@@ -187,8 +193,8 @@ The NAT pool created earlier mapped the SSH and telnet ports (22 and 23, respect
 ## Stop the virtual machine scale set
 
 ```java
-            // stop (not deallocate) all scale set instances
-            virtualMachineScaleSet.powerOff();
+// stop (not deallocate) all scale set instances
+virtualMachineScaleSet.powerOff();
 ```
 
 Stopped virtual machines continue to consume reserved resources. Use `deallocate()` to stop the operating system on the virtual machines and release their compute resources.
@@ -196,8 +202,8 @@ Stopped virtual machines continue to consume reserved resources. Use `deallocate
 ## Deallocate the virtual machine scale set
 
 ```java
-       // deallocate the virtual machine scale set
-                 virtualMachineScaleSet.deallocate();
+// deallocate the virtual machine scale set
+virtualMachineScaleSet.deallocate();
 ```
 
 Deallocated scale set instances stop the operating system for the scale set and return the used compute and network resources (including any non-static IP addresses) used by the scale set instances. You continue to accrue charges for Azure storage used for the virtual machine's data and OS disks. 
@@ -205,15 +211,14 @@ Deallocated scale set instances stop the operating system for the scale set and 
 ## Start a virtual machine scale set
 
 ```java
-    // start a deallocated or stopped virtual machine scale set
-     virtualMachineScaleSet.start();
+// start a deallocated or stopped virtual machine scale set
+virtualMachineScaleSet.start();
 ```
 
 ## Update the number of virtual machines instances in the scale set
 ```java
-            // increase the number of virtual machine scale set instances to six from the
-            // three in the create sample
-            virtualMachineScaleSet.update()
+// increase the number of virtual machine scale set instances from three to six
+virtualMachineScaleSet.update()
                     .withCapacity(6)
                     .apply();
 ```
@@ -222,7 +227,7 @@ Scale the number of virtual machines in the scale set using `withCapacity()` and
 
 ## Sample explanation
 
-[The sample code](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/ManageVirtualMachineScaleSet.java) first creates a virtual network for the scale set to communicate across and a load balancer to distribute traffic across the virtual machines. The scale set is then defined created through `azure.virtualMachineScaleSets().define()...create()` with three Linux instances running the Apache web server. 
+[The sample code](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/ManageVirtualMachineScaleSet.java) first creates a virtual network for the scale set to communicate across and a load balancer to distribute traffic across the virtual machines. The scale set is then defined created through `azure.virtualMachineScaleSets().define()...create()` with three Linux instances running the Apache web server.    
 
 | Class used in sample | Notes
 |-------|-------|
