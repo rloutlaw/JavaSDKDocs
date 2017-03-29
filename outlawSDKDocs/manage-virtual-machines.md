@@ -22,13 +22,21 @@ ms.author: routlaw;asirveda
 
 [This sample](https://github.com/Azure-Samples/compute-java-manage-vm/) uses the [Azure management libraries for Java](https://github.com/Azure/azure-sdk-for-java) to create and work with Azure virtual machines.
 
-## Sample code
+## Run the sample
 
-### Authenticate with Azure
+Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
+
+```
+git clone https://github.com/Azure-Samples/compute-java-manage-vm.git
+cd compute-java-manage-vm
+mvn clean compile exec:java
+```
+
+## Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a Windows virtual machine
+## Create a Windows virtual machine
 
 ```java
 // Prepare a data disk for VM
@@ -56,24 +64,27 @@ VirtualMachine windowsVM = azure.virtualMachines().define(windowsVmName)
                 .create();
 ```
 
-This code:
-0. Defines a `Disk` Creatable with a 50GB size and random name to attach to the virtual machine.
-0. Uses the `azure.virtualMachines().define()..create()` chain to create a Windows Server 2012 virtual machine. The sample creates the `Disk` defined in Azure at the same time as the virtual machine.
+This code:   
 
-Learn more about using [Creatables](concepts.md#Creatbles) do define resources locally and create them only when needed.
+0. Defines a `Disk` Creatable with a 50GB size and random name for use with a virtual machine.
+0. Uses the `azure.virtualMachines().define()..create()` chain to create the Windows Server 2012 virtual machine. The API creates the `Disk` defined in the previous step the same time as the virtual machine. A 10GB data disk is also attached to the virtual machine through `withNewDataDisk(10)`.
 
-### Stop, start, and restart a virtual machine
+Learn more about using [Creatables](concepts.md#Creatbles) do define local representations of resources and create them just as other Azure resources need them.
+
+## Stop, start, and restart a virtual machine
 
 ```java
 // look up a virtual machine by its ID and then restart, stop, and start it
 azureVM = azure.getVirtualMachine.getById(windowsVM.id());
 
 azureVM.restart();
-azureVM.powerOff(); // stops the operating system, but does not deallocate the VM resources
+azureVM.powerOff();
 azureVM.start();
 ```
 
-### Add a virtual machine to an existing network
+`powerOff()` stops the virtual machine operating system but does not deallocate its resources.
+
+## Add a virtual machine to an existing network
 
 ```java
 // Get the virtual network the current virtual machine is using
@@ -94,7 +105,10 @@ VirtualMachine linuxVM = azure.virtualMachines().define(linuxVmName)
                .create();
 ```
 
-### List virtual machines
+Use `withPopularLinuxImage` to define a Linux VM instead of a Windows one.
+
+
+## List virtual machines
 
 ```java
 // get a list of VMs in the same resource group as an existing VM
@@ -107,7 +121,9 @@ for (VirtualMachine virtualMachine : azure.virtualMachines().listByGroup(resourc
 }
 ```
 
-### Update a virtual machine
+List all virtual machines for a subscription using `azure.virtualMachines().list()` and iterate through the Map returned by `tags()` to manage tagged collections of virtual machines across resource groups.
+
+## Update a virtual machine
 
 ```java
 // add a 10GB data disk to the virtual machine
@@ -116,7 +132,9 @@ windowsVM.update()
      .apply();
 ```
 
-### Delete a virtual machine
+Update the virtual machine configuration using `update()...apply()` and the same methods used to configure the virtual machine when created through `define()...create()`.
+
+## Delete a virtual machine
 ```java
 // delete by ID if you already are working with the VM object
 azure.virtualMachines().deleteById(windowsVM.id());
@@ -127,7 +145,7 @@ azure.virtualMachines().deleteByGroup(rgName,windowsVmName);
 
 ## Sample explanation
 
-[The sample code](https://github.com/Azure-Samples/compute-java-manage-vm/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/ManageVirtualMachine.java) creates a Windows virtual machine with a 50GB data disk. The virtual machine is data disk configuration is then updated and the virtual machine restarted.
+[The sample code](https://github.com/Azure-Samples/compute-java-manage-vm/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/ManageVirtualMachine.java) creates a Windows virtual machine with a 50GB data disk. The virtual machine is data disk configuration is updated and the virtual machine restarted.
 
 A Linux virtual machine is then created in the same virtual network. The code gets a list of virtual machines and then deletes both virtual machines before finishing.
 
