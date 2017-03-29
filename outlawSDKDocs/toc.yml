@@ -1,5 +1,12 @@
-- name: Tutorial
-  href: index.md
+- name: Overview
+  href: overview.md
   items:
-  - name: Step 1
-    href: download.md
+  - name: Install
+  - name: Get started
+    href: get-started-intro.md
+  - name: Release notes
+    href: release-notes.md
+- name: Samples
+  items:
+  - name: Linux Virtual Machines
+    href: manage-virtual-machines.md
