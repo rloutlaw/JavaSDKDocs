@@ -41,27 +41,27 @@ mvn clean compile exec:java
 ```java
 // Prepare a data disk for VM
 Disk dataDisk = azure.disks().define(SdkContext.randomResourceName("dsk", 30))
-                .withRegion(region)
-                .withNewResourceGroup(rgName)
-                .withData()
-                .withSizeInGB(50)
-                .create();
+            .withRegion(region)
+            .withNewResourceGroup(rgName)
+            .withData()
+            .withSizeInGB(50)
+            .create();
 
 // create the windows virtual machine with the data disk            
 VirtualMachine windowsVM = azure.virtualMachines().define(windowsVmName)
-                .withRegion(region)
-                .withNewResourceGroup(rgName)
-                .withNewPrimaryNetwork("10.0.0.0/28")
-                .withPrimaryPrivateIpAddressDynamic()
-                .withoutPrimaryPublicIpAddress()
-                .withPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
-                .withAdminUsername(userName)
-                .withAdminPassword(password)
-                .withNewDataDisk(10)
-                .withNewDataDisk(dataDiskCreatable)
-                .withExistingDataDisk(dataDisk)
-                .withSize(VirtualMachineSizeTypes.STANDARD_D3_V2)
-                .create();
+            .withRegion(region)
+            .withNewResourceGroup(rgName)
+            .withNewPrimaryNetwork("10.0.0.0/28")
+            .withPrimaryPrivateIpAddressDynamic()
+            .withoutPrimaryPublicIpAddress()
+            .withPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+            .withAdminUsername(userName)
+            .withAdminPassword(password)
+            .withNewDataDisk(10)
+            .withNewDataDisk(dataDiskCreatable)
+            .withExistingDataDisk(dataDisk)
+            .withSize(VirtualMachineSizeTypes.STANDARD_D3_V2)
+            .create();
 ```
 
 This code:   
@@ -92,17 +92,17 @@ Network network = windowsVM.getPrimaryNetworkInterface().primaryIPConfiguration(
 
 // Create a Linux VM in the same subnet
 VirtualMachine linuxVM = azure.virtualMachines().define(linuxVmName)
-               .withRegion(region)
-               .withExistingResourceGroup(rgName)
-               .withExistingPrimaryNetwork(network)
-               .withSubnet("subnet1") // default subnet name when no name specified at creation
-               .withPrimaryPrivateIPAddressDynamic()
-               .withoutPrimaryPublicIPAddress()
-               .withPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
-               .withRootUsername(userName)
-               .withRootPassword(password)
-               .withSize(VirtualMachineSizeTypes.STANDARD_D3_V2)
-               .create();
+           .withRegion(region)
+           .withExistingResourceGroup(rgName)
+           .withExistingPrimaryNetwork(network)
+           .withSubnet("subnet1") // default subnet name when no name specified at creation
+           .withPrimaryPrivateIPAddressDynamic()
+           .withoutPrimaryPublicIPAddress()
+           .withPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+           .withRootUsername(userName)
+           .withRootPassword(password)
+           .withSize(VirtualMachineSizeTypes.STANDARD_D3_V2)
+           .create();
 ```
 
 Use `withPopularLinuxImage` to define a Linux VM instead of a Windows one.
@@ -113,11 +113,13 @@ Use `withPopularLinuxImage` to define a Linux VM instead of a Windows one.
 ```java
 // get a list of VMs in the same resource group as an existing VM
 String resourceGroupName = windowsVM.resourceGroupName();
-PagedList<VirtualMachine> resourceGroupVMs = azure.virtualMachines().listByGroup(resourceGroupName); 
+PagedList<VirtualMachine> resourceGroupVMs = azure.virtualMachines()
+        .listByGroup(resourceGroupName); 
 
 // for each vitual machine in the resource group, log their name and plan
 for (VirtualMachine virtualMachine : azure.virtualMachines().listByGroup(resourceGroupName)) {
-    System.out.println("VM " + virtualMachine.computerName() + " has plan " + virtualMachine.plan());
+    System.out.println("VM " + virtualMachine.computerName() + 
+        " has plan " + virtualMachine.plan());
 }
 ```
 
