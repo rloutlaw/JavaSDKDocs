@@ -32,6 +32,8 @@ cd compute-java-manage-vm
 mvn clean compile exec:java
 ```
 
+View the [complete code sample on GitHub](https://github.com/Azure-Samples/compute-java-manage-vm/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/ManageVirtualMachine.java).
+
 ## Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]

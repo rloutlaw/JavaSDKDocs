@@ -20,15 +20,25 @@ ms.author: routlaw;asirveda
 
 # Manage Azure virtual machine scale sets with Java
 
-[This sample](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets) creates a  [virtual machine scale set](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-overview) using the J[Java management libraries](https://github.com/Azure/azure-sdk-for-java). 
+[This sample](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets) creates a  [virtual machine scale set](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-overview) using the [Java management libraries](https://github.com/Azure/azure-sdk-for-java). 
 
-## Sample code
+## Run the sample
 
-### Authenticate with Azure
+Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
+
+```
+git clone https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets.git
+cd compute-java-manage-virtual-machine-scale-sets
+mvn clean compile exec:java
+```
+
+View the [complete code sample on GitHub](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/ManageVirtualMachineScaleSet.java).
+
+## Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a virtual network for the scale set
+## Create a virtual network for the scale set
 
 ```java
 Network network = azure.networks().define(vnetName)
@@ -43,7 +53,7 @@ Network network = azure.networks().define(vnetName)
 
 Set up a virtual network and load balancer before creating the scale set definition. The scale set uses these resources for its initial configuration.
 
-### Create a load balancer to distribute load across the scale set
+## Create a load balancer to distribute load across the scale set
 
 ```java
 LoadBalancer loadBalancer1 = azure.loadBalancers().define(loadBalancerName1)
@@ -102,7 +112,7 @@ LoadBalancer loadBalancer1 = azure.loadBalancers().define(loadBalancerName1)
 
  The load balancer defines two backend network address pools-one to balance load across HTTP (`backendPoolName1`) and the other to balance load across HTTPS (`backendPoolName2`).  The `defineHttpProbe()` methods set up health probe endpoints on the load balancers. NAT rules expose ports 22 and 23 on the scale set virtual machines for telnet and SSH access.
 
-### Create a scale set
+## Create a scale set
  
 ```java
  // Create a virtual machine scale set with three virtual machines
@@ -137,7 +147,7 @@ VirtualMachineScaleSet virtualMachineScaleSet = azure.virtualMachineScaleSets().
 
 Use the virtual network definition and load balancer definitions created in the previous step to create a scale set with three Linux instances (`withCapacity(3)`) and three 100GB data disks each. The `defineNewExtension()` method chain installs the Apache web server on each VM.
 
-### List virtual machine scale set network interfaces
+## List virtual machine scale set network interfaces
 
 ```java
 // List network interfaces on the scale set and iterate through them
@@ -147,7 +157,7 @@ for (VirtualMachineScaleSetNetworkInterface vmssNic : vmssNics) {
 }
 ```
 
-### Get SSH connection strings for each scale set virtual machine
+## Get SSH connection strings for each scale set virtual machine
 
 ```java
 for (VirtualMachineScaleSetVM instance : virtualMachineScaleSet.virtualMachines().list()) {
@@ -172,14 +182,18 @@ for (VirtualMachineScaleSetVM instance : virtualMachineScaleSet.virtualMachines(
 }
 ```
 
-### Stop the virtual machine scale set
+The NAT pool created earlier mapped the SSH and telnet ports (22 and 23, respectively) on the virtual machines to ports on the load balancer. This code builds the SSH connection string for each virtual machine.
+
+## Stop the virtual machine scale set
 
 ```java
             // stop (not deallocate) all scale set instances
             virtualMachineScaleSet.powerOff();
 ```
 
-### Deallocate the virtual machine scale set
+Stopped virtual machines continue to consume reserved resources. Use `deallocate()` to stop the operating system on the virtual machines and release their compute resources.
+
+## Deallocate the virtual machine scale set
 
 ```java
        // deallocate the virtual machine scale set
@@ -188,14 +202,14 @@ for (VirtualMachineScaleSetVM instance : virtualMachineScaleSet.virtualMachines(
 
 Deallocated scale set instances stop the operating system for the scale set and return the used compute and network resources (including any non-static IP addresses) used by the scale set instances. You continue to accrue charges for Azure storage used for the virtual machine's data and OS disks. 
 
-### Start a virtual machine scale set
+## Start a virtual machine scale set
 
 ```java
-    // start a dealloated or stopped virtual machine scale set
+    // start a deallocated or stopped virtual machine scale set
      virtualMachineScaleSet.start();
 ```
 
-### Update the number of virtual machines instances in the scale set
+## Update the number of virtual machines instances in the scale set
 ```java
             // increase the number of virtual machine scale set instances to six from the
             // three in the create sample
@@ -203,6 +217,8 @@ Deallocated scale set instances stop the operating system for the scale set and 
                     .withCapacity(6)
                     .apply();
 ```
+
+Scale the number of virtual machines in the scale set using `withCapacity()` and scale the capacity of each virtual machine using `withSku()`.
 
 ## Sample explanation
 
