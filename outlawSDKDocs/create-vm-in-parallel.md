@@ -22,10 +22,18 @@ ms.author: routlaw;asirveda
 
 [This sample](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel) creates virtual machines in parallel across different Azure regions using the [Azure management libraries for Java](https://github.com/Azure/azure-sdk-for-java).
 
->[!INFO]
-> The sample creates a total of 48 VMs running Ubuntu 16.04 LTS of [size STANDARD_DS3_V2](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes) across four regions. The sample code deletes these virtual machines before exiting.
+> [!INFO]
+> The sample creates a total of 48 VMs running Ubuntu 16.04 LTS of [size STANDARD_DS3_V2](https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-windows-sizes) across four regions. The sample code deletes these virtual machines before exiting. Make sure to [check your service limits and quota](https://docs.microsoft.com/en-us/azure/azure-subscription-service-limits) before running this sample with the default number of VMs.
 
-## Sample code
+## Run the sample
+
+Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
+
+```
+git clone https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel.git
+cd compute-java-create-virtual-machines-across-regions-in-parallel
+mvn clean compile exec:java
+```
 
 View the [complete code sample on GitHub](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/CreateVirtualMachinesInParallel.java).
 
@@ -33,7 +41,7 @@ View the [complete code sample on GitHub](https://github.com/Azure-Samples/compu
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Set locations and counts for the virtual machines
+## Set locations and counts for the virtual machines
 
 ```java
 // use a Map to define how where and how many VMs to create 
@@ -46,7 +54,7 @@ virtualMachinesByLocation.put(Region.US_WEST, 12);
 virtualMachinesByLocation.put(Region.US_NORTH_CENTRAL, 12);
 ```
 
-### Create a resource group 
+## Create a resource group 
 
 ```java
 // logically associate the resources in the sample into a randomly named resource group
@@ -56,7 +64,7 @@ ResourceGroup resourceGroup = azure.resourceGroups().define(rgName)
                 .create();
 ```
 
-### Define the virtual machines
+## Define the virtual machines
 ```java
 // list to store the VirtualMachine definitions
 List<Creatable<VirtualMachine>> creatableVirtualMachines = new ArrayList<>();
@@ -75,9 +83,10 @@ for (Map.Entry<Region, Integer> entry : virtualMachinesByLocation.entrySet()) {
 
     // Define one storage account Creatable per region for storing VM disks
     String storageAccountName = SdkContext.randomResourceName("stgcopd", 20);
-    Creatable<StorageAccount> storageAccountCreatable = azure.storageAccounts().define(storageAccountName)
-           .withRegion(region)
-           .withExistingResourceGroup(resourceGroup);
+    Creatable<StorageAccount> storageAccountCreatable = azure.storageAccounts()
+        .define(storageAccountName)
+              .withRegion(region)
+              .withExistingResourceGroup(resourceGroup);
 
     // generate a common prefix for every VM name
     String linuxVMNamePrefix = SdkContext.randomResourceName("vm-", 15);
@@ -117,7 +126,7 @@ The outer `for` loop above iterates through each region, defining a virtual netw
 
 The inner `for` loop gets a public IP address Creatable for the virtual machine and then defines a virtual machine Creatable using the Creatables for the virtual network, storage account, and public IP address defined previously.  This VirtualMachine Creatable is then added to the `creatableVirtualMachines` list.
 
-### Create the virtual machines
+## Create the virtual machines
 
 ```java
 // create all virtual machines defined in the list, return all Creatable objects used
@@ -129,10 +138,11 @@ for (VirtualMachine virtualMachine : virtualMachines.values()) {
     System.out.println(virtualMachine.id());
 }
 
-// call createdRelatedResource(key) to get the resources used to define the virtual machines. You need to save
-// key String at the time you define the Creatble to use CreatedResources
+// call createdRelatedResource(key) to get the resources used to define the virtual machines. 
+// Save the key at the time you define the Creatable to use CreatedResources like this
 for (String publicIpCreatableKey : publicIpCreatableKeys) {
-    PublicIPAddress pip = (PublicIPAddress) virtualMachines.createdRelatedResource(publicIpCreatableKey);
+    PublicIPAddress pip = 
+         (PublicIPAddress) virtualMachines.createdRelatedResource(publicIpCreatableKey);
 }
 ```
 
@@ -142,10 +152,10 @@ Use the returned `CreatedResources` object to access any resources created in th
 
 Learn more about working with `Creatables` and `CreatedResources` in our [API concepts article](concepts.md).
 
-### Delete the resource group 
+## Delete the resource group 
 
 ```java
-// finally block deletes the resource group even if the code before it throws an exception.
+// finally block deletes the resource group before the code exits
 // deleting a resource group deletes all resources created in it
 finally {
     try {
@@ -176,11 +186,11 @@ The `finally` block deletes the resources from your Azure subscription even in t
 
 | Class used in sample | Notes
 |-------|-------|
-| [com.microsoft.azure.management.compute.VirtualMachine](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine) | Query properties and manage state of virtual machines. Retrieved in list form  with`azure.virtualMachines().list()` or by name or ID `azure.virtualMachines().getByGroup()`
-| [com.microsoft.azure.management.compute.VirtualMachineSizeTypes](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_size_types) | Class with static values that map to [virtual machine size options]
-| [com.microsoft.azure.management.network.PublicIpAddress](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._public_i_p_address) | Defined, but not immediately created, for each virtual machine through `azure.publicIpAddresses().define()`. Store the key for each `Creatable` and retrieve later through `createdRelatedResource()`
-| [com.microsoft.azure.management.compute.KnownLinuxVirtualMachineImage](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._known_linux_virtual_machine_image) | Class with a set of Linux virtual machine options for use with the `withPopularLinuxImage()` method when defining a virtual machine.
-| [com.microsoft.azure.management.network.Network](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._network) | One virtual network Creatable defined for each region through  `azure.networks().define()` . 
+| [VirtualMachine](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine) | Query properties and manage state of virtual machines. Retrieved in list form  with`azure.virtualMachines().list()` or by name or ID `azure.virtualMachines().getByGroup()`
+| [VirtualMachineSizeTypes](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_size_types) | Class with static values that map to [virtual machine size options]
+| [PublicIpAddress](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._public_i_p_address) | Defined, but not immediately created, for each virtual machine through `azure.publicIpAddresses().define()`. Store the key for each `Creatable` and retrieve later through `createdRelatedResource()`
+| [KnownLinuxVirtualMachineImage](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._known_linux_virtual_machine_image) | Class with a set of Linux virtual machine options for use with the `withPopularLinuxImage()` method when defining a virtual machine.
+| [Network](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.network._network) | One virtual network Creatable defined for each region through  `azure.networks().define()` . 
 
 ## Next steps
 
