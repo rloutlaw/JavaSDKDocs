@@ -37,7 +37,7 @@ mvn clean compile exec:java
 
 View the [complete code sample on GitHub](https://github.com/Azure-Samples/compute-java-create-virtual-machines-across-regions-in-parallel/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/CreateVirtualMachinesInParallel.java).
 
-### Authenticate with Azure
+## Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
@@ -54,6 +54,8 @@ virtualMachinesByLocation.put(Region.US_WEST, 12);
 virtualMachinesByLocation.put(Region.US_NORTH_CENTRAL, 12);
 ```
 
+This `Map` is used later in the sample to set the distrubtion of the VMs worldwide.
+
 ## Create a resource group 
 
 ```java
@@ -63,6 +65,8 @@ ResourceGroup resourceGroup = azure.resourceGroups().define(rgName)
                 .withRegion(Region.US_EAST)
                 .create();
 ```
+
+Each resource in the sample is managed by this resource group. This makes the resources easy to clean up later by deleting the resource group.
 
 ## Define the virtual machines
 ```java
