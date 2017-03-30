@@ -26,21 +26,19 @@ ms.author: routlaw;asirveda
 
 Create an [authentication file](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md) and set an environment variable `AZURE_AUTH_LOCATION` with the full path to the file on your computer. Then run:
 
-```bash
+```
 git clone https://github.com/Azure-Samples/app-service-java-configure-deployment-sources-for-web-apps.git
 cd app-service-java-configure-deployment-sources-for-web-apps
 mvn clean compile exec:java
 ```
 
-## Sample code
-
 View the [complete sample code on GitHub](https://github.com/Azure-Samples/app-service-java-configure-deployment-sources-for-web-apps/blob/master/src/main/java/com/microsoft/azure/management/appservice/samples/ManageWebAppSourceControl.java).
 
-### Authenticate with Azure
+## Authenticate with Azure
 
 [!INCLUDE [auth-include](_shared/auth-include.md)]
 
-### Create a App Service app running Apache Tomcat
+## Create a App Service app running Apache Tomcat
 
 ```java
 // create a new Standard app service plan and create a single Java 8/Tomcat 8 app in it
@@ -54,19 +52,24 @@ WebApp app1 = azure.webApps().define(app1Name)
              .create();
 ```
 
-### Deploy a Java application using FTP
+`withJavaVersion()` and `withWebContainer()` configure App Service to serve HTTP requests using Tomcat 8.
+
+## Deploy a Java application using FTP
 ```java
 // pass the PublishingProfile that contains FTP information to a helper method 
-uploadFileToFtp(app1.getPublishingProfile(), "helloworld.war", ManageWebAppSourceControl.class.getResourceAsStream("/helloworld.war"));
+uploadFileToFtp(app1.getPublishingProfile(), "helloworld.war", 
+      ManageWebAppSourceControl.class.getResourceAsStream("/helloworld.war"));
 
-// Use the FTP classes in the Apache Commons library to connect to Azure using the information
-// in the PublishingProfile
+// Use the FTP classes in the Apache Commons library to connect to Azure using 
+// the information from the PublishingProfile
 private static void uploadFileToFtp(PublishingProfile profile, String fileName, InputStream file) throws Exception {
         FTPClient ftpClient = new FTPClient();
         String[] ftpUrlSegments = profile.ftpUrl().split("/", 2);
         String server = ftpUrlSegments[0];
         // Tomcat will deploy WAR files uploaded to this directory.
         String path = "./site/wwwroot/webapps"; 
+
+        // FTP the build WAR to Azure
         ftpClient.connect(server);
         ftpClient.login(profile.ftpUsername(), profile.ftpPassword());
         ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -78,18 +81,21 @@ private static void uploadFileToFtp(PublishingProfile profile, String fileName, 
 
 This code uploads a WAR file to the `/site/wwwroot/webapps` directory. Tomcat deploys WAR files placed in this directory by default in App Service.
 
-### Deploy a Java application from a local Git repo
+## Deploy a Java application from a local Git repo
 
 ```java
 // get the publishing profile from the App Service webapp
 PublishingProfile profile = app2.getPublishingProfile();
-// create a new Git repo in the helloworld sample directory in src/main/resources and add all files into a new commit
+
+// create a new Git repo in the sample directory under src/main/resources 
 Git git = Git
     .init()
     .setDirectory(new File(ManageWebAppSourceControl.class.getResource("/azure-samples-appservice-helloworld/").getPath()))
     .call();
 git.add().addFilepattern(".").call();
-git.commit().setMessage("Initial commit").call();
+// add the files in the sample app to an initial commit
+git.commit().setMessage("Initial commit").call(); 
+
 // push the commit using the Azure Git remote URL and credentials in the publishing profile
 PushCommand command = git.push();
 command.setRemote(profile.gitUrl()); 
@@ -104,21 +110,24 @@ This code uses the [JGit](https://eclipse.org/jgit/) libraries to create a new G
 >[!NOTE]
 > The layout of the files in the repo must match exactly how you want the files deployed under the `/site/wwwroot/` directory in Azure App Service.
 
-### Deploy an application from a public Git repo
+## Deploy an application from a public Git repo
 
 ```java
 // deploy a .NET sample app from a public GitHub repo into a new webapp
 WebApp app3 = azure.webApps().define(app3Name)
-                    .withNewResourceGroup(rgName)
-                    .withExistingAppServicePlan(plan)
-                    .defineSourceControl()
-                        .withPublicGitRepository("https://github.com/Azure-Samples/app-service-web-dotnet-get-started")
-                        .withBranch("master")
-                        .attach()
-                    .create();
+                .withNewResourceGroup(rgName)
+                .withExistingAppServicePlan(plan)
+                .defineSourceControl()
+                .withPublicGitRepository(
+                   "https://github.com/Azure-Samples/app-service-web-dotnet-get-started")
+                .withBranch("master")
+                .attach()
+                .create();
  ```
 
-### Continuous deployment from a GitHub repo
+ The App Service runtime automatically builds and deploys the .NET project using the latest code on the `master` branch of the repo.
+
+## Continuous deployment from a GitHub repo
 
 ```java
 // deploy the application whenever you push a new commit or merge a pull request into your master branch
@@ -150,12 +159,12 @@ The fourth application deploys the code in your master branch every time you pus
 
 | Class used in sample | Notes
 |-------|-------|
-| [com.microsoft.azure.management.appservice.WebApp](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._web_app) | Created from the `azure.webApps().define()....create()` fluent chain. Creates a App Service web app and any resources needed for the app. Most methods query the object for configuration details, but verb methods like `restart()` change the state of the webapp.
-| [com.microsoft.azure.management.appservice.WebContainer](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._web_container) | Class with static public fields used as paramters to `withWebContainer()` when defining a WebApp running a Java webcontainer. Has choices for both Jetty and Tomcat versions.
-| [com.microsoft.azure.management.appservice.PublishingProfile](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._publishing_profile) | Obtained through a WebApp object using the `getPublishingProfile()` method. Contains FTP and Git deployment information, including deployment username and password (which is separate from Azure account or service principal credentials).
-| [com.microsoft.azure.management.appservice.AppServicePlan](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._app_service_plan) | Returned by `azure.appServices().appServicePlans().getbyGroup()`. Methods are availble to check the capacity, tier, and number of web apps running in the plan.
-| [com.microsoft.azure.management.appservice.AppServicePricingTier](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._app_service_pricing_tier) | Class with static public fields representing App Service tiers. Used to define a plan tier in-line during app creation with `withPricingTier()` or directly when defining a plan via `azure.appServices().appServicePlans().define()`
-| [com.microsoft.azure.management.appservice.JavaVersion](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._java_version) | Class with static public fields representing Java versions supported by App Service. Used with `withJavaVersion()` during the `define()...create()` chain when creating a new webapp.
+| [WebApp](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._web_app) | Created from the `azure.webApps().define()....create()` fluent chain. Creates a App Service web app and any resources needed for the app. Most methods query the object for configuration details, but verb methods like `restart()` change the state of the webapp.
+| [WebContainer](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._web_container) | Class with static public fields used as paramters to `withWebContainer()` when defining a WebApp running a Java webcontainer. Has choices for both Jetty and Tomcat versions.
+| [PublishingProfile](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._publishing_profile) | Obtained through a WebApp object using the `getPublishingProfile()` method. Contains FTP and Git deployment information, including deployment username and password (which is separate from Azure account or service principal credentials).
+| [AppServicePlan](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._app_service_plan) | Returned by `azure.appServices().appServicePlans().getbyGroup()`. Methods are availble to check the capacity, tier, and number of web apps running in the plan.
+| [AppServicePricingTier](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._app_service_pricing_tier) | Class with static public fields representing App Service tiers. Used to define a plan tier in-line during app creation with `withPricingTier()` or directly when defining a plan via `azure.appServices().appServicePlans().define()`
+| [JavaVersion](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.appservice._java_version) | Class with static public fields representing Java versions supported by App Service. Used with `withJavaVersion()` during the `define()...create()` chain when creating a new webapp.
 
 ## Next steps
 
