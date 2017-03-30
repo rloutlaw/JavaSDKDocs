@@ -104,9 +104,9 @@ Storage accounts with in-use disk images connected to virtual machines or disks 
 
 | Class used in sample | Notes
 |-------|-------|
-| [com.microsoft.azure.management.storage.StorageAccounts](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.datalake.analytics._storage_accounts) | Created from the `azure.storageAccounts()` entry point. Provides create, list, update, and delete operations for storage accounts.
-| [com.microsoft.azure.management.storage.StorageAccount](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account)  | Representation of an Azure storage account. Use the methods in the class to get information about the storage account.
-| [com.microsoft.azure.management.storage.StorageAccountKey](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account_key) | `StorageAccount.getKeys()` returns a list of these objects. Use the `regenerateKey` methods in `StorageAccount` to update the keys.
+| [StorageAccounts](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.datalake.analytics._storage_accounts) | Created from the `azure.storageAccounts()` entry point. Provides create, list, update, and delete operations for storage accounts.
+| [StorageAccount](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account)  | Representation of an Azure storage account. Use the methods in the class to get information about the storage account.
+| [StorageAccountKey](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.storage._storage_account_key) | `StorageAccount.getKeys()` returns a list of these objects. Use the `regenerateKey` methods in `StorageAccount` to update the keys.
 
 ## Next steps
 
