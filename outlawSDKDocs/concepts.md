@@ -62,7 +62,83 @@ Azure azure = Azure
         .withDefaultSubscription();
 ```
 
-The samples use file-based authentication to keep the code compact and easy to follow. If you don't want to save the credentials in a file, you can load them from your Java code from a secure source (such as [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) ) and initialize the `Azure` entry point using an [ApplicationTokenCredentials](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md#using-applicationtokencredentials) object.
+The samples use file-based authentication to keep the code compact and easy to follow. If you don't want to save the credentials in a file, you can load them from your Java code from a secure source (such as [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) ) and initialize the `Azure` entry point using an [ApplicationTokenCredentials](https://github.com/Azure/azure-sdk-for-java/blob/master/AUTH.md#using-applicationtokencredentials) object.   
+
+
+## Build objects through fluent interface
+
+Do not call constructors to work with the management API. Use the fluent interface to build the API objects for your code. For example, the entry-point Azure object:
+
+```java
+Azure azure = Azure
+                    .configure()
+                    .withLogLevel(LogLevel.NONE)
+                    .authenticate(credFile)
+                    .withDefaultSubscription();
+```
+   
+
+## Child resource collections
+
+The management API has a single point of entry through the `com.microsoft.azure.management.Azure` object.  Select which type of resources to work with using the child resource collections in the `Azure` object, for example for SQL Database:
+
+```java
+SqlServer sqlServer = azure.sqlServers().define(sqlServerName)
+                    .withRegion(Region.US_EAST)
+                    .withNewResourceGroup(rgName)
+                    .withAdministratorLogin(administratorLogin)
+                    .withAdministratorPassword(administratorPassword)
+                    .create();
+```
+
+Most fluent conversations you have with the API starts with selecting the appropriate child resource collection for the Azure service or resources you need to work with.     
+
+## Lists and iterations
+
+Every child resource collection has a `list()` method to return every instance of that resource in your current subscription. For example, `azure.sqlServers().list()` returns all SQL databases in the subscription.
+
+Use the `listByGroup(String groupname)` method to scope the returned List to a specific [Azure resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).  
+
+Iterate over the returned `PagedList` collection just as you would a normal `List`:
+
+```java
+PagedList<VirtualMachine> vms = azure.virtualMachines().list();
+for (VirtualMachine vm : vms) {
+    System.out.println("Found virtual machine with ID " + vm.id());
+}
+```   
+
+## Returned object collections
+
+The management API follows convention for returned object collections depending on the properties of the returned objects:
+
+- Lists: Unordered data that is easy to iterate over.
+- Maps: Maps are key/value pairs with unique keys, but not necessarily unique values. An example of a Map would be app settings for a App Service webapp.
+- Sets: Sets have unique keys and values. A good example of a Set would be networks attached to a virtual machine, which would have both a unique identifier and a unique network configuration.
+
+The returned collection types let you make assumptions about the returned objects when working with the collections in your code.   
+
+## Actionable verbs
+
+Child resource collection methods with verbs in their names take immediate action in Azure. These methods work synchronously in your code and will block execution in the current thread until completed. 
+The one exception to this rule is `define()` when not followed by `create()` in a fluent chain to generate a `Creatable`.
+
+| Verb   |  Sample Usage |
+|--------|---------------|
+| create | `azure.virtualMachines().create(listOfVMCreatables)` |
+| delete | `azure.disks().deleteById(id)` | 
+| list   | `azure.sqlServers().list()` | 
+| get    | `VirtualMachine vm  = azure.virtualMachines().getByResourceGroup(group, vmName)` |
+
+Asynchronous versions of these methods exist with a `Async` suffix use [Reactive extensions](https://github.com/ReactiveX/RxJava). 
+
+Specific resource objects have verbs that change the state of the resource in Azure. For example:
+
+```java
+VirtualMachine vmToRestart = azure.getVirtualMachines().getById(id);
+vmToRestart.restart();
+```
+These child resource verbs generally do not have asynchronous versions in the management API.    
 
 <a name="Creatables"></a>
 
@@ -99,84 +175,9 @@ Passing `Creatables` to `create()` calls returns a `CreatedResources` object ins
 PublicIPAddress pip = (PublicIPAddress) virtualMachine.createdRelatedResource(publicIPAddressCreatable.key());
 ```
 
-## Child resource collections
-
-The management API has a single point of entry through the `com.microsoft.azure.management.Azure` object.  Select which type of resources to work with using the child resource collections in the `Azure` object, for example for SQL Database:
-
-```java
-SqlServer sqlServer = azure.sqlServers().define(sqlServerName)
-                    .withRegion(Region.US_EAST)
-                    .withNewResourceGroup(rgName)
-                    .withAdministratorLogin(administratorLogin)
-                    .withAdministratorPassword(administratorPassword)
-                    .create();
-```
-
-Most fluent conversations you have with the API starts with selecting the appropriate child resource collection for the Azure service or resources you need to work with.
-
-## Lists and iterations
-
-Every child resource collection has a `list()` method to return every instance of that resource in your current subscription. For example, `azure.sqlServers().list()` returns all SQL databases in the subscription.
-
-Use the `listByGroup(String groupname)` method to scope the returned List to a specific [Azure resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).  
-
-Iterate over the returned `PagedList` collection just as you would a normal `List`:
-
-```java
-PagedList<VirtualMachine> vms = azure.virtualMachines().list();
-for (VirtualMachine vm : vms) {
-    System.out.println("Found virtual machine with ID " + vm.id());
-}
-```
-
-## Build objects through fluent interface
-
-Do not call constructors to work with the management API. Use the fluent interface to build the API objects for your code. For example, the entry-point Azure object:
-
-```java
-Azure azure = Azure
-                    .configure()
-                    .withLogLevel(LogLevel.NONE)
-                    .authenticate(credFile)
-                    .withDefaultSubscription();
-```
-
-
-## Actionable verbs
-
-Child resource collection methods with verbs in their names take immediate action in Azure. These methods work synchronously in your code and will block execution in the current thread until completed. 
-The one exception to this rule is `define()` when not followed by `create()` in a fluent chain to generate a `Creatable`.
-
-| Verb   |  Sample Usage |
-|--------|---------------|
-| create | `azure.virtualMachines().create(listOfVMCreatables)` |
-| delete | `azure.disks().deleteById(id)` | 
-| list   | `azure.sqlServers().list()` | 
-| get    | `VirtualMachine vm  = azure.virtualMachines().getByResourceGroup(group, vmName)` |
-
-Asynchronous versions of these methods exist with a `Async` suffix use [Reactive extensions](https://github.com/ReactiveX/RxJava). 
-
-Specific resource objects have verbs that change the state of the resource in Azure. For example:
-
-```java
-VirtualMachine vmToRestart = azure.getVirtualMachines().getById(id);
-vmToRestart.restart();
-```
-These child resource verbs generally do not have asynchronous versions in the management API.
-
 ## Exception handling
 
 The management API currently defines Exception classes that extend `com.microsoft.rest.RestException`. Catch exceptions generated by management API, with a `catch (RestException exception)` block after the relevant `try` statement.
-
-## Returned object collections
-
-The management API follows convention for returned object collections depending on the properties of the returned objects:
-
-- Lists: Unordered data that is easy to iterate over.
-- Maps: Maps are key/value pairs with unique keys, but not necessarily unique values. An example of a Map would be app settings for a App Service webapp.
-- Sets: Sets have unique keys and values. A good example of a Set would be networks attached to a virtual machine, which would have both a unique identifier and a unique network configuration.
-
-The returned collection types let you make assumptions about the returned objects when working with the collections in your code.
 
 ## Logs and trace
 

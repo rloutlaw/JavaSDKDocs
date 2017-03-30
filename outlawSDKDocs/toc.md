@@ -24,6 +24,7 @@
 ### [Create virtual machines in parallel](create-vm-in-parallel.md)
 ### [Configure App Service deployment sources](configure-webapp-sources.md)
 # Reference
+## [API concepts](concepts.md)
 ## [Release Notes](release-notes.md)
 ## Autogen'd Topic 1
 ## Autogen'd Topic 2
