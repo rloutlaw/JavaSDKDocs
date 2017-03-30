@@ -228,7 +228,7 @@ Scale the number of virtual machines in the scale set using `withCapacity()` and
 ## Sample explanation
 
 [The sample code](https://github.com/Azure-Samples/compute-java-manage-virtual-machine-scale-sets/blob/master/src/main/java/com/microsoft/azure/management/compute/samples/ManageVirtualMachineScaleSet.java) first creates a virtual network for the scale set to communicate across and a load balancer to distribute traffic across the virtual machines. The scale set is then defined created through `azure.virtualMachineScaleSets().define()...create()` with three Linux instances running the Apache web server.    
-
+   
 | Class used in sample | Notes
 |-------|-------|
 | [VirtualMachineScaleSet](https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.management.compute._virtual_machine_scale_set) | Query, start, stop, update and delete all virtual machines in the scale set.
